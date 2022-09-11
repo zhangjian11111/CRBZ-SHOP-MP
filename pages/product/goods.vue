@@ -270,15 +270,23 @@
             <u-icon size="34" class="red" name="home-fill"></u-icon>
             <view class="red icon-btn-name">店铺</view>
           </view>
-          <view class="icon-btn-item" @click="linkMsgDetail()">
+          <!-- <view class="icon-btn-item" @click="linkMsgDetail()">
             <u-icon size="34" name="kefu-ermai"></u-icon>
             <view class="icon-btn-name">客服</view>
-          </view>
+          </view> -->
           <view class="icon-btn-item" @click="reluchToCart()">
             <u-icon size="34" name="storeping-cart"></u-icon>
             <view class="icon-btn-name">购物车</view>
             <view v-if="nums && nums > 0" class="num-icon">{{ nums }}</view>
           </view>
+		  <view class="icon-btn-item">
+			  <button size="mini" open-type="contact">
+				  <u-icon size="34" name="kefu-ermai"></u-icon>
+				  <!-- </br>
+				  客服 -->
+				  <view style="font-size: 8px;">客服</view>
+			  </button>
+		  </view>
         </view>
         <!-- 正常结算页面 -->
         <view class="detail-btn" v-if="!isGroup">
@@ -647,14 +655,30 @@ export default {
       this.isGroup = false; //初始化拼团
       this.productId = id; // skuId
       // 这里请求获取到页面数据  解析数据
+	  let response = await getGoods(id, goodsId);
+	  uni.showLoading({
+	  	title: '加载中...',
+	  		mask: true,
+	  		success: function (result) {
+				if (response.data.success) {
+				  uni.hideLoading();
+				};
+	  			if (!response.data.success) {
+	  			  setTimeout(() => {
+	  			    uni.navigateBack();
+	  			  }, 500);
+	  			}
+	  		},
+	  });
+	  
 
-      let response = await getGoods(id, goodsId);
+      // let response = await getGoods(id, goodsId);
 
-      if (!response.data.success) {
-        setTimeout(() => {
-          uni.navigateBack();
-        }, 500);
-      }
+      // if (!response.data.success) {
+      //   setTimeout(() => {
+      //     uni.navigateBack();
+      //   }, 500);
+      // }
       // 这里是绑定分销员
       if (distributionId || this.$store.state.distributionId) {
         let disResult = await getGoodsDistribution(distributionId);

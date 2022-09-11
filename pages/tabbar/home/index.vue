@@ -16,8 +16,15 @@ export default {
     };
   },
   onPullDownRefresh() {
+	// uni.showToast({
+	// 	title: '努力加载中...',
+	// 	duration: 3000,
+	// 	icon: "loading",
+	// })
     this.$refs.tpl.init();
-
+	// setTimeout(function () {
+	// 			uni.stopPullDownRefresh();
+	// 		}, 5000);
     uni.stopPullDownRefresh();
   },
   components: {

@@ -23,16 +23,17 @@
           <view>预存款</view>
           <view class="money">{{ walletNum | unitPrice}}</view>
         </u-col>
+		
+		<!-- <u-col text-align="center" span="4" @click="navigateTo('/pages/mine/myTracks')">
+		  <view>足迹</view>
+		  <view>{{ footNum || 0 }}</view>
+		</u-col> -->
 
         <u-col text-align="center" span="4" @click="navigateTo('/pages/cart/coupon/myCoupon')">
           <view>优惠券</view>
           <view>{{ couponNum || 0 }}</view>
         </u-col>
 
-        <u-col text-align="center" span="4" @click="navigateTo('/pages/mine/myTracks')">
-          <view>足迹</view>
-          <view>{{ footNum || 0 }}</view>
-        </u-col>
       </u-row>
       <!-- 我的订单，代付款 -->
       <view class="order">

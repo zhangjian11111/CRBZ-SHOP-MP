@@ -27,7 +27,7 @@ function cleanStorage() {
   storage.setUuid("");
   storage.setUserInfo({});
 
-	
+
   if(!isNavigateTo){
 	  isNavigateTo= true
 	  // 防抖处理跳转
@@ -84,7 +84,7 @@ http.interceptors.request.use(
       config.params = params;
       config.header.accessToken = accessToken;
 
-      
+
     }
     config.header = {
       ...config.header,
@@ -112,15 +112,16 @@ http.interceptors.response.use(
     //   cleanStorage();
     //   isRefreshing = false;
     // }
-    
+
     let token = storage.getAccessToken();
     if (
       (token && response.statusCode === 403) ||
       response.data.status === 403
     ) {
       if (!isRefreshing) {
-		console.log('旧token',token) 
+		console.log('旧token',token)
         isRefreshing = true;
+		storage.setAccessToken('')
 		let oldRefreshToken = storage.getRefreshToken();
         //调用刷新token的接口
         return refreshTokenFn(oldRefreshToken)
@@ -131,7 +132,7 @@ http.interceptors.response.use(
 
             response.header.accessToken = `${accessToken}`;
             // token 刷新后将数组的方法重新执行
-			console.log('接口队列',requests,'新token',accessToken) 
+			console.log('接口队列',requests,'新token',accessToken)
             requests.forEach((cb) => cb(accessToken));
             requests = []; // 重新请求完清空
             return http.request(response.config);

@@ -21,23 +21,23 @@
             <image src="/static/mine/myfavorite.png" mode=""></image>
             <view>我的关注</view>
           </view>
-          <view class="interact-item" @click="navigateTo('/pages/mine/myTracks')">
+          <!-- <view class="interact-item" @click="navigateTo('/pages/mine/myTracks')">
             <image src="/static/mine/myhistory.png" mode=""></image>
             <view>我的足迹</view>
           </view>
           <view class="interact-item" @click="navigateTo('/pages/order/evaluate/myEvaluate')">
             <image src="/static/mine/mycommit.png" mode=""></image>
             <view>我的评价</view>
-          </view>
+          </view> -->
           <!-- <view class="interact-item" @click="navigateTo('/pages/order/complain/complainList')">
             <image src="/static/mine/shensu.png" mode=""></image>
             <view>我的投诉</view>
           </view> -->
 
-          <view class="interact-item" @click="navigateTo('/pages/mine/set/feedBack')">
+          <!-- <view class="interact-item" @click="navigateTo('/pages/mine/set/feedBack')">
             <image src="/static/mine/feedback.png" mode=""></image>
             <view>意见反馈</view>
-          </view>
+          </view> -->
           <view class="interact-item" @click="navigateTo('/pages/cart/coupon/couponCenter')">
             <image src="/static/mine/couponcenter.png" mode=""></image>
             <view>领券中心</view>
@@ -50,6 +50,14 @@
             <image src="/static/mine/setting.png" mode=""></image>
             <view>设置</view>
           </view>
+		  <view class="interact-item">
+		  			  <button size="mini" open-type="contact">
+		  				  <u-icon size="50" name="kefu-ermai"></u-icon>
+		  				  <!-- </br>
+		  				  客服 -->
+		  				  <view style="font-size: 11px;">客服</view>
+		  			  </button>
+		  </view>
           <!-- <view class="interact-item" @click="distribution">
             <image src="/static/mine/distribution.png" mode=""></image>
             <view>我的分销</view>
