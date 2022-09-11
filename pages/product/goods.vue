@@ -541,7 +541,7 @@ export default {
   },
 
   computed: {
-	// udesk IM 
+	// udesk IM
     IM() {
       return this.IMLink + this.storeDetail.merchantEuid;
     },
@@ -613,15 +613,6 @@ export default {
       this.init(this.routerVal.id, this.routerVal.goodsId, this.routerVal.distributionId);
     }
   },
-  // #ifdef MP-WEIXIN
-  onShareAppMessage(res) {
-    return {
-      path: this.share(),
-      title: `[好友推荐]${this.goodsDetail.goodsName}`,
-      imageUrl: this.goodsDetail.goodsGalleryList[0],
-    };
-  },
-  // #endif
   methods: {
     share() {
       return `/pages/product/goods?id=${this.routerVal.id}&goodsId=${this.routerVal.goodsId}`;
@@ -670,7 +661,7 @@ export default {
 	  			}
 	  		},
 	  });
-	  
+
 
       // let response = await getGoods(id, goodsId);
 
@@ -741,20 +732,20 @@ export default {
 
     linkMsgDetail() {
       // lili 基础客服
-	
+
 	  uni.navigateTo({
 		url: `/pages/tabbar/home/web-view?IM=${this.storeDetail.storeId}`,
 	  });
-		
-		// udesk 代码  
+
+		// udesk 代码
 		// if (this.storeDetail.merchantEuid) {
 		//   uni.navigateTo({
 		//     url: `/pages/tabbar/home/web-view?src=${this.IM}`,
 		//   });
 		// }
-		  
-		  
-        // 客服 云智服代码 
+
+
+        // 客服 云智服代码
         // // #ifdef MP-WEIXIN
         // const params = {
         //   storeName: this.storeDetail.storeName,
@@ -782,7 +773,7 @@ export default {
         //     sign,
         // });
         // // #endif
-    
+
     },
     // 格式化金钱  1999 --> [1999,00]
     formatPrice(val) {

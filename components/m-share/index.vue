@@ -8,7 +8,7 @@
     <view class="share-list">
       <!-- #ifdef MP-WEIXIN -->
       <view class="share-item">
-        <button class="share-btn" open-type="share">
+        <button class="share-btn" @click="weChatShare" open-type="share">
           <u-icon color="#04BE02" size="80" name="weixin-fill"></u-icon>微信好友
         </button>
       </view>
@@ -62,6 +62,16 @@ export default {
     close() {
       this.$emit("close");
     },
+    weChatShare(){
+      this.$u.mpShare = {
+        title:  this.shareTitle(), // 默认为小程序名称，可自定义
+        path: '', // 默认为当前页面路径，一般无需修改，QQ小程序不支持
+        // 分享图标，路径可以是本地文件路径、代码包文件路径或者网络图片路径。
+        // 支持PNG及JPG，默认为当前页面的截图
+        imageUrl: this.thumbnail ||''
+      }
+    },
+
     // h5复制链接
     // #ifdef H5
     copyLink() {
@@ -70,8 +80,8 @@ export default {
         content = this.configs.shareLink + this.link;
       } else {
         content =
-          this.configs.shareLink +
-          getCurrentPages()[getCurrentPages().length - 1].__page__.fullPath;
+            this.configs.shareLink +
+            getCurrentPages()[getCurrentPages().length - 1].__page__.fullPath;
       }
       if (content === null || content === undefined) {
         content = "";
@@ -93,13 +103,13 @@ export default {
     shareTitle() {
       let shareTitle;
       if (this.type == "goods") {
-        shareTitle = `我发现了一个${this.goodsName}商品快来跟我一起看看吧`;
+        shareTitle = `[好友推荐]${this.goodsName}快来跟我一起看看吧`;
       } else if (this.type == "shops") {
-        shareTitle = `我发现了一个${this.goodsName}店铺快来跟我一起看看吧`;
+        shareTitle = `[好友发现]${this.goodsName}快来跟我一起看看吧`;
       } else if (this.type == "pintuan") {
-        shareTitle = `我拼了一个${this.goodsName}快来跟我一起抢购吧!`;
+        shareTitle = `[好友邀请]${this.goodsName}快来跟我一起抢购吧!`;
       } else if (this.type == "kanjia") {
-        shareTitle = `请快来帮我砍一刀${this.goodsName}`;
+        shareTitle = `[好友邀请]请快来帮我砍一刀${this.goodsName}`;
       }
       return shareTitle;
     },
@@ -110,8 +120,8 @@ export default {
       if (val.type <= 1) {
         let scene; //  "WXSenceTimeline 朋友圈   WXSceneSession 微信好友"
         val.type == 1
-          ? (scene = "WXSenceTimeline")
-          : (scene = "WXSceneSession");
+            ? (scene = "WXSenceTimeline")
+            : (scene = "WXSceneSession");
         uni.share({
           provider: "weixin",
           scene: scene,

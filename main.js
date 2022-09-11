@@ -8,7 +8,7 @@ import store from "./store";
 /**
  * 仅在h5中显示唤醒app功能
  * 在h5页面手动挂载
- * 
+ *
  */
 // #ifdef H5
 import airBtn from "@/components/m-airbtn/index.vue";
@@ -16,6 +16,9 @@ let btn = Vue.component("airBtn", airBtn); //全局注册
 document.body.appendChild(new btn().$mount().$el);
 // #endif
 
+// 引入uView对小程序分享的mixin封装
+let mpShare = require('uview-ui/libs/mixin/mpShare.js');
+Vue.mixin(mpShare)
 
 /**
  * 全局filters
