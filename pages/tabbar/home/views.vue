@@ -50,7 +50,7 @@
       <!-- <integral v-if="item.type == 'integral'" :res="item.options" /> -->
       <!-- <spike v-if="item.type == 'spike'" :res="item.options" /> -->
     </div>
-    <u-no-network @retry='init' @isConnected='isConnected'></u-no-network>
+    <u-no-network @retry="init" @isConnected="isConnected"></u-no-network>
   </div>
 </template>
 
@@ -117,7 +117,7 @@ export default {
   },
 
   methods: {
-	  
+
     /**
      * 实例化首页数据楼层
      */
@@ -131,17 +131,18 @@ export default {
 			getFloorData().then((res) => {
 			  if (res.data.success) {
 			    that.pageData = JSON.parse(res.data.result.pageData);
+          console.log(this.pageData);
 				uni.hideLoading();
 			  }
 			});
 		},
 	  });
-      
+
     },
-		// 是否有网络链接
-		isConnected(val){
-			val ? this.init() : ''
-		},
+    // 是否有网络链接
+    isConnected(val) {
+      val ? this.init() : "";
+    },
 
     /**
      * TODO 扫码功能后续还会后续增加
