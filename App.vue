@@ -65,12 +65,13 @@ export default {
     // #endif
   },
 
-   onShow() {
+   onShow(options) {
+
     // #ifndef H5
-    this.getClipboard();
+    // this.getClipboard();
     // #endif
     // #ifdef APP-PLUS
-  
+
     if (storage.getShow()) {
       if(uni.getSystemInfoSync().platform == 'ios'){
       this.$u.route("/pages/tabbar/screen/fullScreen");
@@ -80,6 +81,11 @@ export default {
     // #endif
   },
   methods: {
+	  /**
+	   * 获取网络状态
+	   */
+
+
     /**
      * 微信小程序版本提交更新版本 解决缓存问题
      */
@@ -150,10 +156,13 @@ export default {
      */
     async getClipboard() {
       let res = await getClipboardData();
+
       /**
        * 解析粘贴板数据
        */
-      if (res.indexOf(config.shareLink) != -1) {
+
+      if (res.indexOf(config.shareLink) != -1 && (res!= this.$store.state.shareLink)) {
+        this.$store.state.shareLink = res
         uni.showModal({
           title: "提示",
           content: "检测到一个分享链接是否跳转？",

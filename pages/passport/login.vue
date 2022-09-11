@@ -238,15 +238,15 @@ export default {
     };
   },
   onShow() {
-		
+
 		// 只要是app登录的全部清除内容
-		// #ifdef APP-PLUS 
+		// #ifdef APP-PLUS
 		storage.setAccessToken("");
 		storage.setRefreshToken("");
 		storage.setUserInfo({});
 		// #endif
-		
-		
+
+
     //#ifdef H5
     let isWXBrowser = /micromessenger/i.test(navigator.userAgent);
     if (isWXBrowser) {
@@ -621,9 +621,9 @@ export default {
               icon: "none",
             });
 
-           
+
                 whetherNavigate();
-              
+
           } else {
             uni.switchTab({
               url: "/pages/tabbar/home/index",
@@ -846,7 +846,7 @@ page {
   display: flex;
   width: 590rpx;
   position: absolute;
-  bottom: 20px;
+  top: 1200rpx;
   align-items: center;
   justify-content: center;
 }
