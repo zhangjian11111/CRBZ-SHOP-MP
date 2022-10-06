@@ -376,7 +376,7 @@ export default {
       if (typeof val == "undefined") {
         return val;
       }
-      return val.toFixed(2).split(".");
+      return Number(val).toFixed(2).split(".");
     },
 
     // 展示更多数据
@@ -622,9 +622,6 @@ export default {
     },
     //加载商品 ，带下拉刷新和上滑加载
     async loadData(type, loading) {
-		uni.showLoading({
-			title: "努力加载中",
-		})
       this.loadingType = "loading";
       if (type == "refresh") {
         this.goodsList = [];

@@ -19,7 +19,7 @@
         <view>{{ item.title }}</view>
       </view>
       <!-- #endif -->
-      <!-- #ifdef H5 -->
+      <!-- #ifdef H5 -->  
       <view class="share-item" @click="copyLink()">
         <u-icon color="#b4aee8" size="80" name="share-fill"></u-icon>
         <view>{{ '复制链接' }}</view>
@@ -80,8 +80,8 @@ export default {
         content = this.configs.shareLink + this.link;
       } else {
         content =
-            this.configs.shareLink +
-            getCurrentPages()[getCurrentPages().length - 1].__page__.fullPath;
+          this.configs.shareLink +
+          getCurrentPages()[getCurrentPages().length - 1].__page__.fullPath;
       }
       if (content === null || content === undefined) {
         content = "";
@@ -120,8 +120,8 @@ export default {
       if (val.type <= 1) {
         let scene; //  "WXSenceTimeline 朋友圈   WXSceneSession 微信好友"
         val.type == 1
-            ? (scene = "WXSenceTimeline")
-            : (scene = "WXSceneSession");
+          ? (scene = "WXSenceTimeline")
+          : (scene = "WXSceneSession");
         uni.share({
           provider: "weixin",
           scene: scene,

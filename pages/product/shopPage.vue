@@ -1,7 +1,7 @@
 <template>
   <div>
     <u-navbar :border-bottom="false">
-      <u-search v-model="keyword" @custom='search' :show-action="true" action-text="搜索" :animation="true" @search="search" @click="search" placeholder="请输入搜索"></u-search>
+			<u-search v-model="keyword" @custom='search' :show-action="true" action-text="搜索" :animation="true" @search="search" @click="search" placeholder="请输入搜索"></u-search>
     </u-navbar>
     <div class="wrapper">
       <!-- 店铺信息模块 -->
@@ -59,9 +59,9 @@
 
     <!-- 商品 -->
     <div class="contant" v-if="current == 0">
-
+		
       <u-empty style='margin-top:100rpx' v-if="goodsList.length == 0" class="empty" text='暂无商品信息'></u-empty>
-      <goodsTemplate v-else :res="goodsList" :storeName="false" />
+			<goodsTemplate v-else :res="goodsList" :storeName="false" />
     </div>
     <!-- 全部分类 -->
     <div class="category" v-if="current == 1">
@@ -120,7 +120,7 @@ export default {
       val == 0 ? ()=>{ this.goodsList = []; this.getGoodsData()} : this.getCategoryData();
     },
   },
-  components:{goodsTemplate},
+	components:{goodsTemplate},
 
   /**
    * 加载
@@ -204,10 +204,10 @@ export default {
       //     sign,
       // });
       // // #endif
-
-      uni.navigateTo({
-        url: `/pages/tabbar/home/web-view?IM=${this.storeId}`,
-      });
+			
+			uni.navigateTo({
+			   url: `/pages/tabbar/home/web-view?IM=${this.storeId}`,
+			 });
     },
 
     /** 获取店铺分类 */
@@ -236,7 +236,7 @@ export default {
      * 搜索
      */
     search() {
-      console.log("点击")
+			console.log("点击")
       uni.navigateTo({
         url: `/pages/navigation/search/searchPage?storeId=${this.storeId}&keyword=${this.keyword}`,
       });
@@ -253,8 +253,8 @@ export default {
     async getStoreData() {
       let res = await getStoreBaseInfo(this.storeId);
       res.data.success
-          ? (this.storeInfo = res.data.result)
-          : uni.reLaunch({ url: "/" });
+        ? (this.storeInfo = res.data.result)
+        : uni.reLaunch({ url: "/" });
     },
 
     /** 加载商品 */
@@ -262,7 +262,7 @@ export default {
       let res = await getGoodsList(this.goodsParams);
       if (res.data.success) {
         this.goodsList.push(...res.data.result.content);
-        console.log(this.goodsList)
+				console.log(this.goodsList)
       }
     },
 

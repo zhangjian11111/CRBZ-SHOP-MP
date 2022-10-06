@@ -23,26 +23,20 @@
           <view>预存款</view>
           <view class="money">{{ walletNum | unitPrice}}</view>
         </u-col>
-		
-		<!-- <u-col text-align="center" span="4" @click="navigateTo('/pages/mine/myTracks')">
-		  <view>足迹</view>
-		  <view>{{ footNum || 0 }}</view>
-		</u-col> -->
 
         <u-col text-align="center" span="4" @click="navigateTo('/pages/cart/coupon/myCoupon')">
           <view>优惠券</view>
           <view>{{ couponNum || 0 }}</view>
         </u-col>
 
+        <u-col text-align="center" span="4" @click="navigateTo('/pages/mine/myTracks')">
+          <view>足迹</view>
+          <view>{{ footNum || 0 }}</view>
+        </u-col>
       </u-row>
       <!-- 我的订单，代付款 -->
       <view class="order">
-        <view class="order-item" @click="navigateTo('/pages/order/myOrder?status=0')">
-          <div class="bag bag1">
-            <u-icon name="order" size="35" color="#fff"></u-icon>
-          </div>
-          <view>我的订单</view>
-        </view>
+       
         <view class="order-item" @click="navigateTo('/pages/order/myOrder?status=1')">
           <div class="bag bag2">
             <u-icon name="bag-fill" size="35" color="#fff"></u-icon>
@@ -65,8 +59,14 @@
           <div class="bag bag5">
             <u-icon name="server-fill" size="35" color="#fff"></u-icon>
           </div>
-          <view>售后服务</view>
+          <view>售后</view>
         </view>
+		<view class="order-item" @click="navigateTo('/pages/order/myOrder?status=0')">
+		  <div class="bag bag1">
+		    <u-icon name="order" size="35" color="#fff"></u-icon>
+		  </div>
+		  <view>我的订单</view>
+		</view>
       </view>
     </div>
     <!-- 常用工具 -->

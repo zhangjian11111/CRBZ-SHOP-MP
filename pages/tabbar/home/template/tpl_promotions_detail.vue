@@ -40,11 +40,11 @@
             >
               <div class="item-img-box">
                 <u-image
-                    class="item-img"
-                    width="156rpx"
-                    height="156rpx"
-                    :src="i.thumbnail ? i.thumbnail : i.goodsImage"
-                    alt
+                  class="item-img"
+                  width="156rpx"
+                  height="156rpx"
+                  :src="i.thumbnail ? i.thumbnail : i.goodsImage"
+                  alt
                 />
               </div>
               <div

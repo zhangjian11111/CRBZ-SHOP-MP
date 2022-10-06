@@ -388,7 +388,7 @@ export default {
       masterWay: "", //团长信息
       pintuanFlage: true, //是开团还是拼团
       notSupportFreight: [], //不支持运费
-      notSupportFreightGoodsList: ["系统提示商品超出配送范围或者低于25元起送价:"],
+      notSupportFreightGoodsList: ["以下商品超出配送范围："],
     };
   },
   filters: {
@@ -460,7 +460,7 @@ export default {
       if (typeof val == "undefined") {
         return val;
       }
-      return val.toFixed(2).split(".");
+      return Number(val).toFixed(2).split(".");
     },
     //发票回调 选择发票之后刷新购物车
     async callbackInvoice(val) {
