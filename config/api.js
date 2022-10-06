@@ -4,21 +4,17 @@
  */
 // 开发环境
 const dev = {
-  common: "http://127.0.0.1:9111",
-  buyer: "http://127.0.0.1:9111",
-
+  common: "https://common-api.pickmall.cn",
+  buyer: "https://buyer-api.pickmall.cn",
 };
 // 生产环境
 const prod = {
-  // common: "https://yqswgjz.mynatapp.cc",
-  // buyer: "https://yqswgjz.mynatapp.cc",
- common: "http://127.0.0.1:9111",
- buyer: "http://127.0.0.1:9111",
-  
+  common: "https://common-api.pickmall.cn",
+  buyer: "https://buyer-api.pickmall.cn",
 };
 
 //默认生产环境
-let api = prod;
+let api = dev;
 //如果是开发环境
 if (process.env.NODE_ENV == "development") {
   api = dev;

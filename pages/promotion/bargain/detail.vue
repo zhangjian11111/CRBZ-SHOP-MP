@@ -3,7 +3,7 @@
     <u-navbar :custom-back="back" back-icon-color="#fff" :background="background" :border-bottom="false">
     </u-navbar>
 
-    <div class="wrapper">
+    <div class="wrapper-box">
       <!-- 砍价列表 -->
       <div class="box box1">
         <div class="bargain">
@@ -93,7 +93,7 @@
       <u-modal :show-title="false" v-model="helpBargainFlage" :show-confirm-button="false">
         <view class="help-bargain" @click="handleClickHelpBargain">
           <u-image width="100%" height="600rpx"
-            src="https://crbzshop.oss-cn-hangzhou.aliyuncs.com/%E7%B4%A0%E6%9D%90/%E6%98%A5%E6%97%A5%E5%8D%8A%E7%9B%8Flogo-%E4%B8%AD%E5%9B%BD%E7%BA%A2%E9%85%8D%E6%89%B6%E5%85%89%E8%89%B2.png"></u-image>
+            src="https://lilishop-oss.oss-cn-beijing.aliyuncs.com/91631d5a66c7426bbe3f7d644ee41946.jpeg"></u-image>
           <u-image class="help" width="300rpx" height="80rpx" src="/pages/promotion/static/help-bargain.png"></u-image>
         </view>
       </u-modal>
@@ -106,10 +106,6 @@
       <popupGoods ref="popupGoods" :buyMask="maskFlag" @closeBuy="closePopupBuy" :goodsDetail="bargainDetail"
         :goodsSpec="goodsSpec" v-if="bargainDetail.id " @handleClickSku="getGoodsDetail" />
 
-      <!-- 产品详情 -->
-      <div class=" box4">
-
-      </div>
     </div>
   </div>
 </template>
@@ -352,11 +348,11 @@ page {
   align-items: center;
   padding: 10rpx 0;
 }
-.wrapper {
-  background: url("https://crbzshop.oss-cn-hangzhou.aliyuncs.com/%E7%B4%A0%E6%9D%90/%E6%98%A5%E6%97%A5%E5%8D%8A%E7%9B%8Flogo-%E4%B8%AD%E5%9B%BD%E7%BA%A2%E9%85%8D%E6%89%B6%E5%85%89%E8%89%B2.png");
+.wrapper-box {
+  background: url("https://lili-system.oss-cn-beijing.aliyuncs.com/kanjia.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  height: 700rpx;
+  height: 506rpx;
   width: 100%;
 }
 
@@ -371,16 +367,16 @@ page {
   }
 }
 .box1 {
-  top: 750rpx;
+  top: 560rpx;
 }
 .box2 {
-  top: 770rpx;
+  top: 580rpx;
 }
 .box3 {
-  top: 790rpx;
+  top: 600rpx;
 }
 .box4 {
-  top: 810rpx;
+  top: 620  rpx;
   height: 200rpx;
 }
 .bargain-item {

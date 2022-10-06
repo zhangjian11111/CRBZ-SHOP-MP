@@ -1,9 +1,9 @@
 {
-    "name" : "春日半盏小铺",
+    "name" : "lili商城",
     "appid" : "__UNI__EC9FD60",
     "description" : "",
-    "versionName" : "4.2.6",
-    "versionCode" : 4000260,
+    "versionName" : "4.2.7",
+    "versionCode" : 4000270,
     "transformPx" : false,
     "app-plus" : {
         "compatible" : {
@@ -63,7 +63,7 @@
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
                 ],
                 "abiFilters" : [ "armeabi-v7a", "arm64-v8a", "x86" ],
-                "schemes" : "crbzshore",
+                "schemes" : "lilishop",
                 "permissionExternalStorage" : {
                     "request" : "none",
                     "prompt" : "应用保存运行状态等信息，需要获取读写手机存储（系统提示为访问设备上的照片、媒体内容和文件）权限，请允许。"
@@ -84,7 +84,8 @@
                     "NSLocationAlwaysAndWhenInUseUsageDescription" : "位置信息将用于高德地图的效果展示",
                     "NSMicrophoneUsageDescription" : "用户上传视频时需使用音频信息"
                 },
-                "urltypes" : "crbzshore"
+                "urltypes" : "lilishop",
+                "dSYMs" : false
             },
             /* ios打包配置 */
             "sdkConfigs" : {
@@ -188,14 +189,14 @@
     "mp-weixin" : {
         /* 小程序特有相关 */
         "usingComponents" : true,
-        "appid" : "wxb660c158f0f9c8ac",
+        "appid" : "wx6f10f29075dc1b0b",
         "optimization" : {
             "subPackages" : true
         },
         "setting" : {
-            "urlCheck" : true,
+            "urlCheck" : false,
             "minified" : true,
-            "postcss" : true,
+            "postcss" : false,
             "es6" : true
         },
         "permission" : {
@@ -203,12 +204,13 @@
                 "desc" : "位置信息将用于高德地图的效果展示"
             }
         },
-        "plugins" : {}
+        "plugins" : {
+            "live-player-plugin" : {
+                "version" : "1.3.0",
+                "provider" : "wx2b03c6e691cd7370"
+            }
+        }
     },
-    // "live-player-plugin" : {
-    //     "version" : "1.3.0",
-    //     "provider" : "wx2b03c6e691cd7370"
-    // }
     "h5" : {
         "devServer" : {
             "disableHostCheck" : true
@@ -225,7 +227,7 @@
                 "enable" : true
             }
         },
-        "title" : "春日半盏小铺",
+        "title" : "lilishop",
         "template" : ""
     }
 }

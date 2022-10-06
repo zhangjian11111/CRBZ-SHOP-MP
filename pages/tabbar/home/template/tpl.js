@@ -25,7 +25,7 @@ export function modelNavigateTo(item) {
         url: `/pages/product/shopPage?id=${val.id}`,
       });
       break;
-      // 活动
+    // 活动
     case "marketing":
       uni.navigateTo({
         url: "/pages/product/goods?id=" + val.id + "goodsId=" + val.goodsId,

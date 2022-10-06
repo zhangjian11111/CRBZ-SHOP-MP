@@ -8,7 +8,7 @@ import store from "./store";
 /**
  * 仅在h5中显示唤醒app功能
  * 在h5页面手动挂载
- *
+ * 
  */
 // #ifdef H5
 import airBtn from "@/components/m-airbtn/index.vue";
@@ -30,6 +30,8 @@ Object.keys(filters).forEach((key) => {
 
 // 引入Vuex
 Vue.prototype.$store = store;
+
+
 Vue.use(uView);
 Vue.config.productionTip = false;
 

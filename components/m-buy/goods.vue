@@ -63,16 +63,16 @@
 							</div>
 						</view>
 						<view class="goods-check-skus">
-							已选❤️：    
+							已选
 							<span class="goods-check-skus-name">
-								-️{{ selectName }}-
-								,️<span style="font-size: 18px;color: blue;">{{ num }} </span>份
+								{{ selectName }}
+								<span>，{{ num }}个</span>
 							</span>
 						</view>
 						<view class="goods-check-skus">
-							库存🚚：     
+							库存
 							<span class="goods-check-skus-name">
-								<span>🎯{{ goodsDetail.quantity }}🎯</span>
+								<span>{{ goodsDetail.quantity }}</span>
 							</span>
 						</view>
 					</view>
@@ -99,15 +99,10 @@
 						</view>
 					</view>
 					<!-- 数量 -->
-					<view class="goods-skus-number">
+					<view class="goods-skus-number flex flex-a-c flex-j-sb">
 						<view class="view-class-title">数量</view>
-		
-						<!-- <view @click="reduceByOne">➖😭</view> -->
-							<!-- <u-input style='text-align: right;' v-model="num" type="number" @u-input="countVal"  /> -->
-							<!-- <input class="uni-input" maxlength="3" v-model.number="num" type="number"/> -->
-						<!-- <view @click="addByOne">➕😍</view> -->
-						<u-number-box v-model="num" ></u-number-box>
 						
+						<u-input  class="view-class-input" v-model="num" type="number"  />
 					</view>
 				</scroll-view>
 				<!-- 按钮 -->
@@ -188,7 +183,6 @@
 			num(val){
 				if(val){
 					if(val > this.goodsDetail.quantity){
-						console.log(val)
 						this.val = this.goodsDetail.quantity
 					}
 				}
@@ -210,55 +204,12 @@
 		},
 
 		methods: {
-			// 购物车数量加减操作开始
-			reduceByOne(){
-				if(this.num%1 != 0){
-					uni.showToast({
-						title:'宝宝，输入正确的购买数量',
-						icon:'none'
-					})
-					return;
-				}
-				if(this.num <= 1){
-					uni.showToast({
-						title:'宝宝，购买的数量不能小于1哦',
-						icon:'none'
-					})
-					return;
-				}
-				this.num = this.num - 1;
-			},
-			addByOne(){
-				if(this.num%1 != 0){
-					uni.showToast({
-						title:'宝宝，输入正确的购买数量',
-						icon:'none'
-					})
-					return;
-				}
-				if(this.num >= 999){
-					uni.showToast({
-						title:'宝宝，购买的数量太多了哦',
-						icon:'error'
-					})
-					return;
-				}
-				this.num = this.num + 1;
-			},
-			//数值检测
-			countVal(e){
-				this.num = e.detail.value;
-				if(this.num == 0){
-					this.num = 1
-				}
-			},
-			// 购物车数量加减操作结束
 			// 格式化金钱  1999 --> [1999,00]
 			formatPrice(val) {
 				if (typeof val == "undefined") {
 					return val;
 				}
-				return val.toFixed(2).split(".");
+				return Number(val).toFixed(2).split(".");
 			},
 
 			closeMask() {
@@ -471,7 +422,13 @@
 	.goods-skus-number {
 		justify-content: space-between;
 		display: flex;
-		text-align: right
+		
+		>.view-class-title{
+			flex: 8;
+		}
+		>.view-class-input{
+			flex:1
+		}
 	}
 
 	/deep/ .uni-scroll-view {

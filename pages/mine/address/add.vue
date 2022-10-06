@@ -165,9 +165,7 @@ export default {
             delete this.form.updateTime;
             editAddress(this.form).then((res) => {
               if (res.data.success) {
-                uni.navigateTo({
-                  url: `/${beforePage.route}`,
-                });
+                uni.navigateBack();
               }
             });
           }
