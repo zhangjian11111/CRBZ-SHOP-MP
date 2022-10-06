@@ -4,13 +4,13 @@
  */
 // 开发环境
 const dev = {
-  common: "https://common-api.pickmall.cn",
-  buyer: "https://buyer-api.pickmall.cn",
+  common: "https://yqswgjz.mynatapp.cc",
+  buyer: "https://yqswgjz.mynatapp.cc",
 };
 // 生产环境
 const prod = {
-  common: "https://common-api.pickmall.cn",
-  buyer: "https://buyer-api.pickmall.cn",
+  common: "https://yqswgjz.mynatapp.cc",
+  buyer: "https://yqswgjz.mynatapp.cc",
 };
 
 //默认生产环境
