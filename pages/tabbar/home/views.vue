@@ -121,20 +121,23 @@ export default {
      * 实例化首页数据楼层
      */
     init() {
-      var that = this;
-      this.pageData = "";
-      uni.showLoading({
-        title: '加载中下拉刷新',
-        mask: false,
-        success: function (result) {
-          getFloorData().then((res) => {
-            if (res.data.success) {
-              that.pageData = JSON.parse(res.data.result.pageData);
-              console.log(this.pageData);
-              uni.hideLoading();
-            }
-          });
-    },
+    	  var that = this;
+          this.pageData = "";
+    	  uni.showLoading({
+    	  	title: '加载中下拉刷新',
+    		mask: false,
+    		success: function (result) {
+    			getFloorData().then((res) => {
+    			  if (res.data.success) {
+    			    that.pageData = JSON.parse(res.data.result.pageData);
+              console.log(that.pageData);
+    				uni.hideLoading();
+    			  }
+    			});
+    		},
+    	  });
+    
+        },
 		// 是否有网络链接
 		isConnected(val){
 			val ? this.init() : ''
@@ -244,8 +247,8 @@ export default {
       this.seacnCode();
       // #endif
     },
-  },
-};
+	},
+	};
 </script>
 
 <style scoped lang="scss">

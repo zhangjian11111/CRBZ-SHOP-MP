@@ -649,25 +649,27 @@ export default {
       // 这里请求获取到页面数据  解析数据
 
       let response = await getGoods(id, goodsId);
-      uni.showLoading({
-        title: '加载中...',
-        mask: true,
-        success: function (result) {
-          if (response.data.success) {
-            uni.hideLoading();
-          }
-      if (!response.data.success) {
-        setTimeout(() => {
-          uni.navigateBack();
-        }, 500);
-      }
+       uni.showLoading({
+      	  	title: '加载中...',
+      	  		mask: true,
+      	  		success: function (result) {
+      				if (response.data.success) {
+      				  uni.hideLoading();
+      				};
+      	  			if (!response.data.success) {
+      	  			  setTimeout(() => {
+      	  			    uni.navigateBack();
+      	  			  }, 500);
+      	  			}
+      	  		},
+      	  });
       // 这里是绑定分销员
       if (distributionId || this.$store.state.distributionId) {
-        let disResult = await getGoodsDistribution(distributionId);
-        if (!disResult.data.success || disResult.statusCode == 403) {
-          this.$store.state.distributionId = distributionId;
-        }
-      }
+              let disResult = await getGoodsDistribution(distributionId);
+              if (!disResult.data.success || disResult.statusCode == 403) {
+                this.$store.state.distributionId = distributionId;
+              }
+            }
       /**商品信息以及规格信息存储 */
       this.goodsDetail = response.data.result.data;
       this.wholesaleList = response.data.result.wholesaleList;

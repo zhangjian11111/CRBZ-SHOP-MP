@@ -4,8 +4,8 @@
  */
 // 开发环境
 const dev = {
-  common: "https://yqswgjz.mynatapp.cc",
-  buyer: "https://yqswgjz.mynatapp.cc",
+  common: "http://127.0.0.1:9111",
+  buyer: "http://127.0.0.1:9111",
 };
 // 生产环境
 const prod = {
