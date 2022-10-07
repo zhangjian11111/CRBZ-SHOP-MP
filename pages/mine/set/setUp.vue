@@ -20,7 +20,7 @@
       <u-cell-item title="意见反馈" @click="navigateTo('/pages/mine/set/feedBack')"></u-cell-item>
       <!-- #ifndef H5 -->
       <!-- #endif -->
-      <u-cell-item :title="`关于${config.name}`" @click="navigateTo('/pages/mine/set/editionIntro')"></u-cell-item>
+<!--      <u-cell-item :title="`关于${config.name}`" @click="navigateTo('/pages/mine/set/editionIntro')"></u-cell-item>-->
     </u-cell-group>
     <view class="submit" @click="showModalDialog">{{userInfo.id ?'退出登录':'登录'}}</view>
     <u-modal show-cancel-button v-model="quitShow" @confirm="confirm" :confirm-color="lightColor" :async-close="true"
@@ -72,7 +72,7 @@ export default {
 				//TODO handle the exception
 				this.clear();
 			}
-      
+
     },
 
     /**

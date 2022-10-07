@@ -93,7 +93,7 @@
       <u-modal :show-title="false" v-model="helpBargainFlage" :show-confirm-button="false">
         <view class="help-bargain" @click="handleClickHelpBargain">
           <u-image width="100%" height="600rpx"
-            src="https://lilishop-oss.oss-cn-beijing.aliyuncs.com/91631d5a66c7426bbe3f7d644ee41946.jpeg"></u-image>
+                   src="https://crbzshop.oss-cn-hangzhou.aliyuncs.com/%E7%B4%A0%E6%9D%90/%E6%98%A5%E6%97%A5%E5%8D%8A%E7%9B%8Flogo-%E4%B8%AD%E5%9B%BD%E7%BA%A2%E9%85%8D%E6%89%B6%E5%85%89%E8%89%B2.png"></u-image>
           <u-image class="help" width="300rpx" height="80rpx" src="/pages/promotion/static/help-bargain.png"></u-image>
         </view>
       </u-modal>
@@ -349,7 +349,7 @@ page {
   padding: 10rpx 0;
 }
 .wrapper-box {
-  background: url("https://lili-system.oss-cn-beijing.aliyuncs.com/kanjia.png");
+  background: url("https://crbzshop.oss-cn-hangzhou.aliyuncs.com/%E7%B4%A0%E6%9D%90/%E6%98%A5%E6%97%A5%E5%8D%8A%E7%9B%8Flogo-%E4%B8%AD%E5%9B%BD%E7%BA%A2%E9%85%8D%E6%89%B6%E5%85%89%E8%89%B2.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   height: 506rpx;

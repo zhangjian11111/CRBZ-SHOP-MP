@@ -121,13 +121,19 @@ export default {
      * 实例化首页数据楼层
      */
     init() {
+      var that = this;
       this.pageData = "";
-      getFloorData().then((res) => {
-        if (res.data.success) {
-          this.pageData = JSON.parse(res.data.result.pageData);
-          console.log(this.pageData);
-        }
-      });
+      uni.showLoading({
+        title: '加载中下拉刷新',
+        mask: false,
+        success: function (result) {
+          getFloorData().then((res) => {
+            if (res.data.success) {
+              that.pageData = JSON.parse(res.data.result.pageData);
+              console.log(this.pageData);
+              uni.hideLoading();
+            }
+          });
     },
 		// 是否有网络链接
 		isConnected(val){
@@ -146,9 +152,9 @@ export default {
       uni.scanCode({
         success: function (res) {
           let path = encodeURIComponent(res.result);
-          
 
-          
+
+
           if(path!=undefined && path.indexOf("QR_CODE_LOGIN_SESSION")==0){
             console.log(path)
             //app扫码登录

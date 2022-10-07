@@ -178,7 +178,7 @@
 	<div class="empty" v-if="empty">
 		<view>
 			<image style="width: 320rpx; height: 240rpx" src="/static/nodata.png">
-	
+
 			</image>
 		</view>
 		<view>
@@ -240,7 +240,7 @@ export default {
         pageNumber: 1,
         pageSize: 10,
         // sort: 'grade_asc',
-      
+
         keyword: "",
       },
       minPrice: "",
@@ -258,7 +258,7 @@ export default {
       routerVal: "",
     };
   },
-	
+
   onPageScroll(e) {
     console.log(e);
     this.scrollTop = e.scrollTop;
@@ -412,7 +412,7 @@ export default {
       } else {
         this.params.prop = [this.params.prop];
       }
-     
+
       this.selectedWay["prop"].forEach((item) => {
         if (item.__selected) {
           this.params.prop.push(`${item.parent}_${item.title}`);
@@ -427,11 +427,11 @@ export default {
       }
 
       this.goodsList = [];
-      
+
       this.params.pageNumber = 1;
       this.sortParams = this.params;
 
-     
+
       this.loadData();
       this.sortPopup = false;
     },
@@ -622,6 +622,9 @@ export default {
     },
     //加载商品 ，带下拉刷新和上滑加载
     async loadData(type, loading) {
+      uni.showLoading({
+        title: "努力加载中",
+      })
       this.loadingType = "loading";
       if (type == "refresh") {
         this.goodsList = [];
@@ -683,7 +686,7 @@ export default {
     doSearchSwitch() {
       this.isSWitch = !this.isSWitch;
       this.isShowSeachGoods = true;
-			this.params.pageNumber = 1 
+			this.params.pageNumber = 1
 			this.params.pageSize = 10
 			this.loadData("refresh", 1);
     },

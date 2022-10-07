@@ -5,7 +5,7 @@
       <div class="deposit">预存款金额</div>
       <div class="money">￥{{walletNum | unitPrice }}</div>
       <div class="operation-btns">
-        <div class="operation-btn light" @click="navgition('/pages/mine/deposit/withdrawal')">提现</div>
+<!--        <div class="operation-btn light" @click="navgition('/pages/mine/deposit/withdrawal')">提现</div>-->
         <div class="operation-btn" @click="navgition('/pages/mine/deposit/recharge')">充值</div>
       </div>
     </div>

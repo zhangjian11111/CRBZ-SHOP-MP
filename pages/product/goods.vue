@@ -270,14 +270,22 @@
             <u-icon size="34" class="red" name="home-fill"></u-icon>
             <view class="red icon-btn-name">店铺</view>
           </view>
-          <view class="icon-btn-item" @click="linkMsgDetail()">
+          <!-- <view class="icon-btn-item" @click="linkMsgDetail()">
             <u-icon size="34" name="kefu-ermai"></u-icon>
             <view class="icon-btn-name">客服</view>
-          </view>
+          </view> -->
           <view class="icon-btn-item" @click="reluchToCart()">
             <u-icon size="34" name="storeping-cart"></u-icon>
             <view class="icon-btn-name">购物车</view>
             <view v-if="nums && nums > 0" class="num-icon">{{ nums }}</view>
+          </view>
+          <view class="icon-btn-item">
+            <button size="mini" open-type="contact">
+              <u-icon size="34" name="kefu-ermai"></u-icon>
+              <!-- </br>
+              客服 -->
+              <view style="font-size: 8px;">客服</view>
+            </button>
           </view>
         </view>
         <!-- 正常结算页面 -->
@@ -533,7 +541,7 @@ export default {
   },
 
   computed: {
-	// udesk IM 
+	// udesk IM
     IM() {
       return this.IMLink + this.storeDetail.merchantEuid;
     },
@@ -605,7 +613,7 @@ export default {
       this.init(this.routerVal.id, this.routerVal.goodsId, this.routerVal.distributionId);
     }
   },
- 
+
   methods: {
     share() {
       return `/pages/product/goods?id=${this.routerVal.id}&goodsId=${this.routerVal.goodsId}`;
@@ -641,7 +649,13 @@ export default {
       // 这里请求获取到页面数据  解析数据
 
       let response = await getGoods(id, goodsId);
-
+      uni.showLoading({
+        title: '加载中...',
+        mask: true,
+        success: function (result) {
+          if (response.data.success) {
+            uni.hideLoading();
+          }
       if (!response.data.success) {
         setTimeout(() => {
           uni.navigateBack();
@@ -709,20 +723,20 @@ export default {
 
     linkMsgDetail() {
       // lili 基础客服
-	
+
 	  uni.navigateTo({
 		url: `/pages/tabbar/home/web-view?IM=${this.storeDetail.storeId}`,
 	  });
-		
-		// udesk 代码  
+
+		// udesk 代码
 		// if (this.storeDetail.merchantEuid) {
 		//   uni.navigateTo({
 		//     url: `/pages/tabbar/home/web-view?src=${this.IM}`,
 		//   });
 		// }
-		  
-		  
-        // 客服 云智服代码 
+
+
+        // 客服 云智服代码
         // // #ifdef MP-WEIXIN
         // const params = {
         //   storeName: this.storeDetail.storeName,
@@ -750,7 +764,7 @@ export default {
         //     sign,
         // });
         // // #endif
-    
+
     },
     // 格式化金钱  1999 --> [1999,00]
     formatPrice(val) {

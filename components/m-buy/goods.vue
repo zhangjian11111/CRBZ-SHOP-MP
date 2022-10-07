@@ -36,7 +36,7 @@
 						</view>
 						<!-- 正常商品的价格 -->
 						<view v-else>
-							
+
 							<!-- 批发价格 -->
 							<div class='price-row flex' v-if="wholesaleList.length">
 								<div class='goods-price' v-for="(item,index) in wholesaleList" :key="index">
@@ -62,19 +62,19 @@
 								</span>
 							</div>
 						</view>
-						<view class="goods-check-skus">
-							已选
-							<span class="goods-check-skus-name">
-								{{ selectName }}
-								<span>，{{ num }}个</span>
+            <view class="goods-check-skus">
+              已选❤️：
+              <span class="goods-check-skus-name">
+								-️{{ selectName }}-
+								,️<span style="font-size: 18px;color: blue;">{{ num }} </span>份
 							</span>
-						</view>
-						<view class="goods-check-skus">
-							库存
-							<span class="goods-check-skus-name">
-								<span>{{ goodsDetail.quantity }}</span>
+            </view>
+            <view class="goods-check-skus">
+              库存🚚：
+              <span class="goods-check-skus-name">
+								<span>🎯{{ goodsDetail.quantity }}🎯</span>
 							</span>
-						</view>
+            </view>
 					</view>
 				</view>
 				<!-- 商品信息 -->
@@ -101,8 +101,7 @@
 					<!-- 数量 -->
 					<view class="goods-skus-number flex flex-a-c flex-j-sb">
 						<view class="view-class-title">数量</view>
-						
-						<u-input  class="view-class-input" v-model="num" type="number"  />
+            <u-number-box v-model="num" ></u-number-box>
 					</view>
 				</scroll-view>
 				<!-- 按钮 -->
@@ -124,7 +123,7 @@
 			return {
 				setup,
 				num: 1,
-				
+
 				selectName: "", //选中商品的昵称
 				selectSkuList: "", //选中商铺sku,
 				selectedSpecImg: "", //选中的图片路径
@@ -134,7 +133,7 @@
 				currentSelceted: [],
 				skuList: "",
 				isClose: false, //是否可以点击遮罩关闭
-				
+
 			};
 		},
 		props: {
@@ -400,7 +399,7 @@
 	@import "./popup.scss";
 	.price-row{
 		text-align: center;
-		
+
 	}
 	.buy {
 		background-image: linear-gradient(135deg, #ffba0d, #ffc30d 69%, #ffcf0d);
@@ -422,7 +421,7 @@
 	.goods-skus-number {
 		justify-content: space-between;
 		display: flex;
-		
+
 		>.view-class-title{
 			flex: 8;
 		}
@@ -504,7 +503,7 @@
 		>* {
 			color: $price-color;
 			line-height: 80rpx;
-	
+
 		}
 	}
 

@@ -12,8 +12,8 @@
 	import config from "@/config/config";
 	import storage from "@/utils/storage";
 
-	
-	
+
+
 	/**
 	 * 路由监听并删除路由
 	 * https://developers.weixin.qq.com/miniprogram/dev/api/route/wx.navigateTo.html
@@ -88,7 +88,7 @@
 
 		onShow() {
 			// #ifndef H5
-			this.getClipboard();
+			// this.getClipboard();
 			// #endif
 			// #ifdef APP-PLUS
 
