@@ -40,6 +40,33 @@
       <!-- 背景 -->
       <div class="bar"></div>
     </div>
+    <!-- 选择自提点 -->
+    <div class="address-box" v-if="shippingText == 'SELF_PICK_UP'">
+      <div @click="clickToStoreAddress()">
+        <div class="user-box flex">
+          <div class="flex-8">
+            <div v-if="storeAddress">
+              <div class="user-address">
+                <!-- 自提点地址 -->
+                <div class="user-address-detail wes-2">
+                  {{ storeAddress.address }}
+                </div>
+                <!-- 联系手机号 -->
+                <div>
+                </div>
+              </div>
+              </div>
+            <div v-else>
+              请选择自提点
+            </div>
+          </div>
+          <u-icon name="arrow-right" style="color: #bababa"></u-icon>
+        </div>
+        <!-- 背景 -->
+        <div class="bar"></div>
+      </div>
+    </div>
+
 
     <!-- 开团信息 -->
     <view class="group-box" v-if="isAssemble">
@@ -153,7 +180,7 @@
             </p>
           </div>
         </div>
-        <!-- <u-row>
+        <u-row>
           <u-col :offset="0" :span="4">发票信息</u-col>
           <u-col
             :span="8"
@@ -167,7 +194,7 @@
             >
             <span v-else>不开发票</span>
           </u-col>
-        </u-row> -->
+        </u-row>
         <u-row>
           <u-col
             v-if="orderMessage.cartTypeEnum != 'VIRTUAL'"
@@ -224,21 +251,11 @@
         </u-row>
       </div>
       <div>
-        <u-row>
-          <u-col v-if="orderMessage.cartTypeEnum != 'VIRTUAL'" :span="7"
-            >运费</u-col
-          >
-          <u-col
-            v-if="orderMessage.cartTypeEnum != 'VIRTUAL'"
-            :span="5"
-            class="tr tipsColor"
-            textAlign="right"
-          >
-            <span v-if="orderMessage.priceDetailDTO.freightPrice === 0"
-              >包邮</span
-            >
-            <span v-else
-              >￥{{
+        <u-row v-if="shippingText == 'LOGISTICS'">
+          <u-col v-if="orderMessage.cartTypeEnum != 'VIRTUAL'" :span="7">运费</u-col>
+          <u-col v-if="orderMessage.cartTypeEnum != 'VIRTUAL'" :span="5" class="tr tipsColor" textAlign="right">
+            <span v-if="orderMessage.priceDetailDTO.freightPrice == 0">包邮</span>
+            <span v-else>￥{{
                 orderMessage.priceDetailDTO.freightPrice | unitPrice
               }}</span
             >
@@ -364,7 +381,7 @@ export default {
       shippingMethod: [
         {
           value: "LOGISTICS",
-          label: "同城配送",
+          label: "物流",
         },
       ],
       isAssemble: false, //是否拼团
@@ -388,7 +405,7 @@ export default {
       masterWay: "", //团长信息
       pintuanFlage: true, //是开团还是拼团
       notSupportFreight: [], //不支持运费
-      notSupportFreightGoodsList: ["系统提示商品超出配送范围或者低于25元起送价:"],
+      notSupportFreightGoodsList: ["以下商品超出配送范围："],
     };
   },
   filters: {
@@ -693,7 +710,7 @@ export default {
         this.$store.state.canUseCoupons = res.data.result.canUseCoupons;
         this.$store.state.cantUseCoupons = res.data.result.cantUseCoupons;
 
-        if (!res.data.result.memberAddress.id) {
+        if (!res.data.result.memberAddress) {
           // 获取会员默认地址
           this.getUserAddress();
         } else {

@@ -3,9 +3,9 @@
     <div class="uForm">
       <u-form :border-bottom="false" :model="form" ref="uForm" :error-type="['toast']" :rule="rules">
 				<!-- #ifndef H5 -->
-        <view class="selectAddress" @click="clickUniMap">
+        <!-- <view class="selectAddress" @click="clickUniMap">
           选择收货地址
-        </view>
+        </view> -->
 				<!-- #endif -->
         <u-form-item class="border" label="收货人" label-width="130" prop="name">
           <u-input v-model="form.name" clearable placeholder="请输入收货人姓名" />
@@ -33,18 +33,18 @@
       <m-city :provinceData="list" headTitle="区域选择" ref="cityPicker" @funcValue="getpickerParentValue" pickerSize="4">
       </m-city>
 
-      <uniMap v-if="mapFlage" @close="closeMap" @callback="callBackAddress" />
+      <uniMap v-if="mapFlag" @close="closeMap" @callback="callBackAddress" />
     </div>
   </view>
 </template>
 <script>
 import { addAddress, editAddress, getAddressDetail } from "@/api/address.js";
-import gkcity from "@/components/m-city/m-city.vue";
+import city from "@/components/m-city/m-city.vue";
 import uniMap from "./uniMap";
 import permision from "@/js_sdk/wa-permission/permission.js";
 export default {
   components: {
-    "m-city": gkcity,
+    "m-city": city,
     uniMap,
   },
   onShow() {
@@ -53,7 +53,7 @@ export default {
   methods: {
     // 关闭地图
     closeMap() {
-      this.mapFlage = false;
+      this.mapFlag = false;
     },
     // 打开地图并访问权限
     clickUniMap() {
@@ -61,8 +61,8 @@ export default {
       if (plus.os.name == "iOS") {
         // ios系统
         permision.judgeIosPermission("location")
-          ? (this.mapFlage = true)
-          : this.refuseMapOuther();
+          ? (this.mapFlag = true)
+          : this.refuseMap();
       } else {
         // 安卓
         this.requestAndroidPermission(
@@ -72,12 +72,12 @@ export default {
       // #endif
 
       // #ifndef APP-PLUS
-      this.mapFlage = true;
+      this.mapFlag = true;
       // #endif
     },
 
     // 如果拒绝权限 提示区设置
-    refuseMapOuther() {
+    refuseMap() {
       uni.showModal({
         title: "温馨提示",
         content: "您已拒绝定位,请开启",
@@ -113,9 +113,9 @@ export default {
       var result = await permision.requestAndroidPermission(permisionID);
 
       if (result == 1) {
-        this.mapFlage = true;
+        this.mapFlag = true;
       } else {
-        this.refuseMapOuther();
+        this.refuseMap();
       }
     },
 
@@ -139,7 +139,7 @@ export default {
         uni.hideLoading();
       }
 
-      this.mapFlage = !this.mapFlage; //关闭地图
+      this.mapFlag = !this.mapFlag; //关闭地图
     },
 
     // 保存当前 地址
@@ -209,7 +209,7 @@ export default {
   data() {
     return {
       lightColor: this.$lightColor, //高亮颜色
-      mapFlage: false, // 地图选择开
+      mapFlag: false, // 地图选择开
       routerVal: "",
       form: {
         detail: "", //地址详情

@@ -3,17 +3,19 @@ import App from "./App";
 import * as filters from "./utils/filters.js"; // global filter
 import uView from "uview-ui";
 import store from "./store";
-
-
+import config from '@/config/config';
+import airBtn from "@/components/m-airbtn/index.vue";
+import socketIO from './pages/mine/im/socket';
 /**
  * 仅在h5中显示唤醒app功能
  * 在h5页面手动挂载
  * 
  */
 // #ifdef H5
-import airBtn from "@/components/m-airbtn/index.vue";
-let btn = Vue.component("airBtn", airBtn); //全局注册
-document.body.appendChild(new btn().$mount().$el);
+if (config.enableMiniBarStartUpApp) {
+  let btn = Vue.component("airBtn", airBtn); //全局注册
+  document.body.appendChild(new btn().$mount().$el);
+}
 // #endif
 
 // 引入uView对小程序分享的mixin封装
@@ -30,8 +32,7 @@ Object.keys(filters).forEach((key) => {
 
 // 引入Vuex
 Vue.prototype.$store = store;
-
-
+// Vue.prototype.socketIo = new socketIO();
 Vue.use(uView);
 Vue.config.productionTip = false;
 
@@ -43,11 +44,11 @@ Vue.config.productionTip = false;
  * 如需更换主题请修改此处以及uni.scss中的全局颜色
  */
 // 主题色
-Vue.prototype.$mainColor = "#ff3c2a";
+Vue.prototype.$mainColor = config.mainColor;
 // 高亮主题色
-Vue.prototype.$lightColor = "#ff6b35";
+Vue.prototype.$lightColor = config.lightColor;
 // 辅助高亮颜色
-Vue.prototype.$aiderLightColor = "#ff9f28";
+Vue.prototype.$aiderLightColor = config.aiderLightColor;
 
 
 App.mpType = "app";

@@ -31,7 +31,7 @@
             }}</span>
             <u-icon @click="navigateToStore(item)"  size="24" style="margin-left:10rpx;"  name="arrow-right"></u-icon>
           </view>
-          <view class="right-col" v-if="item.canReceiveCoupon" @click="navigateToConpon(item)">
+          <view class="right-col" v-if="item.canReceiveCoupon" @click="navigateToCoupon(item)">
             <div class="right-line"></div>
             <span>领劵</span>
           </view>
@@ -79,8 +79,8 @@
                 <view class="sp-price">
                   <div class="default-color" :class="{'main-color':Object.keys(skuItem.promotionMap).length ==0  }">
                     
-                    ￥<span>{{ formatPrice(skuItem.goodsSku.price)[0] }}</span>
-                    <span>.{{ formatPrice(skuItem.goodsSku.price)[1] }}</span>
+                    ￥<span>{{ $options.filters.goodsFormatPrice(skuItem.goodsSku.price)[0] }}</span>
+                    <span>.{{ $options.filters.goodsFormatPrice(skuItem.goodsSku.price)[1] }}</span>
                   </div>
                 </view>
                 <view>
@@ -108,8 +108,8 @@
               <!-- 如果有活动 并且是选中的状态,显示预估到手价格 -->
               <div class="priceDetail-flowPrice" :class="{'main-color':skuItem.priceDetailDTO}"
                 v-if="skuItem.priceDetailDTO && skuItem.invalid == 0  && Object.keys(skuItem.promotionMap).length != 0 && skuItem.checked && skuItem.checked">
-                预估到手价 ￥<span>{{ formatPrice(skuItem.priceDetailDTO.flowPrice)[0]}}</span>
-                <span>.{{ formatPrice(skuItem.priceDetailDTO.flowPrice)[1] }} </span>
+                预估到手价 ￥<span>{{ $options.filters.goodsFormatPrice(skuItem.priceDetailDTO.flowPrice)[0]}}</span>
+                <span>.{{ $options.filters.goodsFormatPrice(skuItem.priceDetailDTO.flowPrice)[1] }} </span>
               </div>
 							<div style='margin-left: 20rpx;' v-if="!skuItem.checked && skuItem.errorMessage">
 								{{skuItem.errorMessage}}
@@ -119,7 +119,7 @@
         </u-swipe-action>
       </div>
     </div>
-    <u-modal v-model="deleteShow" :confirm-style="{'color':lightColor}" @confirm="delectConfirm" show-cancel-button
+    <u-modal v-model="deleteShow" :confirm-style="{'color':lightColor}" @confirm="deleteConfirm" show-cancel-button
       :content="deleteContent" :async-close="true"></u-modal>
     <!-- 结账 -->
     <div class="box box6">
@@ -131,7 +131,7 @@
             <div class="fullPrice">
               <span class="number" v-if="cartDetail && cartDetail.priceDetailDTO">
                 总计:
-                <span>¥{{ formatPrice(cartDetail.priceDetailDTO.flowPrice)[0] }}</span>.<span>{{ formatPrice(cartDetail.priceDetailDTO.flowPrice)[1] }}</span>
+                <span>¥{{ $options.filters.goodsFormatPrice(cartDetail.priceDetailDTO.flowPrice)[0] }}</span>.<span>{{ $options.filters.goodsFormatPrice(cartDetail.priceDetailDTO.flowPrice)[1] }}</span>
               </span>
               <span class="number" v-else>总计:0.00</span>
             </div>
@@ -180,6 +180,7 @@
 </template>
 <script>
 import * as API_Trade from "@/api/trade";
+import { debounce } from "@/utils/tools.js";
 export default {
   data() {
     return {
@@ -219,7 +220,6 @@ export default {
     // #endif
   },
   onPullDownRefresh(){
-    console.log("132")
     this.getCardData();
   },
   /**
@@ -256,17 +256,6 @@ export default {
     discountDetails() {
       this.discountDetailsFlag = true;
     },
-
-    /**
-     *  格式化金钱  1999 --> [1999,00]
-     */
-    formatPrice(val) {
-      if (typeof val == "undefined") {
-        return val;
-      }
-      return Number(val).toFixed(2).split(".");
-    },
-
     /**
      * 左滑打开删除
      */
@@ -293,7 +282,7 @@ export default {
     /**
      * 点击删除
      */
-    delectConfirm() {
+    deleteConfirm() {
       API_Trade.deleteSkuItem(this.goodsVal.goodsSku.id).then((res) => {
         if (res.statusCode == 200) {
           uni.showToast({
@@ -351,7 +340,7 @@ export default {
     /**
      * 跳转到优惠券
      */
-    navigateToConpon(val) {
+    navigateToCoupon(val) {
       uni.navigateTo({
         url: "/pages/cart/coupon/couponCenter?storeId=" + val.storeId,
       });
@@ -381,7 +370,8 @@ export default {
     /**
      * 点击步进器回调
      */
-    numChange(val, nums) {
+     numChange: debounce(function (val, nums) {   
+        // 需要防抖的内容
       // #ifdef MP-WEIXIN
       if (nums && nums == "1") {
         val.num++;
@@ -392,8 +382,7 @@ export default {
       }
       // #endif
       this.updateSkuNumFun(val.goodsSku.id, val.num);
-    },
-
+    }, 1000),
     /**
      * 去结算
      */
@@ -522,19 +511,19 @@ export default {
             uni.stopPullDownRefresh();
             if (result.data.success) {
               this.cartDetail = result.data.result;
-              let checkouted = true;
+              let checkOuted = true;
               for (let i = 0; i < this.cartDetail.cartList.length; i++) {
                 let item = this.cartDetail.cartList[i];
                 console.log(item);
                 // 循环出当前商品是否全选
                 if (item.checked == 0) {
-                  checkouted = false;
+                  checkOuted = false;
                 }
                 // 如果有拼团活动顺便删除
                 item.skuList &&
                   item.skuList.forEach((sku) => {
                     if (sku.checked == 0) {
-                      checkouted = false;
+                      checkOuted = false;
                     }
                     if(Object.keys(sku.promotionMap).length != 0)
                     {
@@ -548,7 +537,7 @@ export default {
                 
                   });
               }
-              this.checkout = checkouted;
+              this.checkout = checkOuted;
               uni.stopPullDownRefresh();
             }
           })

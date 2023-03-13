@@ -14,18 +14,29 @@ export function resetByMobile(params) {
   });
 }
 
+
+//获取自动发券
+export function getAutoCoup(){
+  return http.request({
+    url:`/promotion/coupon/activity`,
+    method:"GET",
+    needToken: true,
+  });
+}
+
 /**
  * 账号密码登陆
  * @params  password
  * @params  username
  */
- export function userLogin(params){
+ export function userLogin(params, clientType){
   return http.request({
     method: "POST",
     url:`/passport/member/userLogin`,
     data: params,
     header: {
       "content-type": "application/x-www-form-urlencoded",
+	  clientType: clientType,
     },
   })
 }

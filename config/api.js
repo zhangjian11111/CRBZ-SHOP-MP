@@ -4,13 +4,21 @@
  */
 // 开发环境
 const dev = {
-  common: "http://127.0.0.1:9111",
-  buyer: "http://127.0.0.1:9111",
+	im: "https://yqswgjz.mynatapp.cc",
+	common: "https://yqswgjz.mynatapp.cc",
+	buyer: "https://yqswgjz.mynatapp.cc",
+  // im: "http://127.0.0.1:9111",
+  // common: "http://127.0.0.1:9111",
+  // buyer: "http://127.0.0.1:9111",
 };
 // 生产环境
 const prod = {
+  im: "https://yqswgjz.mynatapp.cc",
   common: "https://yqswgjz.mynatapp.cc",
   buyer: "https://yqswgjz.mynatapp.cc",
+  // im: "http://127.0.0.1:9111",
+  // common: "http://127.0.0.1:9111",
+  // buyer: "http://127.0.0.1:9111",
 };
 
 //默认生产环境
@@ -28,6 +36,7 @@ api = prod;
 
 api.buyer += "/buyer";
 api.common += "/common";
+api.im += "/im";
 export default {
   ...api,
 };

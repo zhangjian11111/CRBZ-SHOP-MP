@@ -75,7 +75,7 @@ page {
 </style>
 <style lang="scss" scoped>
 .wrapper {
-  background: url("https://crbzshop.oss-cn-hangzhou.aliyuncs.com/%E7%B4%A0%E6%9D%90/%E6%B7%A1%E9%85%92%E7%BA%A2%E8%89%B2%E9%85%8D%E6%A9%99%E8%89%B2-%E6%A8%AA%E6%9D%BF-206485.png");
+  background: url("https://lili-system.oss-cn-beijing.aliyuncs.com/kanjia.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   height: 506rpx;

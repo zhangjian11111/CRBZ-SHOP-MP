@@ -27,6 +27,12 @@
 			}
 		},
 		{
+			"path": "pages/tabbar/home/title",
+			"style": {
+				"navigationBarTitleText": "消息"
+			}
+		},
+		{
 			"path": "pages/tabbar/cart/cartList",
 			"style": {
 				"navigationBarTitleText": "购物车",
@@ -79,6 +85,12 @@
 			"style": {
 				
 			}
+		},
+				{
+					"path": "pages/tabbar/special/special",
+					"style": {
+							"navigationBarTitleText": "专题"
+					}
 		}
 
 	],
@@ -214,6 +226,13 @@
 					}
 				},
 				{
+					"path": "address/storeAddress",
+					"style": {
+						"enablePullDownRefresh": true,
+						"navigationBarTitleText": "自提点"
+					}
+				},
+				{
 					"path": "address/add",
 					"style": {
 						"navigationBarTitleText": "收货人"
@@ -256,7 +275,26 @@
 					}
 				},
 
-
+				{
+					"path": "im/list",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"enablePullDownRefresh": true,
+						"app-plus": {
+						}
+						
+					}
+				},
+				{
+					"path": "im/index",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"enablePullDownRefresh": true,
+						"app-plus": {
+						}
+						
+					}
+				},
 				{
 					"path": "set/feedBack",
 					"style": {
@@ -415,6 +453,7 @@
 						}
 					}
 				}
+
 			]
 
 		},

@@ -297,6 +297,9 @@ export default {
         {
           orderStatus: "CANCELLED", //已取消
         },
+        {
+          orderStatus: "STAY_PICKED_UP", //待自提
+        },
       ],
       cancelShow: false, //是否显示取消
       orderSn: "", //ordersn
@@ -311,7 +314,7 @@ export default {
    */
   onBackPress(e) {
     if (e.from == "backbutton") {
-      uni.reLaunch({
+      uni.switchTab({
         url: "/pages/tabbar/user/my",
       });
       return true; //阻止默认返回行为
@@ -814,3 +817,4 @@ page,
   height: 60rpx;
 }
 </style>
+

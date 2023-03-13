@@ -1,7 +1,11 @@
 const promotion = [
   {
     title: "积分活动",
-    value: "POINT",
+    value: "POINTS_GOODS",
+  },
+  {
+    title: "砍价活动",
+    value: "KANJIA",
   },
   {
     title: "单品立减",

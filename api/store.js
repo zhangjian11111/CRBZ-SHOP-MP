@@ -13,7 +13,7 @@ import {http, Method} from '@/utils/request.js';
  */
 export function getStoreList(params) {
   return http.request({
-    url: '/store',
+    url: '/store/store',
     method: Method.GET,
     params,
   });
@@ -54,6 +54,18 @@ export function getStoreList(params) {
   });
 }
 
+
+/**
+ * 获取自提点信息
+ * @param id
+ */
+ export function getStoreAddress(storeId,params) {
+  return http.request({
+    url: `/store/address/page/${storeId}`,
+    method: Method.GET,
+    params
+  });
+}
 
 
 

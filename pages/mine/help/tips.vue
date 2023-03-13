@@ -1,29 +1,29 @@
 <template>
   <div class="wrapper">
-    <u-parse v-html="res.content"></u-parse>
+    <u-parse :show-with-animation="true" :lazy-load="true" :selectable="true" :html="res.content" v-if="res"></u-parse>
 
   </div>
 </template>
 <script>
-import { getArticleDetail } from "@/api/article";
+import { getArticleDetailByType } from "@/api/article";
 export default {
   data() {
     return {
       res: "",
       way: {
-        user: {
-          title: "用户协议",
+        USER_AGREEMENT: {
+          title: "服务协议",
           type: "USER_AGREEMENT",
         },
-        privacy: {
+        PRIVACY_POLICY: {
           title: "隐私政策",
           type: "PRIVACY_POLICY",
         },
-        message: {
+        LICENSE_INFORMATION: {
           title: "证照信息",
           type: "LICENSE_INFORMATION",
         },
-        about: {
+        ABOUT: {
           title: "关于我们",
           type: "ABOUT",
         },
@@ -32,6 +32,7 @@ export default {
   },
   mounted() {},
   onLoad(option) {
+    console.log(this.way)
     uni.setNavigationBarTitle({
       title: this.way[option.type].title,
     });
@@ -40,9 +41,10 @@ export default {
 
   methods: {
     init(option) {
-      getArticleDetail(this.way[option.type].type).then((res) => {
+      getArticleDetailByType(this.way[option.type].type).then((res) => {
         if (res.data.success) {
           this.res = res.data.result;
+          console.log(res)
         }
       });
     },

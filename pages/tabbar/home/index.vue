@@ -15,6 +15,19 @@ export default {
       },
     };
   },
+  onShow(){
+    setTimeout(()=>{
+      this.$refs.tpl.firstGetAuto();
+    },1000)
+  },
+  methods: {
+
+  },
+  onReachBottom(){
+    // 给子级监听触底加载
+    uni.$emit('onReachBottom',true)
+  },
+  
   onPullDownRefresh() {
     this.$refs.tpl.init();
 

@@ -4,9 +4,9 @@
     <view class="status_bar">
       <!-- 这里是状态栏 -->
     </view>
-    <view class="header" @click="userDetail">
+    <view class="header"  @click="userDetail">
       <view class="head-1">
-        <image :src="userInfo.face || '/static/missing-face.png'"></image>
+        <image :src="userInfo.face || userImage"></image>
       </view>
       <view class="head-2" v-if="userInfo.id">
         <view class="user-name">{{ userInfo.nickName }}</view>
@@ -21,7 +21,7 @@
       <u-row text-align="center" gutter="16" class="point">
         <u-col text-align="center" span="4" @click="navigateTo('/pages/mine/deposit/operation')">
           <view>预存款</view>
-          <view class="money">{{ walletNum | unitPrice}}</view>
+          <view class="money">{{ walletNum | unitPrice }}</view>
         </u-col>
 
         <u-col text-align="center" span="4" @click="navigateTo('/pages/cart/coupon/myCoupon')">
@@ -36,7 +36,6 @@
       </u-row>
       <!-- 我的订单，代付款 -->
       <view class="order">
-       
         <view class="order-item" @click="navigateTo('/pages/order/myOrder?status=1')">
           <div class="bag bag2">
             <u-icon name="bag-fill" size="35" color="#fff"></u-icon>
@@ -61,12 +60,12 @@
           </div>
           <view>售后</view>
         </view>
-		<view class="order-item" @click="navigateTo('/pages/order/myOrder?status=0')">
-		  <div class="bag bag1">
-		    <u-icon name="order" size="35" color="#fff"></u-icon>
-		  </div>
-		  <view>我的订单</view>
-		</view>
+        <view class="order-item" @click="navigateTo('/pages/order/myOrder?status=0')">
+          <div class="bag bag1">
+            <u-icon name="order" size="35" color="#fff"></u-icon>
+          </div>
+          <view>我的订单</view>
+        </view>
       </view>
     </div>
     <!-- 常用工具 -->
@@ -79,12 +78,15 @@
 import tool from "@/pages/tabbar/user/utils/tool.vue";
 import { getCouponsNum, getFootprintNum } from "@/api/members.js";
 import { getUserWallet } from "@/api/members";
+import configs from '@/config/config'
 export default {
   components: {
     tool,
   },
   data() {
     return {
+      configs,
+      userImage:configs.defaultUserPhoto,
       coverTransform: "translateY(0px)",
       coverTransition: "0s",
       moving: false,
@@ -94,7 +96,7 @@ export default {
       walletNum: "",
     };
   },
-  onLoad() {},
+  onLoad() { },
   onShow() {
     this.userInfo = this.$options.filters.isLogin();
     if (this.$options.filters.isLogin("auth")) {
@@ -116,7 +118,7 @@ export default {
   },
   // #endif
 
-  mounted() {},
+  mounted() { },
   methods: {
     /**
      * 统一跳转接口,拦截未登录路由
@@ -154,6 +156,7 @@ html,
 body {
   overflow: auto;
 }
+
 .money {
   overflow: hidden;
 
@@ -175,12 +178,14 @@ body {
     color: #ffffff;
     display: flex;
     justify-content: space-between;
+
     .head-1 {
       text-align: center;
       width: 152rpx;
       position: relative;
       display: flex;
       align-items: center;
+
       image {
         width: 152rpx;
         height: 144rpx;
@@ -188,6 +193,7 @@ body {
         margin-bottom: 30rpx;
         border: 3px solid #fff;
       }
+
       .edti-head {
         position: absolute;
         width: 40rpx;
@@ -196,23 +202,27 @@ body {
         background-color: rgba(255, 255, 255, 0.3);
         top: 100rpx;
         right: 0;
+
         image {
           width: 100%;
           height: 100%;
         }
       }
     }
+
     .head-2 {
       flex: 1;
       margin-left: 30rpx;
       margin-top: 100rpx;
       line-height: 1;
     }
+
     /deep/ .u-icon,
     .u-icon {
       margin-top: 106rpx;
     }
   }
+
   .pointBox {
     width: 94%;
     margin: 0 3%;
@@ -220,6 +230,7 @@ body {
     border-radius: 20rpx;
     box-shadow: 0 4rpx 24rpx 0 rgba($color: #f6f6f6, $alpha: 1);
   }
+
   .point {
     text-align: center;
     height: 160rpx;
@@ -227,12 +238,14 @@ body {
     font-size: $font-sm;
     // #ifdef MP-WEIXIN
     padding: 24rpx;
+
     // #endif
     .u-col {
       view {
         color: $u-main-color;
         font-size: 28rpx;
       }
+
       view:last-child {
         margin-top: 8rpx;
         color: $main-color;
@@ -240,6 +253,7 @@ body {
       }
     }
   }
+
   .order {
     height: 140rpx;
     text-align: center;
@@ -249,10 +263,12 @@ body {
     align-items: center;
     padding: 0 3%;
     color: #999;
+
     .order-item {
       position: relative;
       line-height: 2em;
       width: 96rpx;
+
       :first-child {
         font-size: 48rpx;
         margin-bottom: 10rpx;
@@ -264,6 +280,7 @@ body {
 .box {
   transform: translateY(-30rpx);
 }
+
 .user-name {
   font-size: 34rpx;
 }
