@@ -117,7 +117,7 @@
           >
             <div class="navbar-right"></div>
 
-            <search style="width: 100%" :res="item.options" :storeId = "storeId"/>         
+            <search style="width: 100%" :res="item.options" :storeId = "storeId"/>
           </u-navbar>
           <carousel v-if="item.type == 'carousel'" :res="item.options" />
           <titleLayout v-if="item.type == 'title'" :res="item.options" />
@@ -420,7 +420,7 @@ export default {
           this.getGoodsData();
           // 店铺分类
           this.getCategoryData();
-          
+
           this.basePageData = true;
         }
       } else {
