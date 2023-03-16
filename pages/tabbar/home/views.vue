@@ -192,9 +192,13 @@ export default {
      * 实例化首页数据楼层
      */
     init () {
+		uni.showLoading({
+			title: '马上就好😀'
+		})
       this.pageData = "";
       getFloorData().then((res) => {
         if (res.data.success) {
+			uni.hideLoading();
           const result = JSON.parse(res.data.result.pageData)
           this.pageData = result;
           if (result.list.length) {
