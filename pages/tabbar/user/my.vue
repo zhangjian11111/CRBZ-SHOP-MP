@@ -172,7 +172,7 @@ body {
     background-size: cover;
     border-bottom-left-radius: 30rpx;
     border-bottom-right-radius: 30rpx;
-    background-image: url("/static/img/main-bg.png");
+    background-image: url("https://crbzshop.oss-cn-hangzhou.aliyuncs.com/%E7%B4%A0%E6%9D%90/wxminiapppic/%E7%83%A7%E9%BA%A6%E5%A6%96%E5%A8%86%E5%9B%BE.jpeg");
     background-position: bottom;
     background-repeat: no-repeat;
     color: #ffffff;
@@ -181,14 +181,14 @@ body {
 
     .head-1 {
       text-align: center;
-      width: 152rpx;
+      width: 200rpx;
       position: relative;
       display: flex;
       align-items: center;
 
       image {
-        width: 152rpx;
-        height: 144rpx;
+        width: 200rpx;
+        height: 192rpx;
         border-radius: 50%;
         margin-bottom: 30rpx;
         border: 3px solid #fff;
@@ -282,7 +282,10 @@ body {
 }
 
 .user-name {
-  font-size: 34rpx;
+  font-size: 52rpx;
+  color: gold;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-weight: 500;
 }
 
 .bag {

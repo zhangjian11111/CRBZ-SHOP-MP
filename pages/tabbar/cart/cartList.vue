@@ -2,7 +2,7 @@
   <div class="wrapper">
     <!-- 空白页-->
     <view v-if="cartDetail.cartList == '' || cartDetail.cartList == [] || !cartDetail" class="empty">
-      <image src="/static/emptyCart.png" mode="aspectFit"></image>
+      <image src="https://crbzshop.oss-cn-hangzhou.aliyuncs.com/%E7%B4%A0%E6%9D%90/wxminiapppic/%E8%B4%AD%E7%89%A9%E8%BD%A6.png" mode="aspectFit"></image>
       <view class="empty-tips">
         空空如也
         <navigator class="navigator" url="/pages/tabbar/home/index" open-type="switchTab">随便逛逛></navigator>
@@ -641,7 +641,7 @@ page {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  background: #fff;
+  background: #00b2e6;
 
   image {
     width: 240rpx;
