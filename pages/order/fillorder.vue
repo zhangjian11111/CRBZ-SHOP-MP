@@ -180,7 +180,7 @@
             </p>
           </div>
         </div>
-        <u-row>
+        <!-- <u-row>
           <u-col :offset="0" :span="4">发票信息</u-col>
           <u-col
             :span="8"
@@ -194,7 +194,7 @@
             >
             <span v-else>不开发票</span>
           </u-col>
-        </u-row>
+        </u-row> -->
         <u-row>
           <u-col
             v-if="orderMessage.cartTypeEnum != 'VIRTUAL'"

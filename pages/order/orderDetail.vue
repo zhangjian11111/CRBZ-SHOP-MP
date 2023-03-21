@@ -173,7 +173,7 @@
       </view>
     </view>
 
-    <view class="info-view" v-if="order.payStatus == 'PAID'">
+    <!-- <view class="info-view" v-if="order.payStatus == 'PAID'">
       <view>
         <view class="invoice-info-view">
           <view class="invoice-title">发票信息：</view>
@@ -181,7 +181,7 @@
           <view v-else class="value" @click="onReceipt(orderDetail.receipt)">查看发票</view>
         </view>
       </view>
-    </view>
+    </view> -->
     <view style="padding-bottom: 150rpx"></view>
 
     <view class="bottom_view">

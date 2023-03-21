@@ -49,10 +49,16 @@
         </div>
 
         <!-- 联系客服 -->
-        <div class="kefu" @click="talk">
+        <!-- <div class="kefu" @click="talk">
           <u-icon name="kefu-ermai"></u-icon>
           联系客服
-        </div>
+        </div> -->
+		<!-- <div class="kefu">
+		  <u-icon name="kefu-ermai"></u-icon>
+		</div> -->
+		<div class="kefubutton">
+			<button open-type="contact" style="font-size: 12px;"><u-icon name="kefu-ermai"></u-icon> 联系客服</button>
+		</div>
       </div>
       <!-- 优惠券 -->
       <scroll-view

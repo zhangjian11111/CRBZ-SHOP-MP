@@ -13,8 +13,10 @@ export default {
   logo:"https://crbzshop.oss-cn-hangzhou.aliyuncs.com/bf12d3e2f9f34169949542e255557dfb.jpg", //logo地址
   customerServiceMobile:"18943013950", //客服电话
   customerServiceEmail:"1097951193@qq.com", //客服邮箱
-  imWebSrc:"https://yqswgjz.mynatapp.cc",//IM地址
-  baseWsUrl: "ws://yqswgjz.mynatapp.cc/lili/webSocket", // IM WS 地址
+  imWebSrc:"http://127.0.0.1:9111",//IM地址
+  baseWsUrl: "ws://127.0.0.1:8885/lili/webSocket", // IM WS 地址
+  // imWebSrc:"https://yqswgjz.mynatapp.cc",
+  // baseWsUrl: "wss://yqswgjz.mynatapp.cc/lili/webSocket", 
   enableGetClipboard: false, //是否启用粘贴板获取 scanAuthNavigation 中的链接，如果匹配则会跳转到对应页面
   enableMiniBarStartUpApp: true, //是否在h5中右侧浮空按钮点击启动app
   /**
