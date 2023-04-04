@@ -17,7 +17,7 @@ export default {
   },
   onShow(){
     setTimeout(()=>{
-      this.$refs.tpl.firstGetAuto();
+      this.$refs.tpl.fetchCoupon();
     },1000)
   },
   methods: {
@@ -40,7 +40,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	.wrapper{
-		background-color: bisque;
-	}
 </style>

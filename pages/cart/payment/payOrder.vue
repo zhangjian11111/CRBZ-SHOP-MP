@@ -70,7 +70,7 @@
 				walletValue: 0.0,
 				// 支付倒计时
 				autoCancel: 0,
-
+			
 			};
 		},
 		onLoad(val) {
@@ -94,7 +94,7 @@
 
 
 
-			//
+			// 
 		},
 		onBackPress(e) {
 			if (e.from == "backbutton") {
@@ -125,10 +125,10 @@
 					paymentMethod +
 					"&payPrice=" +
 					this.cashierParams.price+
-					"&orderType="+this.orderType
+					"&orderType="+this.orderType 
 				});
 			},
-
+			
 			/**
 			 * 获取收银详情
 			 */
@@ -139,7 +139,7 @@
 					// 判断当前是否是充值
 					this.sn = this.routerVal.recharge_sn;
 					this.orderType = "RECHARGE";
-
+					
 				} else if (this.routerVal.trade_sn) {
 					this.sn = this.routerVal.trade_sn;
 					this.orderType = "TRADE";
@@ -152,7 +152,7 @@
 				parms.clientType = this.paymentType;
 
 				API_Trade.getCashierData(parms).then((res) => {
-
+				
 					if(res.data.success){
 					this.cashierParams = res.data.result;
 
@@ -162,7 +162,7 @@
 					});
 					// #endif
 
-
+					
 				  if(this.routerVal.recharge_sn){
 						this.payList = res.data.result.support.filter((item) => {
 						return item != "WALLET";
@@ -175,7 +175,7 @@
 					//判断是否微信浏览器
 					var ua = window.navigator.userAgent.toLowerCase();
 					if (ua.match(/MicroMessenger/i) == 'micromessenger') {
-
+					
 						this.payList = res.data.result.support.filter((item) => {
 							return item != "ALIPAY";
 						});
@@ -185,12 +185,12 @@
 								return item == "WECHAT";
 							});
 						}
-
+						
 					}
 					// #endif
-
-
-
+					
+				
+					
 
 					this.walletValue = res.data.result.walletValue;
 					this.autoCancel =
@@ -202,7 +202,7 @@
 							 url: `/pages/order/myOrder?status=0`
 						});
 						},500)
-
+						
 					}
 				});
 			},
@@ -216,7 +216,7 @@
 
 			//订单支付
 			async pay(payment) {
-
+				
 				// 支付编号
 				const sn = this.sn;
 				// 交易类型【交易号|订单号】
@@ -233,12 +233,12 @@
 				const paymentMethod = payment;
 				// 客户端类型 APP/NATIVE/JSAPI/H5
 				const paymentClient = this.paymentClient;
-
+				
 				uni.showLoading({
 				  title: "正在唤起支付...",
 				  mask:true
 				});
-
+				
 				// #ifdef APP-PLUS
 				//APP pay
 				// 初始化支付签名
@@ -253,11 +253,11 @@
 							});
 							return;
 						}
-
+						
 						let payForm = signXml.data.result;
-
+						
 						let paymentType = paymentMethod === "WECHAT" ? "wxpay" : "alipay";
-
+						
 						if(paymentMethod === "WALLET"){
 							uni.showToast({
 								icon: "none",
@@ -325,7 +325,7 @@
 												title: "支付成功!",
 											});
 											this.callback(paymentMethod)
-
+											 
 										} else {
 											uni.showModal({
 												content: "支付失败,如果您已支付，请勿反复支付",
@@ -334,9 +334,25 @@
 										}
 									}
 								);
-                uni.hideLoading();
+								uni.hideLoading();
 							} else {
 								window.location.href = JSON.parse(response.result).h5_url;
+								const searchParams = {
+									...params,
+									price:this.cashierParams,
+								}
+								const timer = setInterval(()=>{
+									payCallback(searchParams).then(res=>{
+									if(res.data.result){
+										clearTimeout(timer);
+										uni.navigateTo({
+											url:"/pages/order/myOrder"
+										})
+									}
+								})
+								},3000)
+								
+								uni.hideLoading();		
 							}
 						} else if (paymentMethod === "WALLET") {
 							uni.showToast({
@@ -381,7 +397,7 @@
 										title: "支付成功!",
 									});
 									this.callback(paymentMethod)
-
+									 
 								},
 								fail: (e) => {
 									console.log(e);
@@ -398,7 +414,7 @@
 								title: "支付成功!",
 							});
 							this.callback(paymentMethod)
-
+							 
 						}
 					}
 				);

@@ -1,37 +1,5 @@
 <template>
   <div class="wrapper">
-    <u-popup v-model="showCp" mode="center" width="550rpx" height="400px">
-      <view style="height:130rpx;">
-        <view style="width:200rpx;height:120rpx;float:left;line-height:120rpx;font-size:35rpx;color:#28A4F2;font-weight:600;margin-left:20rpx;">优惠券活动</view>
-        <view style="width:120rpx;height:120rpx;float:right;">
-          <image @click="showCp = false" src="/static/cpauto1.png" style="width:100%;height:100%;"></image>
-        </view>
-      </view>
-			<scroll-view scroll-y="true" style="height: 620rpx;">
-        <!-- {{coupList}} -->
-        <view v-for="(item,index) in coupList" :key="index" >
-          <view class="grad1">
-            <view style="float:right;">
-              <view v-if="item.couponType == 'DISCOUNT'">{{ item.couponDiscount }}折</view>
-							<view v-else>优惠金额：<span style="color:red;font-size:32rpx;">{{ item.price | unitPrice}}</span>元</view>
-              <view>满<span style="color:red;font-size:32rpx;">{{ item.consumeThreshold | unitPrice }}元</span>可用</view>
-              <view v-if="item.scopeType == 'ALL' && item.storeId == '0'">全平台</view>
-							<view v-if="item.scopeType == 'PORTION_GOODS_CATEGORY'">仅限品类</view>
-              <view v-else>{{ item.storeName == 'platform' ? '全平台' :item.storeName+'店铺' }}使用
-							</view>
-              <view v-if="item.endTime">有效期至：{{ item.endTime.split(" ")[0] }}</view>
-            </view>
-            <view style="color:white;font-size:28rpx;font-weight:500;float:left;writing-mode:vertical-rl;flex: auto;height:100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;" @click="showCp = false">
-              立即使用
-            </view>
-          </view>
-        </view>
-				</scroll-view>
-		</u-popup>
     <!-- uni 中不能使用 vue component 所以用if判断每个组件 -->
     <div v-for="(item, index) in pageData.list" :key="index">
       <!-- 搜索栏，如果在楼层装修顶部则会自动浮动，否则不浮动 -->
@@ -64,7 +32,9 @@
       <!-- <joinGroup v-if="item.type == 'joinGroup'" :res="item.options" /> -->
       <!-- <integral v-if="item.type == 'integral'" :res="item.options" /> -->
       <!-- <spike v-if="item.type == 'spike'" :res="item.options" /> -->
+    
     </div>
+    <fetchCoupon ref='coupon' />
     <u-no-network @retry="init" @isConnected="isConnected"></u-no-network>
   </div>
 </template>
@@ -89,12 +59,13 @@ import tpl_group from "@/pages/tabbar/home/template/tpl_group"; //
 import tpl_goods from "@/pages/tabbar/home/template/tpl_goods"; //商品分类以及分类中的商品
 // 结束引用组件
 import { getFloorData } from "@/api/home"; //获取楼层装修接口
-import permision from "@/js_sdk/wa-permission/permission.js"; //权限工具类
+import permission from "@/js_sdk/wa-permission/permission.js"; //权限工具类
 import config from "@/config/config";
-import {getAutoCoup} from "@/api/login"
+
 import tpl_notice from "@/pages/tabbar/home/template/tpl_notice"; //标题栏模块
 import tpl_promotions from "@/pages/tabbar/home/template/tpl_promotions_detail"; //标题栏模块
 import storage from "@/utils/storage.js";
+import fetchCoupon from '@/pages/tabbar/home/template/fetch_coupon'
 // import {receiveCoupons} from "@/api/members"
 
 export default {
@@ -102,8 +73,7 @@ export default {
     return {
       config,
       storage,
-      coupList:[],
-      showCp:false,
+      showCp:true,
       pageData: "", //楼层页面数据
       isIos: "",
       enableLoad: false, //触底加载 针对于商品模块
@@ -128,6 +98,7 @@ export default {
     group: tpl_group,
     notice: tpl_notice,
     promotions: tpl_promotions,
+    fetchCoupon
   },
 
   mounted () {
@@ -136,69 +107,19 @@ export default {
     // 小程序默认分享
     uni.showShareMenu({ withShareTicket: true });
     // #endif
-    this.firstGetAuto()
+   
   },
   methods: {
-    firstGetAuto(){
-      // console.log(123123213)
-      let data  = new Date()
-      let datas = data.getDate()
-      let huors = data.getHours()
-      let flagCoup = storage.getAutoCp()
-      console.log(flagCoup)
-      console.log(datas)
-      if(storage.getAutoCp() && storage.getAutoCp() != '' && storage.getAutoCp() != undefined && storage.getAutoCp() != null){
-        if(Number(datas) > Number(flagCoup)){
-          if(Number(huors) >= 6){
-            storage.setAutoCp(datas)
-            this.getAutoCp()
-          }
-        }
-      }else{
-        this.getAutoCp()
-      }
-      
+    fetchCoupon(){
+       this.$refs.coupon.firstGetAuto();
     },
-    getAutoCp(){
-      let data  = new Date()
-      let datas = data.getDate()
-      getAutoCoup().then(res=>{ 
-        console.log(res)
-        if(res.data.success){
-          this.coupList.push(...res.data.result)
-          if(this.coupList != ''){
-            this.showCp = true
-          }else{
-            this.showCp = false
-          }
-          storage.setAutoCp(datas)
-          let objs = {};
-            this.coupList = this.coupList.reduce((cur, next) => {
-              //对象去重
-              if (next.id != undefined) {
-                objs[next.id]
-                  ? ""
-                  : (objs[next.id] = true && cur.push(next));
-              }
-              return cur;
-            }, []);
-        }
-      })
-    },
-    // receiveCoupons(v){
-
-    // },
     /**
      * 实例化首页数据楼层
      */
     init () {
-		uni.showLoading({
-			title: '马上就好😀'
-		})
       this.pageData = "";
       getFloorData().then((res) => {
         if (res.data.success) {
-			uni.hideLoading();
           const result = JSON.parse(res.data.result.pageData)
           this.pageData = result;
           if (result.list.length) {
@@ -221,7 +142,7 @@ export default {
      * 扫描二维码登录
      * 扫描其他站信息 弹出提示，返回首页。
      */
-    seacnCode () {
+    scanCode () {
       uni.scanCode({
         success: function (res) {
           let path = encodeURIComponent(res.result);
@@ -275,7 +196,7 @@ export default {
             if (this.isIos) {
               plus.runtime.openURL("app-settings:");
             } else {
-              permision.gotoAppPermissionSetting();
+              permission.gotoAppPermissionSetting();
             }
           }
         },
@@ -294,10 +215,10 @@ export default {
         const iosFirstCamera = uni.getStorageSync("iosFirstCamera"); //是不是第一次开启相机
         if (iosFirstCamera !== "false") {
           uni.setStorageSync("iosFirstCamera", "false"); //设为false就代表不是第一次开启相机
-          this.seacnCode();
+          this.scanCode();
         } else {
-          if (permision.judgeIosPermission("camera")) {
-            this.seacnCode();
+          if (permission.judgeIosPermission("camera")) {
+            this.scanCode();
           } else {
             // 没有权限提醒是否去申请权限
             this.tipsGetSettings();
@@ -308,13 +229,13 @@ export default {
          * TODO 安卓 权限已经授权了，调用api总是显示用户已永久拒绝申请。人傻了
          * TODO 如果xdm有更好的办法请在 https://gitee.com/beijing_hongye_huicheng/lilishop/issues 提下谢谢
          */
-        this.seacnCode();
+        this.scanCode();
       }
 
       // #endif
 
       // #ifdef MP-WEIXIN
-      this.seacnCode();
+      this.scanCode();
       // #endif
     },
   },
@@ -325,30 +246,4 @@ export default {
 .navbar-right {
   padding: 0 16rpx 0 0;
 }
-
-.grad1 {
-    width: 500rpx;
-    height: 200rpx;
-    background: radial-gradient(circle at right top, transparent 20rpx,  #ff6b35 0) top left / 120rpx 51% no-repeat,
-      radial-gradient(circle at right bottom, transparent 20rpx,  #ff6b35 0) bottom left /120rpx 51% no-repeat,
-      radial-gradient(circle at left top, transparent 20rpx, #ffffff 0) top right /380rpx 51% no-repeat,
-      radial-gradient(circle at left bottom, transparent 20rpx, #ffffff 0) bottom right /380rpx 51% no-repeat;
-    filter: drop-shadow(6rpx 6rpx  6rpx  rgba(0,0,0,.3));
-    margin: 30rpx auto;
-    padding-top: 2rpx;
-    padding-bottom: 10rpx;
-    padding-left: 38rpx;
-    padding-right: 30rpx;
-}
-// .grad2 {
-//     width: 100px;
-//     height: 120px;
-// 	background:
-//                     radial-gradient(circle at left bottom, transparent 10px, #28A4F2 0) top left /60px 30px no-repeat,
-//                     radial-gradient(circle at right bottom, transparent 10px, #28A4F2 0) top right /60px 30px no-repeat,
-//                     radial-gradient(circle at left top, transparent 10px, #EFEFF4 0) bottom left /60px 90px no-repeat,
-//                     radial-gradient(circle at right top, transparent 10px, #EFEFF4 0) bottom right /60px 90px no-repeat;
-//    filter: drop-shadow(3rpx 3rpx 3rpx rgba(0,0,0,.3));
-// }
-
 </style>
