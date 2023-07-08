@@ -1,7 +1,11 @@
 <template>
   <div class="wrapper">
     <!-- 选择地址 -->
-    <div class="address-box" @click="clickToAddress()">
+    <div
+      class="address-box"
+      @click="clickToAddress()"
+      v-if="shippingText == 'LOGISTICS'"
+    >
       <div class="user-box flex">
         <div class="flex-8">
           <div v-if="!address.id">请选择地址</div>
@@ -52,13 +56,10 @@
                   {{ storeAddress.address }}
                 </div>
                 <!-- 联系手机号 -->
-                <div>
-                </div>
+                <div></div>
               </div>
-              </div>
-            <div v-else>
-              请选择自提点
             </div>
+            <div v-else>请选择自提点</div>
           </div>
           <u-icon name="arrow-right" style="color: #bababa"></u-icon>
         </div>
@@ -66,7 +67,6 @@
         <div class="bar"></div>
       </div>
     </div>
-
 
     <!-- 开团信息 -->
     <view class="group-box" v-if="isAssemble">
@@ -85,7 +85,7 @@
             class="head-img"
             width="81rpx"
             height="81rpx"
-            :src="masterWay.face || '/static/missing-face.png'"
+            :src="masterWay.face || userImage"
           ></u-image>
           <view class="btn-one">团长</view>
         </view>
@@ -110,7 +110,7 @@
             v-else
             width="81rpx"
             height="81rpx"
-            :src="endWay.face || '/static/missing-face.png'"
+            :src="endWay.face || userImage"
           ></u-image>
 
           <view class="wait">{{ endWay.nickname || "等待参团" }}</view>
@@ -174,13 +174,17 @@
             <p class="goods-prices">
               <span>￥</span>
               <span class="goods-price">{{
-                formatPrice(val.goodsSku.price)[0]
+                $options.filters.goodsFormatPrice(val.purchasePrice)[0]
               }}</span>
-              <span>.{{ formatPrice(val.goodsSku.price)[1] }}</span>
+              <span
+                >.{{
+                  $options.filters.goodsFormatPrice(val.purchasePrice)[1]
+                }}</span
+              >
             </p>
           </div>
         </div>
-        <!-- <u-row>
+        <u-row>
           <u-col :offset="0" :span="4">发票信息</u-col>
           <u-col
             :span="8"
@@ -194,7 +198,7 @@
             >
             <span v-else>不开发票</span>
           </u-col>
-        </u-row> -->
+        </u-row>
         <u-row>
           <u-col
             v-if="orderMessage.cartTypeEnum != 'VIRTUAL'"
@@ -237,7 +241,12 @@
       @callbackInvoice="callbackInvoice"
       v-if="invoiceFlag"
     />
-    <u-select v-model="shippingFlag" :list="shippingMethod"></u-select>
+    <u-select
+      @confirm="confirmDistribution"
+      v-model="shippingFlag"
+      v-if="shippingMethod.length != 0"
+      :list="shippingMethod"
+    ></u-select>
 
     <div class="box box5" v-if="orderMessage.priceDetailDTO">
       <div>
@@ -252,19 +261,33 @@
       </div>
       <div>
         <u-row v-if="shippingText == 'LOGISTICS'">
-          <u-col v-if="orderMessage.cartTypeEnum != 'VIRTUAL'" :span="7">运费</u-col>
-          <u-col v-if="orderMessage.cartTypeEnum != 'VIRTUAL'" :span="5" class="tr tipsColor" textAlign="right">
-            <span v-if="orderMessage.priceDetailDTO.freightPrice == 0">包邮</span>
-            <span v-else>￥{{
+          <u-col v-if="orderMessage.cartTypeEnum != 'VIRTUAL'" :span="7"
+            >运费</u-col
+          >
+          <u-col
+            v-if="orderMessage.cartTypeEnum != 'VIRTUAL'"
+            :span="5"
+            class="tr tipsColor"
+            textAlign="right"
+          >
+            <span v-if="orderMessage.priceDetailDTO.freightPrice == 0"
+              >包邮</span
+            >
+            <span v-else
+              >￥{{
                 orderMessage.priceDetailDTO.freightPrice | unitPrice
               }}</span
             >
           </u-col>
         </u-row>
       </div>
-      <u-row>
+      <u-row
+        v-if="
+          orderMessage.priceDetailDTO.goodsPrice != 0 &&
+          orderMessage.priceDetailDTO.goodsPrice != null
+        "
+      >
         <u-col :offset="0" :span="9" @click="GET_Discount()">优惠券</u-col>
-
         <u-col
           :span="3"
           v-if="
@@ -294,8 +317,8 @@
           >
             <span class="main-color">
               -￥{{ orderMessage.priceDetailDTO.couponPrice | unitPrice }}</span
-            ></u-col
-          >
+            >
+          </u-col>
           <u-col :span="3" textAlign="right" v-else>0.00</u-col>
         </u-row>
       </div>
@@ -332,10 +355,16 @@
         <div v-if="!orderMessage.priceDetailDTO.payPoint" class="number">
           <span>¥</span>
           <span class="price">{{
-            formatPrice(orderMessage.priceDetailDTO.flowPrice)[0]
+            $options.filters.goodsFormatPrice(
+              orderMessage.priceDetailDTO.flowPrice
+            )[0]
           }}</span>
           <span
-            >.{{ formatPrice(orderMessage.priceDetailDTO.flowPrice)[1] }}
+            >.{{
+              $options.filters.goodsFormatPrice(
+                orderMessage.priceDetailDTO.flowPrice
+              )[1]
+            }}
           </span>
         </div>
         <span v-else class="number"
@@ -361,9 +390,9 @@ import * as API_Trade from "@/api/trade";
 import * as API_Address from "@/api/address";
 import * as API_Order from "@/api/order";
 import invoices from "@/pages/order/invoice/setInvoice";
-
+import { mapState } from "vuex";
 import LiLiWXPay from "@/js_sdk/lili-pay/wx-pay.js";
-
+import configs from "@/config/config";
 export default {
   onLoad: function (val) {
     this.routerVal = val;
@@ -372,20 +401,27 @@ export default {
     invoices,
   },
 
-  watch: {},
   data() {
     return {
+      configs,
+      userImage: configs.defaultUserPhoto,
       invoiceFlag: false, //开票开关
       shippingText: "LOGISTICS",
       shippingFlag: false,
-      shippingMethod: [
+      shippingMethod: [],
+      shippingWay: [
         {
           value: "LOGISTICS",
           label: "物流",
         },
+        {
+          value: "SELF_PICK_UP",
+          label: "自提",
+        },
       ],
       isAssemble: false, //是否拼团
-      couponNums: "", //结算页面优惠券数量
+      // 判断是否填写过备注
+      remarkFlag: false,
       selectAddressId: "",
       routerVal: "",
       params: {},
@@ -393,6 +429,7 @@ export default {
       couponList: "",
       // 已选地址
       address: "",
+      shopAddress: "",
       // 发票信息
       receiptList: "",
       // 店铺信息
@@ -400,13 +437,28 @@ export default {
       data: "",
       // 存储备注
       remarkVal: [],
+      remarkVal1: "",
       detail: "", //返回的所有数据
       endWay: "", //最后一个参团人
       masterWay: "", //团长信息
       pintuanFlage: true, //是开团还是拼团
       notSupportFreight: [], //不支持运费
       notSupportFreightGoodsList: ["以下商品超出配送范围："],
+      storeAddress: "",
     };
+  },
+  watch: {
+    // 监听备注 并在 vuex 中存储
+    remarkVal: {
+      handler(val) {
+        this.$store.commit("setRemark", val);
+      },
+      immediate: true,
+      deep: true,
+    },
+  },
+  computed: {
+    ...mapState(["remark"]),
   },
   filters: {
     /**
@@ -438,7 +490,7 @@ export default {
           item.route == "pages/tabbar/cart/cartList" ||
           item.route.indexOf("pages/product/goods") != -1
         ) {
-          uni.redirectTo({
+          uni.navigateTo({
             url: item.route,
           });
         }
@@ -455,12 +507,19 @@ export default {
     }
   },
 
-  onShow() {
+  async onShow() {
+    // 判断是否存在写过备注信息的商品
+    if (this.remark && this.remark.length > 0) {
+      this.remarkFlag = true;
+    }
     uni.showLoading({
       mask: true,
     });
-    this.getOrderList();
-    uni.hideLoading();
+    await this.getOrderList();
+    await this.getDistribution();
+    if (this.$store.state.isShowToast) {
+      uni.hideLoading();
+    }
     if (this.routerVal.way == "PINTUAN") {
       this.isAssemble = true;
       this.routerVal.parentOrder = JSON.parse(
@@ -472,13 +531,6 @@ export default {
   mounted() {},
 
   methods: {
-    // 格式化金钱  1999 --> [1999,00]
-    formatPrice(val) {
-      if (typeof val == "undefined") {
-        return val;
-      }
-      return Number(val).toFixed(2).split(".");
-    },
     //发票回调 选择发票之后刷新购物车
     async callbackInvoice(val) {
       this.invoiceFlag = false;
@@ -510,6 +562,11 @@ export default {
         }&parentOrder=${encodeURIComponent(
           JSON.stringify(this.routerVal.parentOrder)
         )}`
+      );
+    },
+    clickToStoreAddress() {
+      this.navigateTo(
+        `/pages/mine/address/storeAddress?from=cart&way=${this.routerVal.way}&storeId=${this.remarkVal[0].storeId}`
       );
     },
 
@@ -585,14 +642,26 @@ export default {
     createTradeFun() {
       // 防抖
       this.$u.throttle(() => {
-        if (!this.address.id) {
-          uni.showToast({
-            title: "请选择地址",
-            duration: 2000,
-            icon: "none",
-          });
-          return false;
+        if (this.shippingText === "SELF_PICK_UP") {
+          if (!this.storeAddress.id) {
+            uni.showToast({
+              title: "请选择提货点",
+              duration: 2000,
+              icon: "none",
+            });
+            return false;
+          }
+        } else if (this.shippingText === "LOGISTICS") {
+          if (!this.address.id) {
+            uni.showToast({
+              title: "请选择地址",
+              duration: 2000,
+              icon: "none",
+            });
+            return false;
+          }
         }
+
         //  创建订单
         let client;
         // #ifdef H5
@@ -628,7 +697,7 @@ export default {
             });
             // 如果当前价格为0跳转到订单列表
             if (this.orderMessage.priceDetailDTO.billPrice == 0) {
-              uni.redirectTo({
+              uni.navigateTo({
                 url: "/pages/order/myOrder?status=0",
               });
             } else {
@@ -677,9 +746,42 @@ export default {
         }
       });
     },
+    // 获取配送列表
+    async getDistribution() {
+      let shopRes = await API_Trade.shippingMethodList({
+        way: this.routerVal.way,
+      });
+      let shopList;
+      if (shopRes.data.success) {
+        shopList = shopRes.data.result;
+        let way = [];
+        console.log(shopList);
+        this.shippingWay.forEach((item) => {
+          shopList.forEach((child) => {
+            if (item.value == child) {
+              way.push(item);
+            }
+          });
+        });
+        this.shippingMethod = way;
+      }
+    },
+
+    // 选择配送
+    async confirmDistribution(val) {
+      let res = await API_Trade.setShipMethod({
+        shippingMethod: val[0].value,
+        way: this.routerVal.way,
+      });
+
+      this.shippingText = val[0].value;
+      if (res.data.success) {
+        this.getOrderList();
+      }
+    },
 
     // 获取结算参数
-    getOrderList() {
+    async getOrderList() {
       this.notSupportFreight = [];
       // 获取结算参数
       API_Trade.getCheckoutParams(this.routerVal.way).then((res) => {
@@ -692,16 +794,26 @@ export default {
           });
         }
         if (res.data.result.skuList.length <= 0) {
-          uni.redirectTo({
+          uni.navigateTo({
             url: "/pages/order/myOrder?status=0",
           });
         }
+
+        let repeatData;
         res.data.result.cartList.forEach((item, index) => {
-          this.remarkVal[index] = {
-            remark: item.remark,
+          // 如果已经写过备注信息的话赋值
+          repeatData = {
+            remark: this.remarkFlag
+              ? this.remark[index].storeId == item.storeId
+                ? this.remark[index].remark
+                : item.remark
+              : item.remark,
             storeId: item.storeId,
           };
+
+          this.$set(this.remarkVal, index, repeatData);
         });
+
         this.orderMessage = res.data.result;
         /**
          * 为了避免路径传值在h5中超出限制问题
@@ -718,7 +830,10 @@ export default {
           res.data.result.memberAddress.consigneeAddressPath =
             res.data.result.memberAddress.consigneeAddressPath.split(",");
         }
-
+        if (res.data.result.storeAddress) {
+          this.storeAddress = res.data.result.storeAddress;
+          console.log("storeAddress", this.storeAddress);
+        }
         if (
           res.data.result.notSupportFreight &&
           res.data.result.notSupportFreight.length != 0
@@ -747,24 +862,29 @@ page {
 }
 
 .main-color {
+  color: $main-color;
   font-weight: bold;
 }
+
 .uinput {
   /deep/ input {
     text-align: right;
   }
 }
+
 .promotionNotice {
   font-size: 24rpx;
   margin: 20rpx 0;
   color: $aider-light-color;
 }
+
 .nums {
   flex: 2;
   color: $light-color;
 
   text-align: center;
 }
+
 .wait {
   font-size: 22rpx;
   font-family: PingFang SC, PingFang SC-Regular;
@@ -780,6 +900,7 @@ page {
   width: 143rpx;
   border-bottom: 2px dotted #999;
 }
+
 .tabbar-left {
   margin-left: 32rpx;
 }
@@ -832,6 +953,7 @@ page {
   align-items: center;
   justify-content: center;
 }
+
 .tr {
   text-align: right;
 }
@@ -854,6 +976,7 @@ page {
 .box2 {
   margin-top: 20rpx;
 }
+
 .notSupportFreight {
   position: fixed;
 
@@ -873,6 +996,7 @@ page {
     margin: 0 32rpx;
   }
 }
+
 /deep/ .u-notice-bar-wrap {
   width: 100% !important;
 }
@@ -950,6 +1074,7 @@ page {
   color: $main-color;
   font-size: 26rpx;
   font-weight: bold;
+
   > span {
     font-size: 36rpx;
   }
@@ -960,6 +1085,7 @@ page {
   color: $main-color;
   font-size: 28rpx;
   font-weight: bold;
+
   > .goods-price {
     font-size: 38rpx;
     padding: 0 2rpx;
@@ -1001,6 +1127,7 @@ page {
   text-align: left;
   overflow: hidden;
 }
+
 .default {
   background: $main-color;
   font-size: 24rpx;
@@ -1009,6 +1136,7 @@ page {
   color: #fff;
   margin-right: 20rpx;
 }
+
 .address-box {
   border-radius: 40rpx;
   border-top-left-radius: 0 !important;
@@ -1023,9 +1151,11 @@ page {
   font-weight: normal;
   letter-spacing: 1rpx;
 }
+
 .user-box {
   padding: 32rpx;
 }
+
 .user-address-detail {
   color: #333;
   font-size: 38rpx;
@@ -1033,13 +1163,16 @@ page {
   margin: 20rpx 0;
   letter-spacing: 1rpx;
 }
+
 .mobile {
   margin-left: 20rpx;
 }
+
 .price {
   font-size: 50rpx !important;
   margin: 0 2rpx;
 }
+
 .goods-detail {
   display: flex;
   flex-direction: column;
@@ -1047,12 +1180,14 @@ page {
   justify-content: center;
   flex: 8;
   margin-left: 20rpx !important;
+
   > p {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 }
+
 .goods-item {
   margin: 20rpx 0;
 }

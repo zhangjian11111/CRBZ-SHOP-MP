@@ -45,20 +45,14 @@
         </div>
         <!-- 店铺简介 -->
         <div class="store-desc wes-2">
-          {{ storeInfo.storeDesc }}
+          {{ storeInfo.storeDesc || '' }}
         </div>
 
         <!-- 联系客服 -->
-        <!-- <div class="kefu" @click="talk">
+        <div class="kefu" @click="talk">
           <u-icon name="kefu-ermai"></u-icon>
           联系客服
-        </div> -->
-		<!-- <div class="kefu">
-		  <u-icon name="kefu-ermai"></u-icon>
-		</div> -->
-		<div class="kefubutton">
-			<button open-type="contact" style="font-size: 12px;"><u-icon name="kefu-ermai"></u-icon> 联系客服</button>
-		</div>
+        </div>
       </div>
       <!-- 优惠券 -->
       <scroll-view
@@ -123,7 +117,7 @@
           >
             <div class="navbar-right"></div>
 
-            <search style="width: 100%" :res="item.options" :storeId = "storeId"/>
+            <search style="width: 100%" :res="item.options" :storeId = "storeId"/>         
           </u-navbar>
           <carousel v-if="item.type == 'carousel'" :res="item.options" />
           <titleLayout v-if="item.type == 'title'" :res="item.options" />
@@ -187,8 +181,8 @@ import { getStoreBaseInfo, getStoreCategory } from "@/api/store.js";
 import {
   receiveCoupons,
   deleteStoreCollection,
-  collectionGoods,
-  getGoodsIsCollect,
+  collectionStore,
+  getStoreIsCollect,
 } from "@/api/members.js";
 import config from "@/config/config";
 
@@ -380,7 +374,7 @@ export default {
     },
     /**是否收藏店铺 */
     async enableGoodsIsCollect() {
-      let res = await getGoodsIsCollect("STORE", this.storeId);
+      let res = await getStoreIsCollect("STORE", this.storeId);
       if (res.data.success) {
         this.isCollection = res.data.result;
       }
@@ -426,7 +420,7 @@ export default {
           this.getGoodsData();
           // 店铺分类
           this.getCategoryData();
-
+          
           this.basePageData = true;
         }
       } else {
@@ -440,7 +434,7 @@ export default {
     async getGoodsData() {
       let res = await getGoodsList(this.goodsParams);
       if (res.data.success) {
-        this.goodsList.push(...res.data.result.content);
+        this.goodsList.push(...res.data.result.records);
       }
     },
 
@@ -453,14 +447,7 @@ export default {
       }
     },
 
-    /**
-     * 跳转到商品详情
-     */
-    navigateToGoodsDetail(val) {
-      uni.navigateTo({
-        url: `/pages/product/goods?id=${val.content.id}&goodsId=${val.content.goodsId}`,
-      });
-    },
+  
 
     /**
      *  是否收藏
@@ -478,7 +465,7 @@ export default {
           }
         });
       } else {
-        collectionGoods("STORE", this.storeId).then((res) => {
+        collectionStore(this.storeId).then((res) => {
           if (res.data.success) {
             this.isCollection = true;
             uni.showToast({

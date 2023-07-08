@@ -147,9 +147,9 @@ export function getCheckoutParams(way) {
  * 设置收货地址ID
  * @param addressId
  */
-export function setAddressId(addressId,way,lon,lat) {
+export function setAddressId(addressId,way) {
   return http.request({
-    url: `/trade/carts/shippingAddress?shippingAddressId=${addressId}&way=${way}&lon=${lon}&lat=${lat}`,
+    url: `/trade/carts/shippingAddress?shippingAddressId=${addressId}&way=${way}`,
     method: Method.GET,
     needToken: true,
   

@@ -157,6 +157,12 @@
           }}</view>
         </view>
         <view class="order-info-view">
+          <view class="title">订单备注：</view>
+          <view class="value">{{
+              order.remark
+          }}</view>
+        </view>
+        <view class="order-info-view">
           <view class="title">支付状态：</view>
           <view class="value">
             {{
@@ -355,7 +361,7 @@ export default {
         if (this.order.deliveryMethod === 'LOGISTICS') {
           this.loadLogistics(sn)
         }
-        uni.hideLoading();
+         if (this.$store.state.isShowToast){ uni.hideLoading() };
       });
 
     },
@@ -407,7 +413,7 @@ export default {
       });
       setTimeout(() => {
         this.navList[this.tabCurrentIndex].orderList.splice(index, 1);
-        uni.hideLoading();
+         if (this.$store.state.isShowToast){ uni.hideLoading() };
       }, 600);
     },
     //取消订单
@@ -421,7 +427,7 @@ export default {
         if (res.data.result.length >= 1) {
           this.cancelList = res.data.result;
         }
-        uni.hideLoading();
+         if (this.$store.state.isShowToast){ uni.hideLoading() };
       });
 
       this.cancelShow = true;
@@ -752,5 +758,13 @@ page,
 }
 .address-line-height{
   line-height: 1.75;
+}
+.seller-name{
+  >.name{
+    flex:10 !important;
+  }
+  >.status{
+    flex:2;
+  }
 }
 </style>

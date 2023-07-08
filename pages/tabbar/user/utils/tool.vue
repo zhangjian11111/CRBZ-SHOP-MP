@@ -37,10 +37,10 @@
 			  <view>我的积分</view>
 			</view>
 			
-			<!-- <view class="interact-item" @click="distribution">
+			<view class="interact-item" @click="distribution">
 			  <image src="/static/mine/distribution.png" mode=""></image>
 			  <view>我的分销</view>
-			</view> -->
+			</view>
 			
 			
 			
@@ -86,10 +86,10 @@
 		  <view>意见反馈</view>
 		</view>
 		
-		<!-- <view class="interact-item" @click="navigateTo('/pages/mine/set/editionIntro')">
+		<view class="interact-item" @click="navigateTo('/pages/mine/set/editionIntro')">
 		  <image src="/static/mine/pointgift.png" mode=""></image>
 		  <view>关于</view>
-		</view> -->
+		</view>
 		
 		
 		<view class="interact-item" @click="navigateTo('/pages/mine/set/setUp')">

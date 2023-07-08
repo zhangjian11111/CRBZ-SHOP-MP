@@ -191,7 +191,7 @@
     "mp-weixin" : {
         /* 小程序特有相关 */
         "usingComponents" : true,
-        "appid" : "wxb660c158f0f9c8ac",
+        "appid" : "wxcc79af48cf4c5d4a",
         "optimization" : {
             "subPackages" : true
         },

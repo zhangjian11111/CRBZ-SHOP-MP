@@ -67,7 +67,7 @@
               <view class="content">
                 <view class="title-1">{{ coupon.title }}</view>
                 <view class="title-2"
-                  >使用平台：{{
+                  >使用范围：{{
                     coupon.scopeType == "ALL" && coupon.storeId == "0"
                       ? "全平台"
                       : coupon.scopeType == "PORTION_CATEGORY"
@@ -217,7 +217,7 @@ export default {
             this.navList[index].dataList.push(...data);
           }
         }
-        uni.hideLoading();
+         if (this.$store.state.isShowToast){ uni.hideLoading() };
       });
     },
 

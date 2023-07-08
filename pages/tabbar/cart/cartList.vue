@@ -1,8 +1,8 @@
 <template>
   <div class="wrapper">
     <!-- 空白页-->
-    <view v-if="cartDetail.cartList == '' || cartDetail.cartList == [] || !cartDetail" class="empty">
-      <image src="https://crbzshop.oss-cn-hangzhou.aliyuncs.com/%E7%B4%A0%E6%9D%90/wxminiapppic/%E8%B4%AD%E7%89%A9%E8%BD%A6.png" mode="aspectFit"></image>
+    <view v-if="!loading && (cartDetail.cartList == '' || cartDetail.cartList == [] || !cartDetail)" class="empty">
+      <image src="/static/emptyCart.png" mode="aspectFit"></image>
       <view class="empty-tips">
         空空如也
         <navigator class="navigator" url="/pages/tabbar/home/index" open-type="switchTab">随便逛逛></navigator>
@@ -26,7 +26,7 @@
                 @change="checkboxChangeDP(item)"></u-checkbox>
               <!-- #endif -->
             </u-checkbox-group>
-            <span class="store-name store-line-desc" @click.stop="navigateToStore(item)">{{
+            <span class="store-name wes store-line-desc" @click.stop="navigateToStore(item)">{{
               item.storeName 
             }}</span>
             <u-icon @click="navigateToStore(item)"  size="24" style="margin-left:10rpx;"  name="arrow-right"></u-icon>
@@ -84,15 +84,7 @@
                   </div>
                 </view>
                 <view>
-                  <!-- #ifndef MP-WEIXIN -->
-                  <u-number-box class="uNumber" :min="1" input-width="70" input-height="40" size="20"
-                    v-model="skuItem.num" @change="numChange(skuItem)"></u-number-box>
-                  <!-- #endif -->
-                  <!-- #ifdef MP-WEIXIN -->
-                  <u-number-box class="uNumber" :min="1" input-width="70" input-height="40" size="20"
-                    :value="skuItem.num" @plus="numChange(skuItem, '1')" @change="numChange_WEIXIN" :skuItem="skuItem"
-                    @minus="numChange(skuItem, '0')"></u-number-box>
-                  <!-- #endif -->
+                  <uni-number-box class="uNumber" :min="1" :max="999"  @change="numChange(skuItem)"	 v-model="skuItem.num"></uni-number-box>
                 </view>
                 <!-- 如果当有促销并且促销是 限时抢购 -->
                 <!-- promotions -->
@@ -181,9 +173,12 @@
 <script>
 import * as API_Trade from "@/api/trade";
 import { debounce } from "@/utils/tools.js";
+import uniNumberBox from '@/components/uni-number-box'
 export default {
+  components:{uniNumberBox}, // 数量加减组件
   data() {
     return {
+      loading:false,
       lightColor: this.$lightColor,
       discountDetailsFlag: false, //优惠明细开关
       // 商品栏右侧滑动按钮
@@ -360,27 +355,9 @@ export default {
     },
 
     /**
-     * 点击步进器微信回调
-     */
-    numChange_WEIXIN(callback) {
-      this.WEIXIN_num = callback.value;
-      this.numChange(callback.data, "3");
-    },
-
-    /**
      * 点击步进器回调
      */
-     numChange: debounce(function (val, nums) {   
-        // 需要防抖的内容
-      // #ifdef MP-WEIXIN
-      if (nums && nums == "1") {
-        val.num++;
-      } else if (nums && nums == "0") {
-        val.num--;
-      } else if (nums && nums == "3") {
-        val.num = this.WEIXIN_num;
-      }
-      // #endif
+     numChange: debounce(function (val) {   
       this.updateSkuNumFun(val.goodsSku.id, val.num);
     }, 1000),
     /**
@@ -508,6 +485,7 @@ export default {
         });
         API_Trade.getCarts()
           .then((result) => {
+            this.loading = false;
             uni.stopPullDownRefresh();
             if (result.data.success) {
               this.cartDetail = result.data.result;
@@ -541,10 +519,10 @@ export default {
               uni.stopPullDownRefresh();
             }
           })
-          .catch((err) => {});
-        uni.hideLoading();
+          .catch((err) => {this.loading = false;});
+         if (this.$store.state.isShowToast){ uni.hideLoading() };
       } else {
-        uni.hideLoading();
+         if (this.$store.state.isShowToast){ uni.hideLoading() };
       }
     },
 
@@ -641,7 +619,7 @@ page {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  background: #00b2e6;
+  background: #fff;
 
   image {
     width: 240rpx;
@@ -740,6 +718,7 @@ page {
   display: flex;
   // #endif
   overflow: hidden;
+  flex:10;
 }
 
 .goods-config {
@@ -758,6 +737,9 @@ page {
 }
 
 .right-col {
+  flex:2;
+  text-align: center;
+  width: 100rpx;
   color: $light-color;
   font-size: 26rpx;
 

@@ -81,13 +81,12 @@ export default {
   onHide() {},
   methods: {
     async selectAddressData(val) {
-      await API_Trade.setAddressId(val.id, this.routerVal.way,val.lon,val.lat);
+      await API_Trade.setAddressId(val.id, this.routerVal.way);
 
       uni.navigateBack({
         delta: 1,
       });
     },
-	
     //获取地址列表
     getAddressList() {
       uni.showLoading();
@@ -102,7 +101,7 @@ export default {
         this.addressList = res.data.result.records;
         console.log(this.addressList);
 
-        uni.hideLoading();
+         if (this.$store.state.isShowToast){ uni.hideLoading() };
       });
     },
     //删除地址

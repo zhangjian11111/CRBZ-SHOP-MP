@@ -21,7 +21,7 @@
       <u-cell-item title="意见反馈" @click="navigateTo('/pages/mine/set/feedBack')"></u-cell-item>
       <!-- #ifndef H5 -->
       <!-- #endif -->
-      <!-- <u-cell-item :title="`关于${config.name}`" @click="navigateTo('/pages/mine/set/editionIntro')"></u-cell-item> -->
+      <u-cell-item :title="`关于${config.name}`" @click="navigateTo('/pages/mine/set/editionIntro')"></u-cell-item>
     </u-cell-group>
     <view class="submit" v-if="userInfo.id" @click="quiteLoginOut">退出登录</view>
   </view>

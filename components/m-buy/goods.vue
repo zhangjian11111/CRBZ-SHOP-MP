@@ -47,16 +47,16 @@
 							</div>
 						</view>
 						<view class="goods-check-skus">
-              已选❤️：
+							已选
 							<span class="goods-check-skus-name">
-								-️{{ selectName }}-
-								,️<span style="font-size: 18px;color: blue;">{{ num }} </span>份
+								{{ selectName }}
+								<span>，{{ num }}个</span>
 							</span>
 						</view>
 						<view class="goods-check-skus">
-              库存🚚：
+							库存
 							<span class="goods-check-skus-name">
-								<span>🎯{{ goodsDetail.quantity }}🎯</span>
+								<span>{{ goodsDetail.quantity }}</span>
 							</span>
 						</view>
 					</view>
@@ -96,8 +96,7 @@
 					<!-- 数量 -->
 					<view class="goods-skus-number flex flex-a-c flex-j-sb">
 						<view class="view-class-title">数量</view>
-            <u-number-box class="view-class-input" v-model="num" type="number" @blur="numCheck()" ></u-number-box>
-<!--						<u-input class="view-class-input" input-align="right" v-model="num" type="number" @blur="numCheck()" />-->
+						<uni-number-box class="uNumber" :min="1" :max="999"   v-model="num"></uni-number-box>
 					</view>
 				</scroll-view>
 				<!-- 按钮 -->
@@ -112,8 +111,11 @@
 <script>
 import * as API_trade from '@/api/trade.js';
 import setup from './popup';
-
+import uniNumberBox from '@/components/uni-number-box'
 export default {
+	components: {
+		uniNumberBox
+	},
 	data() {
 		return {
 			setup,
@@ -182,10 +184,10 @@ export default {
 	},
 	watch: {
 		num(val) {
-
+			
 			val == 0 ? this.num = 1 : ''
 			if (val) {
-
+				
 				//超过库存后修改回库存
 				if (val > this.goodsDetail.quantity) {
 					this.$nextTick(function() {
@@ -226,7 +228,7 @@ export default {
 		closeMask() {
 			this.$emit('closeBuy', false);
 		},
-
+		
 		/**点击规格 */
 		handleClickSpec(val, index, specValue) {
 			this.currentSelected[index] = specValue.value;

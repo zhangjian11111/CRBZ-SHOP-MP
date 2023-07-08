@@ -4,25 +4,25 @@
  */
 // 开发环境
 const dev = {
-	// im: "https://yqswgjz.mynatapp.cc",
-	// common: "https://yqswgjz.mynatapp.cc",
-	// buyer: "https://yqswgjz.mynatapp.cc",
-  im: "http://127.0.0.1:9111",
-  common: "http://127.0.0.1:9111",
-  buyer: "http://127.0.0.1:9111",
+	im: "https://yqswgjz.mynatapp.cc",
+	common: "https://yqswgjz.mynatapp.cc",
+	buyer: "https://yqswgjz.mynatapp.cc",
+  // im: "http://127.0.0.1:9111",
+  // common: "http://127.0.0.1:9111",
+  // buyer: "http://127.0.0.1:9111",
 };
 // 生产环境
 const prod = {
-  im: "https://yqswgjz.mynatapp.cc",
-  common: "https://yqswgjz.mynatapp.cc",
-  buyer: "https://yqswgjz.mynatapp.cc",
+  im: "http://www.qgxbm.com",
+  common: "http://www.qgxbm.com",
+  buyer: "http://www.qgxbm.com",
   // im: "http://127.0.0.1:9111",
   // common: "http://127.0.0.1:9111",
   // buyer: "http://127.0.0.1:9111",
 };
 
 //默认生产环境
-let api = dev;
+let api = prod;
 //如果是开发环境
 if (process.env.NODE_ENV == "development") {
   api = dev;
@@ -31,8 +31,8 @@ if (process.env.NODE_ENV == "development") {
 }
 //微信小程序，app的打包方式建议为生产环境，所以这块直接条件编译赋值
 // #ifdef MP-WEIXIN || APP-PLUS
-api = prod;
-// api = dev;
+// api = prod;
+api = dev;
 // #endif
 
 api.buyer += "/buyer";

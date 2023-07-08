@@ -3,9 +3,9 @@
     <div class="uForm">
       <u-form :border-bottom="false" :model="form" ref="uForm" :error-type="['toast']" :rule="rules">
 				<!-- #ifndef H5 -->
-        <!-- <view class="selectAddress" @click="clickUniMap">
+        <view class="selectAddress" @click="clickUniMap">
           选择收货地址
-        </view> -->
+        </view>
 				<!-- #endif -->
         <u-form-item class="border" label="收货人" label-width="130" prop="name">
           <u-input v-model="form.name" clearable placeholder="请输入收货人姓名" />
@@ -121,6 +121,7 @@ export default {
 
     // 选择地址后数据的回调
     callBackAddress(val) {
+      console.log(val)
       uni.showLoading({
         title: "加载中",
       });
@@ -133,10 +134,7 @@ export default {
         this.form.consigneeAddressPath = val.data.result.name; //地址名称， '，'分割
         this.form.lat = val.latitude; //纬度
         this.form.lon = val.longitude; //经度
-		console.log(this.form.detail);
-		console.log(this.form.lat);
-		console.log(this.form.lon);
-        uni.hideLoading();
+         uni.hideLoading();
       }
 
       this.mapFlag = !this.mapFlag; //关闭地图
@@ -279,10 +277,10 @@ export default {
         params.___path = params.consigneeAddressPath;
         this.$set(this, "form", params);
 
-        uni.hideLoading();
+         if (this.$store.state.isShowToast){ uni.hideLoading() };
       });
     }
-    uni.hideLoading();
+     uni.hideLoading();
   },
   // 初始化rules必须要在onReady生命周期，因为onLoad生命周期组件可能尚未创建完毕
   onReady() {

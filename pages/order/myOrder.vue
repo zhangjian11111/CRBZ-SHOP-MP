@@ -40,8 +40,8 @@
           >
             <!-- 店铺名称 -->
             <view class="seller-info u-flex u-row-between">
-              <view class="seller-name" @click="navigateToStore(order)">
-                <view class="name">{{ order.storeName }}</view>
+              <view class="seller-name wes" @click="navigateToStore(order)">
+                <view class="name wes">{{ order.storeName }}</view>
               </view>
               <view class="order-sn">{{
                 order.orderStatus | orderStatusList
@@ -90,19 +90,19 @@
                   <div v-else>应付金额:</div>
                   <div class="price">￥{{ order.flowPrice | unitPrice }}</div>
                 </view>
-                <view>
+                <view class="goods-btn flex flex-a-c">
                   <!-- 全部 -->
-                  <u-button
+                  <view
                     ripple
                     class="pay-btn"
                     shape="circle"
                     size="mini"
                     v-if="order.allowOperationVO.pay"
                     @click="waitPay(order)"
-                    >立即付款</u-button
+                    >立即付款</view
                   >
                   <!-- 取消订单 -->
-                  <u-button
+                  <view
                     ripple
                     class="cancel-btn"
                     shape="circle"
@@ -111,9 +111,9 @@
                     @click="onCancel(order.sn)"
                   >
                     取消订单
-                  </u-button>
+                  </view>
                   <!-- 等待收货 -->
-                  <u-button
+                  <view
                     ripple
                     shape="circle"
                     class="rebuy-btn"
@@ -122,10 +122,9 @@
                     @click="navigateToLogistics(order)"
                   >
                     查看物流
-                  </u-button>
-                  <u-button
+                  </view>
+                  <view
                     ripple
-                    :customStyle="{ background: lightColor, color: '#fff' }"
                     shape="circle"
                     class="pay-btn"
                     size="mini"
@@ -133,17 +132,17 @@
                     @click="onRog(order.sn)"
                   >
                     确认收货
-                  </u-button>
-                  <u-button
+                  </view>
+                  <view
                     ripple
                     shape="circle"
                     class="cancel-btn"
                     size="mini"
-                    v-if="order.groupAfterSaleStatus && order.groupAfterSaleStatus.includes('NOT_APPLIED')"
+                    v-if="order.groupAfterSaleStatus && (order.groupAfterSaleStatus==='NOT_APPLIED'|| order.groupAfterSaleStatus==='PART_AFTER_SALE' )"
                     @click="applyService(order)"
                   >
                     退款/售后
-                  </u-button>
+                  </view>
                   <!-- TODO 后续完善 -->
                   <!-- <u-button ripple shape="circle" class="rebuy-btn" size="mini" v-if="
                       order.orderStatus === 'CANCELLED' ||
@@ -392,7 +391,7 @@ export default {
         if (res.data.result.length >= 1) {
           this.cancelList = res.data.result;
         }
-        uni.hideLoading();
+         if (this.$store.state.isShowToast){ uni.hideLoading() };
       });
     },
 
@@ -473,7 +472,7 @@ export default {
       });
       setTimeout(() => {
         this.navList[this.tabCurrentIndex].orderList.splice(index, 1);
-        uni.hideLoading();
+         if (this.$store.state.isShowToast){ uni.hideLoading() };
       }, 600);
     },
     //取消订单
@@ -493,7 +492,7 @@ export default {
         let list = this.navList[1].orderList;
         let index = list.findIndex((val) => val.id === item.id);
         index !== -1 && list.splice(index, 1);
-        uni.hideLoading();
+         if (this.$store.state.isShowToast){ uni.hideLoading() };
       }, 600);
     },
 
@@ -542,13 +541,13 @@ export default {
      */
     submitCancel() {
       cancelOrder(this.orderSn, { reason: this.reason }).then((res) => {
-        if (res.statusCode == 200) {
+        if (res.data.success) {
           uni.showToast({
             title: "订单已取消",
             duration: 2000,
             icon: "none",
           });
-          this.initData(0);
+          this.initData(this.tabCurrentIndex);
 
           this.cancelShow = false;
         } else {
@@ -689,6 +688,7 @@ page,
     padding: 0 20rpx;
 
     .seller-name {
+      flex:10;
       font-size: 28rpx;
       font-weight: 600;
       display: flex;
@@ -701,6 +701,9 @@ page,
     }
 
     .order-sn {
+      flex:2;
+      width:120rpx;
+      text-align: center;
       color: $aider-light-color;
       font-size: 26rpx;
     }
@@ -758,6 +761,7 @@ page,
       flex: 1;
       .price {
         color: $main-color;
+        
       }
     }
   }
@@ -792,29 +796,33 @@ page,
     text-align: center;
   }
 }
-
-.cancel-btn {
-  color: #999999 !important;
-  border-color: #999999 !important;
+.goods-btn{
+  display: flex;
+}
+.cancel-btn,.pay-btn,.rebuy-btn{
+  text-align: center;
   margin-left: 15rpx;
-  height: 60rpx;
+  font-size: 24rpx;
+  padding: 14rpx 20rpx;
+  border-radius: 100px;
+
+}
+.cancel-btn {
+  color: #333639 !important;
+  background: rgba(46, 51, 56, .05) !important;
 }
 
 .pay-btn {
-  // #ifndef MP-WEIXIN
+
   background-color: $light-color !important;
-  // #endif
+
   color: #ffffff !important;
-  margin-left: 15rpx;
-  height: 60rpx;
 }
 
 .rebuy-btn {
   color: $light-color !important;
   border-color: $light-color !important;
   background-color: #ffffff !important;
-  margin-left: 15rpx;
-  height: 60rpx;
 }
 </style>
 

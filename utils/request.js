@@ -11,7 +11,7 @@ import api from "@/config/api.js";
 
 import uuid from "@/utils/uuid.modified.js";
 import jwt from '@/js_sdk/t-jwt/jwt.js'
-
+import store from "../store";
 
 
 let isNavigateTo = false
@@ -53,12 +53,19 @@ function cleanStorage() {
 let http = new Request();
 
 
-http.setConfig((config) => {
-	// 没有uuid创建
+/**
+ * 创建uuid方法
+ */
+const createUuid = () => {
 	if (!storage.getUuid()) {
 		storage.setUuid(uuid.v1());
+		console.log("uuid", storage.getUuid());
 	}
+}
 
+
+http.setConfig((config) => {
+	createUuid();
 	/* 设置全局配置 */
 	config.baseURL = api.buyer;
 	config.header = {
@@ -105,9 +112,10 @@ http.interceptors.request.use(
 
 
 		}
+		createUuid();
 		config.header = {
 			...config.header,
-			uuid: storage.getUuid() || uuid.v1(),
+			uuid: storage.getUuid()
 		};
 		return config;
 	},
@@ -131,7 +139,7 @@ http.interceptors.response.use(
 			//   cleanStorage();
 			//   isRefreshing = false;
 			// }
-
+			uni.showLoading() ? uni.hideLoading() : ''
 			let token = storage.getAccessToken();
 			if (
 				(token && response.statusCode === 403) ||
@@ -196,6 +204,15 @@ http.interceptors.response.use(
 						title: response.data.message,
 						icon: "none",
 						duration: 1500,
+						success: function () {
+							store.state.isShowToast = true;
+						},
+						fail: function () {
+							store.state.isShowToast = false;
+						},
+						complete: function () {
+							store.state.isShowToast = false;
+						}
 					});
 				}
 			}

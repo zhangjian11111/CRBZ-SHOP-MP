@@ -29,7 +29,7 @@
             {{item.name}}
           </div>
           <div class="live-store">
-            <span class="wes">春日半盏</span>
+            <span class="wes">lilishop</span>
           </div>
           <div class="live-goods-list">
             <div class="live-goods-item">
@@ -95,7 +95,7 @@ export default {
       swiperImg: [
         {
           image:
-            "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/bf12d3e2f9f34169949542e255557dfb.jpg",
+            "https://lilishop-oss.oss-cn-beijing.aliyuncs.com/48d789cb9c864b7b87c1c0f70996c3e8.jpeg",
         },
       ],
     };
@@ -229,13 +229,13 @@ export default {
       let customParams = encodeURIComponent(
         JSON.stringify({ path: "pages/index/index", pid: 1 })
       ); // 开发者在直播间页面路径上携带自定义参数，后续可以在分享卡片链接和跳转至商详页时获取，详见【获取自定义参数】、【直播间到商详页面携带参数】章节（上限600个字符，超过部分会被截断）
-      // uni.navigateTo({
-      //   url:
-      //     "plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=" +
-      //     roomId +
-      //     "&custom_params=" +
-      //     customParams,
-      // });
+      uni.navigateTo({
+        url:
+          "plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=" +
+          roomId +
+          "&custom_params=" +
+          customParams,
+      });
       // #endif
 
       // #ifndef MP-WEIXIN
