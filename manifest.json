@@ -216,21 +216,26 @@
     },
     "h5" : {
         "devServer" : {
-            "disableHostCheck" : true
+            "disableHostCheck" : true,
+            "port" : 9119
         },
         "router" : {
             "mode" : "history",
             "base" : ""
         },
         "sdkConfigs" : {
-            "maps" : {}
+            "maps" : {
+                "qqmap" : {
+                    "key" : "7ATBZ-YPS3L-T45PF-ETTKM-EQJM2-5XF3B"
+                }
+            }
         },
         "optimization" : {
             "treeShaking" : {
                 "enable" : true
             }
         },
-        "title" : "CRBZ-store",
+        "title" : "西部胜海牛肉面",
         "template" : ""
     }
 }

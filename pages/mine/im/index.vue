@@ -24,7 +24,7 @@
                   v-if="item.messageType === 'MESSAGE' && !emojistwo.includes(item.text)">{{ item.text }}</text>
                 <view v-if="item.messageType === 'MESSAGE' && emojistwo.includes(item.text)"
                   v-html="textReplaceEmoji(item.text)"></view>
-                <view v-if="item.messageType == 'GOODS'">
+                <view v-if="item.messageType === 'GOODS'">
                   <view class="goods-card u-flex u-row-between u-p-b-0" style="width:100%;margin: 0 0; ">
                     <view class="image-box" @click="jumpGoodDesc(item)">
                       <image class="image" :src="JSON.parse(item.text)['thumbnail']" mode="widthFix"></image>
@@ -45,8 +45,8 @@
           
                 <view v-if="item.messageType == 'ORDER'" @click="linkTosOrders(item.text)">
                   <view class="order-sn">
-                    <div class="wes">订单号：{{ JSON.parse(item.text)['sn'] }}</div>
-                    <div class='order-item flex' v-if="JSON.parse(item.text).orderItems.length"  v-for='(order,orderIndex) in JSON.parse(item.text).orderItems'>
+                    <div class="wes">订单号：{{ item.text['sn'] }}</div>
+                    <div class='order-item flex' v-if="item.text.orderItems.length"  v-for='(order,orderIndex) in item.text.orderItems'>
                       <u-image  mode="widthFix" width='120rpx' height='120rpx' :src="order.image" />
                        <view class="name-or-time">
                         <div class="wes-2" >{{
@@ -60,7 +60,7 @@
                     </div>
                     <view class="order-list">
                       <view class="order-time">
-                          <text>{{ JSON.parse(item.text)['paymentTime'] }}</text>
+                          <text>{{ item.text['paymentTime'] }}</text>
                         </view>
                     </view>
                   </view>
@@ -106,16 +106,16 @@
                 </view>
                 <view v-if="item.messageType === 'ORDER'">
                   <view class="order-sn">
-                    <text>订单号：{{ JSON.parse(item.text)['sn'] }}</text>
+                    <text>订单号：{{ item.text['sn'] }}</text>
                     <view class="order-list">
                       <img style="height: 120rpx; width: 120rpx; margin-top: 15rpx;"
-                        :src="JSON.parse(item.text)['groupImages']" mode="widthFix" />
+                        :src="item.text['groupImages']" mode="widthFix" />
                       <view class="name-or-time">
                         <text @click="linkTosOrders(item.text)">{{
-                          JSON.parse(item.text)['groupName']
+                          item.text['groupName']
                         }}</text>
                         <view class="order-time">
-                          <text>{{ JSON.parse(item.text)['paymentTime'] }}</text>
+                          <text>{{ item.text['paymentTime'] }}</text>
                         </view>
                       </view>
                     </view>
@@ -441,6 +441,7 @@ export default {
         // 监听收到信息
         uni.onSocketMessage(function (res) {
           res.data = JSON.parse(res.data)
+		  // res.data = res.data
           console.log(res.data.result);
           if (res.data.messageResultType == 'MESSAGE') {
             _this.msgList.push(res.data.result)
@@ -463,6 +464,7 @@ export default {
     //订单详情
     linkTosOrders (val) {
       let order = JSON.parse(val)
+	  // let order = val
       uni.navigateTo({
         url: '/pages/order/orderDetail?sn=' + order.sn,
       });
@@ -575,6 +577,7 @@ export default {
       let type = '';
       await getTalkMessage(this.params).then(res => {
         if (res.data.success) {
+			console.log("消息列表",res.data)
           if (this.msgList.length >= 10) {
             this.msgList.unshift(...res.data.result)
             type = 'up'
@@ -589,7 +592,7 @@ export default {
           })
         }
       })
-      console.log(this.msgList);
+      console.log("这是什么鬼：",this.msgList);
       this.msgGo(type)
     },
     // 上拉加载

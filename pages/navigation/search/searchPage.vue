@@ -688,6 +688,9 @@ export default {
 		 * 执行搜索
 		 */
 		doSearch(keyword) {
+			uni.showLoading({
+				title: '马上就好🤪'
+			})
 			//  用户自行搜索/热门搜索/搜索历史
 			keyword = keyword === false ? this.keyword : keyword;
 
@@ -718,6 +721,7 @@ export default {
 			uni.getStorage({
 				key: 'OldKeys',
 				success: res => {
+					uni.hideLoading();
 					var OldKeys = JSON.parse(res.data);
 					var findIndex = OldKeys.indexOf(keyword);
 					if (findIndex == -1) {
