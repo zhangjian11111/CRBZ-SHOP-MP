@@ -19,11 +19,11 @@
       <u-cell-item title="功能介绍" @click="navigateTo('/pages/mine/set/versionFunctionList')"></u-cell-item>
       <u-cell-item title="检查更新" @click="checkUpdate"></u-cell-item>
       <!--  #endif -->
-	 
-      <u-cell-item title="证照信息" @click="navigateTo('/pages/mine/help/tips?type=LICENSE_INFORMATION')"></u-cell-item>
-      <u-cell-item title="服务协议" @click="navigateTo('/pages/mine/help/tips?type=USER_AGREEMENT')"></u-cell-item>
-      <u-cell-item title="隐私协议" @click="navigateTo('/pages/mine/help/tips?type=PRIVACY_POLICY')"></u-cell-item>
-      <u-cell-item title="关于我们" :border-bottom="false" @click="navigateTo('/pages/mine/help/tips?type=ABOUT')"></u-cell-item>
+
+<!--      <u-cell-item title="证照信息" @click="navigateTo('/pages/mine/help/tips?type=LICENSE_INFORMATION')"></u-cell-item>-->
+<!--      <u-cell-item title="服务协议" @click="navigateTo('/pages/mine/help/tips?type=USER_AGREEMENT')"></u-cell-item>-->
+<!--      <u-cell-item title="隐私协议" @click="navigateTo('/pages/mine/help/tips?type=PRIVACY_POLICY')"></u-cell-item>-->
+<!--      <u-cell-item title="关于我们" :border-bottom="false" @click="navigateTo('/pages/mine/help/tips?type=ABOUT')"></u-cell-item>-->
 
     </u-cell-group>
 
@@ -31,10 +31,12 @@
       <view>{{config.customerServiceMobile ? `客服热线：${config.customerServiceMobile}` :  ``}}</view>
       <view style="margin:20rpx 0 0 0;">{{config.customerServiceEmail ? `客服邮箱：${config.customerServiceEmail}` :  ``}}</view>
 
-      <view>
-        <view style="margin:20rpx 0; color:#003a8c;" @click="navigateTo('/pages/mine/help/tips?type=USER_AGREEMENT')">《{{config.name}}用户协议》</view>
-        <view>CopyRight ©{{config.name}} </view>
-      </view>
+
+    </view>
+
+    <view>
+      <!--        <view style="margin:20rpx 0; color:#003a8c;" @click="navigateTo('/pages/mine/help/tips?type=USER_AGREEMENT')">《{{config.name}}用户协议》</view>-->
+      <view style="margin-top:90%;">CopyRight © 2023 {{config.name}}. 保留所有权利。</view>
     </view>
   </view>
 </template>
@@ -78,8 +80,8 @@ export default {
       };
     });
     // #endif
-	
-	
+
+
 	// #ifdef MP-WEIXIN
 	const accountInfo = wx.getAccountInfoSync();
 	console.log("===========accountInfo==============");
