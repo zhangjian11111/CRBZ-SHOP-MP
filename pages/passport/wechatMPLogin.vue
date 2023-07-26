@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<u-navbar :custom-back="back" title="小程序登录"></u-navbar>
-		<u-modal v-model="phoneAuthPopup" :mask-close-able="true" :title="projectName+'商城'"
+		<u-modal v-model="phoneAuthPopup" :mask-close-able="true" :title="projectName+'店'"
 			:show-confirm-button="false">
 			<div class="tips">
 				为了更好地用户体验，需要您授权手机号
@@ -13,7 +13,7 @@
 		<view class="wx-auth-container">
 			<div class="box">
 				<view class="logo-info">
-					<text class="title">欢迎进入{{ projectName }}</text>
+					<text class="title">{{ projectName }}欢迎您</text>
 				</view>
 				<view class="small-tips">
 					<view>为您提供优质服务,{{ projectName }}需要获取以下信息</view>
@@ -21,7 +21,7 @@
 				</view>
 				<view class="btns">
 					<button type="primary" bindtap="getUserProfile" @click="getUserProfile()"
-						class="btn-auth">使用微信授权</button>
+						class="btn-auth">家人们冲啊🚀</button>
 					<div @click="backToHome" class="btn-callback">暂不登录</div>
 				</view>
 			</div>

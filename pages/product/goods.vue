@@ -51,7 +51,7 @@
         :scroll-top="tabScrollTop" @scroll="pageScroll">
         <view>
           <!-- 轮播图 -->
-          <GoodsSwiper id="main1" :res="imgList" />
+          <GoodsSwiper id="main1" :res="imgList" :video="goodsDetail.goodsVideo" />
 
           <!-- 促销活动条 -->
           <PromotionAssembleLayout v-if="PromotionList" :detail="goodsDetail" :res="PromotionList" />
@@ -442,7 +442,7 @@ export default {
   },
 
   computed: {
-    // udesk IM 
+    // udesk IM
     IM () {
       return this.IMLink + this.storeDetail.merchantEuid;
     },
@@ -554,8 +554,8 @@ export default {
       // 这里请求获取到页面数据  解析数据
 
       let response = await getGoods(id, goodsId);
-      
-      // 判断当前接口返回内容 
+
+      // 判断当前接口返回内容
       if (!response.data.success) {
         // 商品已下架
         if(response.data.code == 11001){
@@ -629,7 +629,7 @@ export default {
       //   url: `/pages/mine/im/index?userId=${this.goodsDetail.storeId}&goodsid=${this.routerVal.goodsId}&skuid=${this.routerVal.id}`
       // });
 
-      // udesk 代码  
+      // udesk 代码
       // if (this.storeDetail.merchantEuid) {
       //   uni.navigateTo({
       //     url: `/pages/tabbar/home/web-view?src=${this.IM}`,
@@ -637,7 +637,7 @@ export default {
       // }
 
 
-      // 客服 云智服代码 
+      // 客服 云智服代码
       // // #ifdef MP-WEIXIN
       // const params = {
       //   storeName: this.storeDetail.storeName,

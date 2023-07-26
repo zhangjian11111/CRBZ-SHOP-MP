@@ -53,10 +53,13 @@
               <div class="user-address">
                 <!-- 自提点地址 -->
                 <div class="user-address-detail wes-2">
-                  {{ storeAddress.address }}
+				  {{ storeAddress.addressName }}
                 </div>
                 <!-- 联系手机号 -->
-                <div></div>
+                <div>
+					<span>{{ storeAddress.address }}</span>
+					<span class="mobile">{{ storeAddress.mobile }}</span>
+				</div>
               </div>
             </div>
             <div v-else>请选择自提点</div>
@@ -205,7 +208,7 @@
             :offset="0"
             :span="9"
             @click="shippingFlag = true"
-            >配送
+            >选择配送方式
           </u-col>
           <u-col
             v-if="orderMessage.cartTypeEnum != 'VIRTUAL'"
@@ -406,18 +409,18 @@ export default {
       configs,
       userImage: configs.defaultUserPhoto,
       invoiceFlag: false, //开票开关
-      shippingText: "LOGISTICS",
+      shippingText: "SELF_PICK_UP",
       shippingFlag: false,
       shippingMethod: [],
       shippingWay: [
         {
-          value: "LOGISTICS",
-          label: "物流",
-        },
-        {
           value: "SELF_PICK_UP",
-          label: "自提",
+          label: "门店自提",
         },
+		{
+		  value: "LOGISTICS",
+		  label: "物流配送",
+		},
       ],
       isAssemble: false, //是否拼团
       // 判断是否填写过备注

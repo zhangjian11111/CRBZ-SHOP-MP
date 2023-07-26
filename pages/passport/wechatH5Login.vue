@@ -4,7 +4,7 @@
     <view class="wx-auth-container">
       <div class="box">
         <view class="logo-info">
-          <text class="title">欢迎进入{{ projectName }}</text>
+          <text class="title">{{ projectName }}欢迎您</text>
         </view>
         <view class="small-tips">
           <view>为您提供优质服务,{{ projectName }}需要获取以下信息</view>

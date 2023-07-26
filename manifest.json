@@ -1,13 +1,13 @@
 {
     "name" : "春日半盏小铺",
-    "appid" : "__UNI__D472780",
+    "appid" : "__UNI__CA202B7",
     "description" : "",
     "versionName" : "4.2.8",
     "versionCode" : 4000280,
     "transformPx" : false,
     "app-plus" : {
         "compatible" : {
-            "ignoreVersion" : true //true表示忽略版本检查提示框，HBuilderX1.9.0及以上版本支持  
+            "ignoreVersion" : true //true表示忽略版本检查提示框，HBuilderX1.9.0及以上版本支持
         },
         /* 5+App特有相关 */
         "usingComponents" : true,
@@ -63,7 +63,7 @@
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
                 ],
                 "abiFilters" : [ "armeabi-v7a", "arm64-v8a", "x86" ],
-                "schemes" : "lilishop",
+                "schemes" : "xbmall",
                 //安卓自添加 权限  应用市场 过度索取权限
                 "permissionExternalStorage" : {
                     "request" : "none",
@@ -86,7 +86,7 @@
                     "NSLocationAlwaysAndWhenInUseUsageDescription" : "位置信息将用于高德地图的效果展示",
                     "NSMicrophoneUsageDescription" : "用户上传视频时需使用音频信息"
                 },
-                "urltypes" : "lilishop",
+                "urltypes" : "xbmall",
                 "dSYMs" : false
             },
             /* ios打包配置 */

@@ -5,7 +5,7 @@
 		</u-navbar>
 		<u-empty text="暂无历史记录" style="margin-top:200rpx;" mode="history" v-if="whetherEmpty"></u-empty>
 		<div v-else>
-			<view v-for="(item, index) in trackList" :key="index">
+      <view  v-if="item" v-for="(item, index) in trackList" :key="index">
 				<view class="myTracks-title" @click="navigateToStore(item)" v-if="item.storeName">{{item.storeName}}</view>
 				<view class="myTracks-items">
 
@@ -13,7 +13,7 @@
 						@click="delTracks" @open="open" :options="options">
 						<!-- 已失效商品 -->
 						<div class="myTracks-item lose-goods" v-if="!item.storeName && !item.goodsName && !item.price">
-							已失效商品 
+							已失效商品
 						</div>
 						<!-- 正常有效商品 -->
 						<view v-else class="myTracks-item">

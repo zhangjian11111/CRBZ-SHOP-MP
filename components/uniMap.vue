@@ -14,9 +14,11 @@ export default {
   methods: {
     // 初始化地图并且调用
     initMap() {
+		console.log("我打开地图了！！！")
       let that = this;
       uni.chooseLocation({
         success: function (res) {
+			console.log("我确定位置了！！！",res)
           /**获取地址详情地址 */
           that.posToCity(res.latitude, res.longitude).then((val) => {
             /**获取地址code */
@@ -82,6 +84,7 @@ export default {
     },
     // 获取城市的数据
     posToCity(latitude, longitude) {
+		console.log("我要调用高德地图api了！！！")
       return new Promise((resolve, reject) => {
         uni.request({
           url: `https://restapi.amap.com/v3/geocode/regeo`,

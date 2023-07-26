@@ -4,7 +4,7 @@
     <view v-if="!loading && (cartDetail.cartList == '' || cartDetail.cartList == [] || !cartDetail)" class="empty">
       <image src="/static/emptyCart.png" mode="aspectFit"></image>
       <view class="empty-tips">
-        空空如也
+        啥也没有呢，快去选购吧
         <navigator class="navigator" url="/pages/tabbar/home/index" open-type="switchTab">随便逛逛></navigator>
       </view>
     </view>
@@ -27,7 +27,7 @@
               <!-- #endif -->
             </u-checkbox-group>
             <span class="store-name wes store-line-desc" @click.stop="navigateToStore(item)">{{
-              item.storeName 
+              item.storeName
             }}</span>
             <u-icon @click="navigateToStore(item)"  size="24" style="margin-left:10rpx;"  name="arrow-right"></u-icon>
           </view>
@@ -84,7 +84,8 @@
                   </div>
                 </view>
                 <view>
-                  <uni-number-box class="uNumber" :min="1" :max="999"  @change="numChange(skuItem)"	 v-model="skuItem.num"></uni-number-box>
+                  <!-- <uni-number-box class="uNumber" :min="1" :max="999"  @change="numChange(skuItem)"	 v-model="skuItem.num"></uni-number-box> -->
+				  <uni-number-box class="uNumber" :min="1" :max="999" :value="skuItem.num"  @change="numChange(skuItem,$event)"	></uni-number-box>
                 </view>
                 <!-- 如果当有促销并且促销是 限时抢购 -->
                 <!-- promotions -->
@@ -95,7 +96,7 @@
                     font-size="24" :timestamp="getCountDownTime(skuItem)">
                   </u-count-down>
                 </div>
-              </div> 
+              </div>
 
               <!-- 此处先隐藏 对于预估到手价来说 前端无法真正的计算出来，光靠促销模式进行展示可能有些不妥。所以暂且隐藏 -->
               <!-- 如果有活动 并且是选中的状态,显示预估到手价格 -->
@@ -208,7 +209,7 @@ export default {
       WEIXIN_num: "", //购物车兼容微信步进器
     };
   },
-  
+
   mounted() {
     // #ifdef MP-WEIXIN
     // 小程序默认分享
@@ -358,9 +359,20 @@ export default {
     /**
      * 点击步进器回调
      */
-     numChange: debounce(function (val) {   
-      this.updateSkuNumFun(val.goodsSku.id, val.num);
-    }, 1000),
+    //  numChange: debounce(function (val,num) {
+    //   console.log("啊你选了：",num)
+    //   val.num = num;
+    //   this.updateSkuNumFun(val.goodsSku.id, val.num);
+    //
+    // }, 1000),
+
+    numChange: debounce(function(skuItem,newValue) {
+      const newNum = parseInt(newValue, 10);
+      if (!isNaN(newNum)) {
+        skuItem.num = newNum;
+        this.updateSkuNumFun(skuItem.goodsSku.id,newNum);
+      }
+    },1000),
     /**
      * 去结算
      */
@@ -457,6 +469,7 @@ export default {
      * 更新商品购物车数量
      */
     updateSkuNumFun(skuId, num) {
+      console.log("你选了：",num)
       API_Trade.updateSkuNum(skuId, num).then((result) => {
         if (result.statusCode == 200) {
           this.getCardData();
@@ -469,7 +482,7 @@ export default {
       });
     },
 
-    // 数据去重一下 
+    // 数据去重一下
     getPromotion(item) {
         return Object.keys(item.promotionMap).map((child) => {
           return child.split("-")[0]
@@ -482,7 +495,7 @@ export default {
     getCardData() {
       if (this.$options.filters.isLogin("auth")) {
         uni.showLoading({
-          title: "加载中",
+          title: "马上就好😀",
         });
         API_Trade.getCarts()
           .then((result) => {
@@ -513,7 +526,7 @@ export default {
                         }
                       });
                     }
-                
+
                   });
               }
               this.checkout = checkOuted;

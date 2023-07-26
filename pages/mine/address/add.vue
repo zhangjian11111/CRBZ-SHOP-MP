@@ -40,7 +40,7 @@
 <script>
 import { addAddress, editAddress, getAddressDetail } from "@/api/address.js";
 import city from "@/components/m-city/m-city.vue";
-import uniMap from "./uniMap";
+import uniMap from "@/components/uniMap";
 import permision from "@/js_sdk/wa-permission/permission.js";
 export default {
   components: {
@@ -121,7 +121,7 @@ export default {
 
     // 选择地址后数据的回调
     callBackAddress(val) {
-      console.log(val)
+      console.log("这是我选择的地址：",val)
       uni.showLoading({
         title: "加载中",
       });
