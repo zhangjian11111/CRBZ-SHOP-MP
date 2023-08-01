@@ -22,10 +22,9 @@
       <view class="logistics-List" v-else>
         <view class="verificationCode" v-if="order.verificationCode">
           券码： {{ order.orderStatus == 'CANCELLED' ?  '已失效' : order.verificationCode }}
+		  <yz-qr :qrPath.sync="qrPath" :text="order.orderStatus == 'CANCELLED' ?  '已失效' : order.verificationCode" :size="size" :quality="quality" :colorDark="colorDark" :colorLight="colorLight"></yz-qr>
         </view>
-		<view class="verificationQrCode" v-if="order.verificationCode">
-		  <yz-qr :qrPath.sync="qrPath" :text="order.sn+','+(order.orderStatus=='CANCELLED'?'已失效':order.verificationCode)" :size="size" :quality="quality" :colorDark="colorDark" :colorLight="colorLight"></yz-qr>
-		</view>
+		
         <view v-else class="logistics-List-title">
           {{ '暂无物流信息' }}
         </view>
@@ -58,7 +57,7 @@
             <view class="title">联系方式:</view>
             <view class="value">{{ order.storeAddressMobile }}<u-icon name='phone-fill' ></u-icon></view>
           </view>
-         
+
         </view>
       </view>
     </view>
@@ -70,7 +69,8 @@
         <view class="seller-info u-flex u-row-between">
           <view class="seller-name" @click="goToShopPage(order)">
             <view class="name">{{ order.storeName }}</view>
-            <view class="status" v-if="orderStatusList[order.orderStatus]"> {{ orderStatusList[order.orderStatus].title}}</view>
+            <view class="status" v-if="orderStatusList[order.orderStatus]"> {{ orderStatusList[order.orderStatus].title
+            }}</view>
           </view>
           <view class="order-sn"></view>
         </view>
@@ -264,15 +264,12 @@ export default {
   },
   data() {
     return {
-	  /**qrcode****/
 	  qrPath: '',
 	  qrtext: 'hello',
 	  size: 200,
 	  quality:'L',
 	  colorDark: '#000000',
 	  colorLight: '#ffffff',
-	  /**qrcode****/
-		
       lightColor: this.$lightColor,
       logisticsList: "", //物流信息
       shareFlag: false, //拼团分享开关
@@ -705,11 +702,6 @@ page,
 .verificationCode {
   font-weight: bold;
   letter-spacing: 2rpx;
-}
-.verificationQrCode{
-	width: 100%;
-	margin-left: 30%;
-	
 }
 
 .bottom_view {

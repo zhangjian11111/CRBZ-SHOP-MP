@@ -113,3 +113,17 @@ export function getPinTuanShare(parentOrderSn,skuId) {
   });
 }
 
+
+/**
+ * 订单核销--走捷径
+ * @param {*} orderSn
+ * @param {*} verificationCode
+ */
+export function caVerification(orderSn,verificationCode) {
+  return http.request({
+    url: `/order/order/mpTake/${orderSn}/${verificationCode}`,
+    method: Method.PUT,
+    needToken: true,
+  });
+}
+

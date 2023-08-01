@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="box">
       <div class="block block-1">
-        <image class="img" src="@/pages/cart/static/pay.png" />
+        <image class="img" src="https://xbcdn.qgxbm.com/XBMALL/images/pay.png" />
         <p class="ptips">收银台</p>
 
         <p class="ptips">剩余支付时间：

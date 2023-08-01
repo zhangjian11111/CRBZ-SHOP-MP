@@ -623,7 +623,7 @@ export default {
     },
 
     linkMsgDetail () {
-      // lili 基础客服
+      // XBM 基础客服
       this.$options.filters.talkIm(this.goodsDetail.storeId, this.routerVal.goodsId, this.routerVal.id)
       // uni.navigateTo({
       //   url: `/pages/mine/im/index?userId=${this.goodsDetail.storeId}&goodsid=${this.routerVal.goodsId}&skuid=${this.routerVal.id}`

@@ -66,7 +66,17 @@
           </div>
           <view>我的订单</view>
         </view>
+		
       </view>
+	  
+	  <view class="order" v-if="userInfo.mobile === '18186854165' || userInfo.mobile === '18393706596' || userInfo.mobile === '18943013950' " >
+		  <view class="order-item" @click="navigateTo('/pages/order/cancelafterverification/ca-verification')">
+		    <div class="bag bag6">
+		      <u-icon name="scan" size="35" color="#fff"></u-icon>
+		    </div>
+		    <view>订单核销</view>
+		  </view>
+	  </view>
     </div>
     <!-- 常用工具 -->
 
@@ -99,6 +109,7 @@ export default {
   onLoad() { },
   onShow() {
     this.userInfo = this.$options.filters.isLogin();
+	console.log("userinfo:::",this.userInfo)
     if (this.$options.filters.isLogin("auth")) {
       this.getUserOrderNum();
     } else {
@@ -174,7 +185,8 @@ body {
     background-size: cover;
     border-bottom-left-radius: 30rpx;
     border-bottom-right-radius: 30rpx;
-    background-image: url("https://crbzshop.oss-cn-hangzhou.aliyuncs.com/%E7%B4%A0%E6%9D%90/wxminiapppic/%E7%83%A7%E9%BA%A6%E5%A6%96%E5%A8%86%E5%9B%BE.jpeg");
+    // background-image: url("https://crbzshop.oss-cn-hangzhou.aliyuncs.com/%E7%B4%A0%E6%9D%90/wxminiapppic/%E7%83%A7%E9%BA%A6%E5%A4%A7%E5%A4%B4%E8%B4%B4.jpg");
+	background-image: url("https://crbzshop.oss-cn-hangzhou.aliyuncs.com/%E7%B4%A0%E6%9D%90/wxminiapppic/%E7%83%A7%E9%BA%A6%E5%98%9F%E5%98%9F%E8%84%B8.jpg");
     background-position: bottom;
     background-repeat: no-repeat;
     color: #ffffff;
@@ -215,7 +227,7 @@ body {
     .head-2 {
       flex: 1;
       margin-left: 30rpx;
-      margin-top: 100rpx;
+      margin-top: 120rpx;
       line-height: 1;
     }
 
@@ -284,7 +296,9 @@ body {
 }
 
 .user-name {
-  font-size: 34rpx;
+  font-size: 40rpx;
+  color: goldenrod;
+  font-weight: bolder;
 }
 
 .bag {
@@ -295,7 +309,7 @@ body {
 }
 
 .bag1 {
-  background: #ff4a48;
+  background: #aa5500;
 }
 
 .bag2 {
@@ -312,5 +326,9 @@ body {
 
 .bag5 {
   background: #28ccb0;
+}
+
+.bag6 {
+  background: #ff0000;
 }
 </style>

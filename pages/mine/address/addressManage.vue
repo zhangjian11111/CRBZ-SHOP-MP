@@ -36,7 +36,7 @@
 
     <button type="default" class="btn" @click="addAddress('')">
       <u-icon name="plus-circle"></u-icon>
-      添加新收货人
+      添加新收货地址
     </button>
 
     <u-action-sheet :list="removeList" :tips="tips" v-model="showAction" @click="deleteAddressMessage"></u-action-sheet>

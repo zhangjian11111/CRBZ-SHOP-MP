@@ -17,7 +17,7 @@
 		</u-navbar>
 		<!-- 顶部栏 -->
 		<div class='header-wraper'>
-			<image  src="/static/join-buy.png"></image>
+			<image  src="https://xbcdn.qgxbm.com/XBMALL/images/join-buy.png"></image>
 		</div>
 		<!-- 商品栏 -->
 		<div class="swiper">
@@ -119,7 +119,7 @@
 
 <style lang="scss" scoped>
 	.header-wraper {
-		background: url('/static/bg.png');
+		background: url('https://xbcdn.qgxbm.com/XBMALL/images/bg.png');
 		height: 200rpx;
 		display: flex;
 		align-items: center;

@@ -1,0 +1,19 @@
+{
+    "id": "yz-qr",
+    "name": "简易的二维码生成组件",
+    "displayName": "简易的二维码生成组件",
+    "version": "1.0.4",
+    "description": "动态赋值，自定义二维码颜色及密度，生成二维码并返回图片地址",
+    "keywords": [
+        "QR",
+        "qrcode",
+        "二维码",
+        "图片地址"
+    ],
+    "dcloudext": {
+        "category": [
+            "前端组件",
+            "通用组件"
+        ]
+    }
+}

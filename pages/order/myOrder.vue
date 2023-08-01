@@ -216,7 +216,7 @@
 import uniLoadMore from "@/components/uni-load-more/uni-load-more.vue";
 import { getOrderList, cancelOrder, confirmReceipt } from "@/api/order.js";
 import { getClearReason } from "@/api/after-sale.js";
-import LiLiWXPay from "@/js_sdk/lili-pay/wx-pay.js";
+import XBMWXPay from "@/js_sdk/xbm-pay/wx-pay.js";
 export default {
   components: {
     uniLoadMore,
@@ -418,7 +418,7 @@ export default {
     pay(val) {
       if (val.sn) {
         // #ifdef MP-WEIXIN
-        new LiLiWXPay({
+        new XBMWXPay({
           sn: val.sn,
           price: val.flowPrice,
           orderType: "ORDER",

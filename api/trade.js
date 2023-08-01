@@ -139,7 +139,7 @@ export function getCheckoutParams(way) {
   return http.request({
     url: "/trade/carts/checked?way=" + way,
     method: Method.GET,
-    needToken: true,
+    needToken: true
   });
 }
 

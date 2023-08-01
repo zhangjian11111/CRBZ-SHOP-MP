@@ -9,7 +9,7 @@
             <u-image
               width="400rpx"
               height="300rpx"
-              src="https://lili-system.oss-cn-beijing.aliyuncs.com/confirm.png"
+              src="https://crbzshop.oss-cn-hangzhou.aliyuncs.com/confirm.png"
             ></u-image>
             <div>电脑端登录确认</div>
             <div>为确保帐号安全，请确认是您本人操作</div>

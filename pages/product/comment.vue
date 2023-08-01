@@ -319,7 +319,7 @@ page {
           .star {
             width: 30rpx;
             height: 30rpx;
-            background: url("/static/star.png");
+            background: url("https://xbcdn.qgxbm.com/XBMALL/images/star.png");
             background-size: 100%;
           }
         }

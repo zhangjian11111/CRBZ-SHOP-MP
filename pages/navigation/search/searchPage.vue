@@ -192,7 +192,7 @@
 			</view>
 		</u-popup>
 		<div class="empty" v-if="empty">
-			<view><image style="width: 320rpx; height: 240rpx" src="/static/nodata.png"></image></view>
+			<view><image style="width: 320rpx; height: 240rpx" src="https://xbcdn.qgxbm.com/XBMALL/images/nodata.png"></image></view>
 			<view>
 				<p>没有找到相关的商品信息</p>
 				<p>请换一个关键词试试吧</p>
@@ -689,7 +689,7 @@ export default {
 		 */
 		doSearch(keyword) {
 			uni.showLoading({
-				title: '马上就好🤪'
+				title: '马上就好🤪',
 			})
 			//  用户自行搜索/热门搜索/搜索历史
 			keyword = keyword === false ? this.keyword : keyword;

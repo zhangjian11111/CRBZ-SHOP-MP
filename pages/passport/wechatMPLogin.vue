@@ -70,14 +70,6 @@
 			
 		},
 		methods: {
-			/**
-			 * TODO 此方法不一定是最优解，如果有更好的办法请在  https://gitee.com/beijing_hongye_huicheng/lilishop/issues 中提出
-			 * 小程序返回bug
-			 * 1.介于微信登录是在login.vue的基础上作为判断跳转来
-			 * 所以在页面栈中会自动记录回退路径，所以导致每次微信小程序点击回退就会自动返回login页面
-			 * 当然login页面的判断就是 没有登录就会跳转到微信小程序页面 导致了无法回退到之前页面
-			 * 2.解决方法： 尝试在回退的时候判断地址，让回退多一级这样就避免了
-			 */
 
 			back() {
 				whetherNavigate("wx");
@@ -87,8 +79,6 @@
 					url: `/pages/tabbar/home/index`,
 				});
 			},
-
-
 
 
 			//获取用户信息

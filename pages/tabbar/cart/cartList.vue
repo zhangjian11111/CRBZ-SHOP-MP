@@ -2,10 +2,10 @@
   <div class="wrapper">
     <!-- 空白页-->
     <view v-if="!loading && (cartDetail.cartList == '' || cartDetail.cartList == [] || !cartDetail)" class="empty">
-      <image src="/static/emptyCart.png" mode="aspectFit"></image>
+      <image src="https://xbcdn.qgxbm.com/XBMALL/images/emptyCart.png" mode="aspectFit"></image>
       <view class="empty-tips">
         啥也没有呢，快去选购吧
-        <navigator class="navigator" url="/pages/tabbar/home/index" open-type="switchTab">随便逛逛></navigator>
+        <navigator class="navigator" url="/pages/tabbar/home/index" open-type="switchTab">老铁抢购开始了></navigator>
       </view>
     </view>
 

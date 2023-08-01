@@ -771,7 +771,23 @@
 						"navigationBarTitleText": "填写订单"
 					}
 				}
-			]
+			    ,{
+                    "path" : "cancelafterverification/ca-verification",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "订单核销",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                
+            ],
+			"preloadRule" :{
+				"pages/index/index":{ //要进行预加载时用户要进入的页面路径
+					"network":"all", // 什么网络下支持允许预加载，默认wifi: wifi/all
+					"packages":["pages/mine","pages/product","pages/floor","pages/passport","pages/promotion","pages/cart","pages/order"] // 要进行预加载的子包名
+			    }
+			}
 		}
 	],
 	"globalStyle": {
@@ -819,6 +835,8 @@
 			}
 		]
 	},
+	
+	
 	// #todo 为什么要注释condition下代码？ 
 	// IOS plus.runtime.arguments 添加 condition节点后， 框架会修改 runtime.arguments
 	// 会影响什么功能？

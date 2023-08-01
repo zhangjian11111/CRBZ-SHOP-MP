@@ -19,10 +19,10 @@
 			  <image src="/static/mine/feedback.png" mode=""></image>
 			  <view>我的评价</view>
 			</view>
-			<!-- <view class="interact-item" @click="linkMsgDetail()">
+			<view class="interact-item" @click="linkMsgDetail()">
 			  <image src="/static/mine/mycommit.png" mode=""></image>
-			  <view>我的消息</view>
-			</view> -->
+			  <view>消息中心</view>
+			</view>
 		
 		
 			<view class="interact-item" @click="navigateTo('/pages/mine/myCollect')">
@@ -37,10 +37,10 @@
 			  <view>我的积分</view>
 			</view>
 			
-			<view class="interact-item" @click="distribution">
+			<!-- <view class="interact-item" @click="distribution">
 			  <image src="/static/mine/distribution.png" mode=""></image>
 			  <view>我的分销</view>
-			</view>
+			</view> -->
 			
 			
 			
@@ -96,6 +96,11 @@
 		  <image src="/static/mine/setting.png" mode=""></image>
 		  <view>设置</view>
 		</view>
+		
+		<!-- <view class="interact-item" @click="navigateTo('/pages/mine/set/setUp')">
+		  <image src="/static/mine/核销.png" mode=""></image>
+		  <view>商品核销</view>
+		</view> -->
 	
 		  
         </view>

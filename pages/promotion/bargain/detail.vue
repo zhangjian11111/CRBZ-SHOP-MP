@@ -62,7 +62,7 @@
             <div class="user-config flex">
               <div class="user-name">
                 <div>{{item.kanjiaMemberName | noPassByName}}</div>
-                <div>使出吃的奶劲儿</div>
+                <div>艾玛，拼命三郎帮你</div>
               </div>
               <div class="save">砍掉：<span>￥{{item.kanjiaPrice | unitPrice}}</span></div>
             </div>
@@ -93,8 +93,8 @@
       <u-modal :show-title="false" v-model="helpBargainFlage" :show-confirm-button="false">
         <view class="help-bargain" @click="handleClickHelpBargain">
           <u-image width="100%" height="600rpx"
-            src="https://lilishop-oss.oss-cn-beijing.aliyuncs.com/91631d5a66c7426bbe3f7d644ee41946.jpeg"></u-image>
-          <u-image class="help" width="300rpx" height="80rpx" src="/pages/promotion/static/help-bargain.png"></u-image>
+            src="https://xbcdn.qgxbm.com/%E7%B4%A0%E6%9D%90/wxminiapppic/%E6%9D%A1%E7%BA%B9.jpg"></u-image>
+          <u-image class="help" width="300rpx" height="80rpx" src="https://xbcdn.qgxbm.com/XBMALL/images/promotion/help-bargain.png"></u-image>
         </view>
       </u-modal>
 
@@ -349,7 +349,7 @@ page {
   padding: 10rpx 0;
 }
 .wrapper-box {
-  background: url("https://lili-system.oss-cn-beijing.aliyuncs.com/kanjia.png");
+  background: url("https://crbzshop.oss-cn-hangzhou.aliyuncs.com/kanjia%E6%9A%97%E9%BB%91.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   height: 506rpx;

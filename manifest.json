@@ -94,8 +94,8 @@
                 "payment" : {
                     "weixin" : {
                         "__platform__" : [ "ios", "android" ],
-                        "appid" : "wx32788b91bdb614c0",
-                        "UniversalLinks" : "https://m-b2b2c.pickmall.cn/app/"
+                        "appid" : "",
+                        "UniversalLinks" : ""
                     },
                     "alipay" : {
                         "__platform__" : [ "ios", "android" ]
@@ -104,15 +104,15 @@
                 "ad" : {},
                 "share" : {
                     "weixin" : {
-                        "appid" : "wx32788b91bdb614c0",
-                        "UniversalLinks" : "https://m-b2b2c.pickmall.cn/app/"
+                        "appid" : "",
+                        "UniversalLinks" : ""
                     }
                 },
                 "oauth" : {
                     "weixin" : {
-                        "appid" : "wx32788b91bdb614c0",
-                        "appsecret" : "230233cef7520ee935bbecad372a370e",
-                        "UniversalLinks" : "https://m-b2b2c.pickmall.cn/app/"
+                        "appid" : "",
+                        "appsecret" : "",
+                        "UniversalLinks" : ""
                     },
                     "apple" : {},
                     "qq" : {
@@ -122,14 +122,14 @@
                 "geolocation" : {
                     "amap" : {
                         "__platform__" : [ "ios", "android" ],
-                        "appkey_ios" : "48e85877d7d8877661aeb7392c54deff",
-                        "appkey_android" : "fb3f1ccb34616c70f068aa950f3e27df"
+                        "appkey_ios" : "",
+                        "appkey_android" : ""
                     }
                 },
                 "maps" : {
                     "amap" : {
-                        "appkey_ios" : "48e85877d7d8877661aeb7392c54deff",
-                        "appkey_android" : "fb3f1ccb34616c70f068aa950f3e27df"
+                        "appkey_ios" : "",
+                        "appkey_android" : ""
                     }
                 },
                 "push" : {}

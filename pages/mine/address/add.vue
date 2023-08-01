@@ -126,8 +126,8 @@ export default {
         title: "加载中",
       });
 
-      if (val.regeocode && val) {
-        let address = val.regeocode;
+      if (val.regeocodeData && val) {
+        let address = val.regeocodeData;
         this.form.detail = address.formatted_address; //地址详情
         this.form.___path = val.data.result.name;
         this.form.consigneeAddressIdPath = val.data.result.id; // 地址id分割

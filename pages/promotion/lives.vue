@@ -17,7 +17,7 @@
         <div class="live-cover-img">
           <div class="tips">
             <div class="live-box">
-              <image class="live-gif" src="./static/live.gif"></image>
+              <image class="live-gif" src="https://xbcdn.qgxbm.com/XBMALL/images/promotion/live.gif"></image>
             </div>
             <span>{{item.status == 'END' ? '已结束' : item.status =='NEW' ? '未开始' : '直播中'}}</span>
           </div>
@@ -29,7 +29,7 @@
             {{item.name}}
           </div>
           <div class="live-store">
-            <span class="wes">lilishop</span>
+            <span class="wes">西部梦</span>
           </div>
           <div class="live-goods-list">
             <div class="live-goods-item">
@@ -95,7 +95,7 @@ export default {
       swiperImg: [
         {
           image:
-            "https://lilishop-oss.oss-cn-beijing.aliyuncs.com/48d789cb9c864b7b87c1c0f70996c3e8.jpeg",
+            "https://crbzshop.oss-cn-hangzhou.aliyuncs.com/%E7%B4%A0%E6%9D%90/wxminiapppic/%E7%83%A7%E9%BA%A6%E5%A6%96%E5%A8%86%E5%9B%BE.jpeg",
         },
       ],
     };

@@ -3,7 +3,7 @@
     <!-- <div class="point-rule">积分规则</div> -->
     <div class="point-wrapper">
       <u-image shape="circle" :lazy-load="true" width="100" height="100"
-        :src="userInfo.face || '/static/missing-face.png'"></u-image>
+        :src="userInfo.face || 'https://xbcdn.qgxbm.com/XBMALL/images/missing-face.png'"></u-image>
       <div class="whether-point">
         <div>你的可用积分：<span class="point">{{userInfo.point || 0}}</span></div>
       </div>
@@ -35,7 +35,7 @@ export default {
 .user-point {
   padding: 0 20rpx;
   height: 300rpx;
-  background: url("/static/point-bg.png") no-repeat;
+  background: url("https://xbcdn.qgxbm.com/XBMALL/images/point-bg2.png") no-repeat;
   background-size: 100%;
 }
 .point {

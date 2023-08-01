@@ -26,7 +26,7 @@ export default {
     imgUrl: "", //绘制出来的图片路径
     show: false, //是否展示模态框
     dp: {}, //绘制的dp对象，用于存储绘制等一些方法。
-    logo: require("@/pages/passport/static/logo-title.png"), //本地logo地址
+    logo: "https://xbcdn.qgxbm.com/XBMALL/images/logo-title.png", //本地logo地址
   }),
 
   props: {

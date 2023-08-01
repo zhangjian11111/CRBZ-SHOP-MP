@@ -75,11 +75,12 @@ page {
 </style>
 <style lang="scss" scoped>
 .wrapper {
-  background: url("https://lili-system.oss-cn-beijing.aliyuncs.com/kanjia.png");
+  background: url("https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBMALL/images/kanjia.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   height: 506rpx;
   width: 100%;
+  border-radius: 10%;
 }
 
 .box {

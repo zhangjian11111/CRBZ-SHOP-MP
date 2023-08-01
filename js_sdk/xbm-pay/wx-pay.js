@@ -9,7 +9,7 @@
 
 import { initiatePay } from "@/api/trade";
 import { getWeChatMpMessage } from "@/api/message.js";
-class LiLiWXPay {
+class XBMWXPay {
   constructor(...payList) {
     this.data = payList[0];
     console.log(payList);
@@ -113,4 +113,4 @@ function sendMessage(price) {
   }
 }
 
-export default LiLiWXPay;
+export default XBMWXPay;

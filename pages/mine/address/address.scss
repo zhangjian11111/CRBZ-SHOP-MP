@@ -10,6 +10,26 @@
       margin: 0 4rpx !important;
     }
   }
+  
+  .storeregion {
+    span {
+      margin: 10% 10% !important;
+    }
+  }
+  
+  .regiondistance {
+	  span {
+		  margin-left: 65%;
+		  // font-weight: bolder;
+		  color: goldenrod;
+	  }
+  }
+  .pickstorename {
+	  margin-left: 5rpx;
+	  color: black;
+	  font-weight: bolder;
+	  font-size: 40rpx;
+  }
   .address {
     .default {
       border: 1px solid #ff6262;

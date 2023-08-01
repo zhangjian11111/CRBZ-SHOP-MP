@@ -50,8 +50,8 @@
 					<u-checkbox shape="circle" v-model="enablePrivacy" active-color="#FF5E00"></u-checkbox>
 				</u-checkbox-group>
 				<div class="tips">
-					未注册的手机号验证后将自动创建用户账号，登录即代表您已同意<span @click="navigateToPrivacy('privacy')">《隐私协议》</span>
-					<span @click="navigateToPrivacys('user')">
+          未注册的手机号验证后将自动创建用户账号，登录即代表您已同意<span @click="navigateToPrivacy('PRIVACY_POLICY')">《隐私协议》</span>
+          <span @click="navigateToPrivacy('USER_AGREEMENT')">
 						《用户协议》
 					</span>
 				</div>
@@ -183,7 +183,7 @@
 		onShow() {
 
 			// 只要是app登录的全部清除内容
-			// #ifdef APP-PLUS 
+			// #ifdef APP-PLUS
 			storage.setAccessToken("");
 			storage.setRefreshToken("");
 			storage.setUserInfo({});
@@ -204,7 +204,7 @@
 		},
 
 		mounted() {
-			
+
 			// #ifndef APP-PLUS
 			//判断是否微信浏览器
 			var ua = window.navigator.userAgent.toLowerCase();
@@ -459,7 +459,7 @@
 					token:{unionId:""}
 				};
         		uni.getStorageSync("unionId") ? (params.token.unionId = uni.getStorageSync("unionId")) : delete params.token;
-	
+
 				openIdLogin(params, clientType).then((res) => {
 					if (!res.data.success) {
 						let errormessage = "第三方登录暂不可用";
@@ -598,12 +598,6 @@
 				uni.navigateTo({
 					url: "/pages/mine/help/tips?type=" + val,
 				});
-				console.log(val)
-			},
-			navigateToPrivacys(val) {
-				uni.navigateTo({
-					url: "/pages/mine/help/tips?type=" + val,
-				})
 			},
 			// 点击获取验证码
 			start() {

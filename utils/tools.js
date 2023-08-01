@@ -3,6 +3,10 @@
  * @example ?id=12345&a=b
  * @return Object {id:12345,a:b}
  */
+
+import amap from "@/js_sdk/amap-wx.130";
+import config from '@/config/config';
+
 function urlParse(url) {
   let obj = {};
   let reg = /[?&][^?&]+=[^?&]+/g;
@@ -115,4 +119,8 @@ const debounce = (fn, delay) => {
     }, delays);
   };
 };
-export { getNetworkType, throttle, countTimeDown, theNextDayTime, debounce };
+
+
+//定义高德地图amap对象
+let amapPlugin = new amap.AMapWX({ key: config.aMapWxPKey });
+export { getNetworkType, throttle, countTimeDown, theNextDayTime, debounce, amapPlugin };

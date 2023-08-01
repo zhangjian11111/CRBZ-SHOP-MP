@@ -1,7 +1,7 @@
 <template>
   <view class="person-msg">
     <view class="head c-content" @click="changeFace">
-      <image :src="form.face || '/static/missing-face.png'" mode=""></image>
+      <image :src="form.face || 'https://xbcdn.qgxbm.com/XBMALL/images/missing-face.png'" mode=""></image>
       <view>点击修改头像</view>
     </view>
     <u-form :model="form" ref="uForm" class="form">
@@ -22,6 +22,9 @@
       <u-form-item label="城市" label-width="150" placeholder="请选择城市" right-icon="arrow-right">
         <u-input v-model="form.___path" disabled @click="clickRegion" />
       </u-form-item>
+	  <u-form-item label="手机" label-width="150">
+	    <u-input v-model="form.mobile" placeholder="请输入您的手机号" />
+	  </u-form-item>
       <view class="submit" @click="submit">保存</view>
 	    <view class="submit" @click="quiteLoginOut">退出登录</view>
     </u-form>
@@ -43,11 +46,12 @@ export default {
       form: {
         nickName: storage.getUserInfo().nickName || "",
         birthday: storage.getUserInfo().birthday || "",
-        face: storage.getUserInfo().face || "/static/missing-face.png", //默认头像
+        face: storage.getUserInfo().face || "https://xbcdn.qgxbm.com/XBMALL/images/missing-face.png", //默认头像
         regionId: [], //地址Id
         region: storage.getUserInfo().region || [], //地址
         sex: storage.getUserInfo().sex, //性别
         ___path: storage.getUserInfo().region,
+		mobile: storage.getUserInfo().mobile,
       },
       birthday: storage.getUserInfo().birthday || "", //生日
       photo: [
