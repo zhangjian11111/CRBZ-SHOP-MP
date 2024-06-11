@@ -1,8 +1,8 @@
-import Foundation from "./Foundation.js";
-import storage from "@/utils/storage.js";
-import { logout } from "@/api/login";
+import { logout, logoffConfirm } from "@/api/login";
 import { getUserInfo } from "@/api/members";
+import storage from "@/utils/storage.js";
 import Vue from "vue";
+import Foundation from "./Foundation.js";
 /**
  * 金钱单位置换  2999 --> 2,999.00
  * @param val
@@ -353,8 +353,31 @@ export function quiteLoginOut () {
         storage.setAccessToken("");
         storage.setRefreshToken("");
         storage.setUserInfo({});
+        storage.setHasLogin(false);
         navigateToLogin("redirectTo");
         await logout();
+      }
+    },
+  });
+}
+
+
+/**
+ * 用户注销
+ *
+ */
+export function logoff () {
+  uni.showModal({
+    title: "警告⚠️",
+    content: "确认注销用户么？注销用户后将无法登录当前用户，删除所有数据且无法恢复！",
+    confirmColor: Vue.prototype.$mainColor,
+    async success (res) {
+      if (res.confirm) {
+        await logoffConfirm();
+        storage.setAccessToken("");
+        storage.setRefreshToken("");
+        storage.setUserInfo({});
+        navigateToLogin("redirectTo");
       }
     },
   });
@@ -376,7 +399,7 @@ export function talkIm (storeId, goodsId, id) {
   }
 }
 
-export function tipsToLogin () {
+export function tipsToLogin (type) {
   if (!isLogin("auth")) {
     uni.showModal({
       title: "提示",
@@ -388,7 +411,9 @@ export function tipsToLogin () {
         if (res.confirm) {
           navigateToLogin();
         } else if (res.cancel) {
-          uni.navigateBack();
+          if(type !== 'normal'){
+            uni.navigateBack();
+          }
         }
       },
     });
@@ -467,6 +492,8 @@ export function navigateToLogin (type = "navigateTo") {
   });
   //  #endif
 }
+
+
 
 /**
  * 服务状态列表

@@ -553,7 +553,7 @@ export default {
       this.productId = id; // skuId
       // 这里请求获取到页面数据  解析数据
 
-      let response = await getGoods(id, goodsId);
+      let response = await getGoods(id || 'undefined', goodsId);
 
       // 判断当前接口返回内容
       if (!response.data.success) {
@@ -593,7 +593,7 @@ export default {
           }
         });
       // 轮播图
-      this.imgList = this.goodsDetail.goodsGalleryList;
+      this.imgList = this.goodsDetail.goodsGalleryList.filter(i => i.indexOf("\"url\":") === -1 && i.indexOf("\"status\":") === -1);
 
       // 获取店铺基本信息
       this.getStoreBaseInfoFun(this.goodsDetail.storeId);

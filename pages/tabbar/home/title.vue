@@ -106,9 +106,7 @@
 					params.messageId = v.memberId
 					editMessages(v.id, params).then(res => {
 						if (res.data.success) {
-                            console.log( this.lists)
                             this.lists.forEach((item,index)=>{
-                                console.log(item)
                                 if(item.id == v.id){
                                     this.lists.splice(index, 1)
                                 }
@@ -137,7 +135,6 @@
 			},
 			change(e) {
 				this.showLoading = true;
-				console.log(e)
 				this.current = e;
 				if (e == 0) {
 					this.params.status = "UN_READY"
@@ -153,11 +150,9 @@
 				this.params.memberId = this.$options.filters.isLogin().id;
 				
 				messages(this.params).then(res => {
-					console.log(res)
 					if (res.data.success) {
 						this.showLoading = false
 						if (res.data.result.records == '') {
-							console.log(11111)
 							this.status = "nomore"
 						}
 						res.data.result.records.forEach(item => {
@@ -171,7 +166,6 @@
 											"" :
 											(obj[next.id] = true && cur.push(next));
 									}
-									console.log(cur);
 									return cur;
 								},
 								[]

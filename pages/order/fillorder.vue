@@ -2,7 +2,7 @@
 	<div class="wrapper">
 		<!-- 选择地址 -->
 		<div class="address-box" @click="clickToAddress()"
-			v-if="shippingText == 'LOGISTICS' || shippingText == 'LOCAL_TOWN_DELIVERY'">
+			v-if="shippingText === 'LOGISTICS' || shippingText === 'LOCAL_TOWN_DELIVERY'">
 			<div class="user-box flex">
 				<div class="flex-8">
 					<div v-if="!address.id">请选择地址</div>
@@ -36,7 +36,7 @@
 			<div class="bar"></div>
 		</div>
 		<!-- 选择自提点 -->
-		<div class="address-box" v-if="shippingText == 'SELF_PICK_UP'">
+		<div class="address-box" v-if="shippingText == 'SELF_PICK_UP' ">
 			<div @click="clickToStoreAddress()">
 				<div class="user-box flex">
 					<div class="flex-8">
@@ -286,7 +286,8 @@
 		onLoad: function(val) {
 			console.log("这到底是个啥：", val)
 			this.routerVal = val;
-			this.storeDistance = val.storeDistance;			console.log("x选择的自提点距离：：",this.storeDistance)
+			this.storeDistance = val.storeDistance;
+			console.log("x选择的自提点距离：：",this.storeDistance)
 
 		},
 
@@ -542,57 +543,82 @@
 			/**
 			 * 提交订单准备支付
 			 */
+      // 创建订单
+      createTradeFun() {
+        // 防抖
+        this.$u.throttle(() => {
+          if (this.shippingText === "SELF_PICK_UP") {
+            if (!this.storeAddress.id) {
+              uni.showToast({
+                title: "请选择提货点",
+                duration: 2000,
+                icon: "none",
+              });
+              return false;
+            }
+          } else if (this.shippingText === "LOGISTICS" && this.orderMessage.cartTypeEnum !== 'VIRTUAL') {
+            if (!this.address.id) {
+              uni.showToast({
+                title: "请选择地址",
+                duration: 2000,
+                icon: "none",
+              });
+              return false;
+            }
+          }
 
-			// 创建订单
-			createTradeFun() {
-				// 防抖
-				//暂时把物流和同城配送关闭，因为物流还没到那么大体量，同城配送还没写完
-				this.$u.throttle(() => {
-					if (this.shippingText === "SELF_PICK_UP") {
-						if (!this.storeAddress.id) {
-							uni.showToast({
-								title: "请选择提货门店✅",
-								duration: 2000,
-								icon: "none",
-							});
-							return false;
-						}
-						
-						
-					} else if (this.shippingText === "LOGISTICS") {
-						// if (!this.address.id) {
-						// 	uni.showToast({
-						// 		title: "请选择收货地址✅",
-						// 		duration: 2000,
-						// 		icon: "none",
-						// 	});
-						// 	return false;
-						// }
-						
-						uni.showToast({
-							title: "暂不支持快递物流配送❌",
-							duration: 2000,
-							icon: "none",
-						});
-						return false;
-						
-					} else if (this.shippingText === "LOCAL_TOWN_DELIVERY") {
-						// if (!this.address.id) {
-						// 	uni.showToast({
-						// 		title: "请选择需要配送的地址✅",
-						// 		duration: 2000,
-						// 		icon: "none",
-						// 	});
-						// 	return false;
-						// }
-						
-						uni.showToast({
-							title: "暂不支持同城配送❌即将上线",
-							duration: 2000,
-							icon: "none",
-						});
-						return false;
-					}
+
+
+          // 创建订单
+			// createTradeFun() {
+			// 	// 防抖
+			// 	//暂时把物流和同城配送关闭，因为物流还没到那么大体量，同城配送还没写完
+			// 	this.$u.throttle(() => {
+			// 		if (this.shippingText === "SELF_PICK_UP") {
+			// 			if (!this.storeAddress.id) {
+			// 				uni.showToast({
+			// 					title: "请选择提货门店✅",
+			// 					duration: 2000,
+			// 					icon: "none",
+			// 				});
+			// 				return false;
+			// 			}
+      //
+      //
+      //     } else if (this.shippingText === "LOGISTICS" ) {
+			// 			// if (!this.address.id) {
+			// 			// 	uni.showToast({
+			// 			// 		title: "请选择收货地址✅",
+			// 			// 		duration: 2000,
+			// 			// 		icon: "none",
+			// 			// 	});
+			// 			// 	return false;
+			// 			// }
+      //
+			// 			uni.showToast({
+			// 				title: "暂不支持快递物流配送❌",
+			// 				duration: 2000,
+			// 				icon: "none",
+			// 			});
+			// 			return false;
+      //
+			// 		} else if (this.shippingText === "LOCAL_TOWN_DELIVERY" ) {
+			// 			// if (!this.address.id) {
+			// 			// 	uni.showToast({
+			// 			// 		title: "请选择需要配送的地址✅",
+			// 			// 		duration: 2000,
+			// 			// 		icon: "none",
+			// 			// 	});
+			// 			// 	return false;
+			// 			// }
+      //
+			// 			uni.showToast({
+			// 				title: "暂不支持同城配送❌即将上线",
+			// 				duration: 2000,
+			// 				icon: "none",
+			// 			});
+			// 			return false;
+			// 		}
 
 					//  创建订单
 					let client;
@@ -747,6 +773,7 @@
 					});
 
 					this.orderMessage = res.data.result;
+					console.log("商品类型：：",this.orderMessage.cartTypeEnum)
 					/**
 					 * 为了避免路径传值在h5中超出限制问题
 					 * 这块将可用的优惠券以及不可用的优惠券放入到vuex里面进行存储

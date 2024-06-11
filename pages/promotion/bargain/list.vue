@@ -75,19 +75,19 @@ page {
 </style>
 <style lang="scss" scoped>
 .wrapper {
-  background: url("https://crbzshop.oss-cn-hangzhou.aliyuncs.com/XBMALL/images/kanjia.jpg");
+  background: url("https://xbcdn.qgxbm.com/XBMALL/images/%E8%A5%BF%E9%83%A8%E8%83%9C%E6%B5%B7%E7%89%9B%E8%82%89%E9%9D%A2%20%E7%A0%8D%E4%BB%B7.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  height: 506rpx;
+  height: 342rpx;
   width: 100%;
-  border-radius: 10%;
+  border-radius: 2%;
 }
 
 .box {
   background: #fff;
   border-radius: 20rpx;
   position: relative;
-  top: 560rpx;
+  top: 380rpx;
   width: 94%;
   margin: 0 auto;
   > .bargain {

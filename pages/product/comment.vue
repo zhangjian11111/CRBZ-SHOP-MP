@@ -96,7 +96,7 @@ export default {
     this.getGoodsCommentsNum(options.id);
     this.opid = options.id;
   },
-  
+
   /**
    * 触底加载
    */
@@ -155,15 +155,17 @@ export default {
      * 顶部筛选条件
      */
     select(index) {
+      this.params = {
+        pageNumber: 1,
+        pageSize: 10,
+      };
       this.selectIndex = index;
       this.params.grade = ["", "GOOD", "MODERATE", "WORSE", ""][
         this.selectIndex
       ];
-      this.selectIndex == 4 ? (this.params.haveImage = 1) : true;
-      this.params.pageNumber = 1;
-      this.params.pageSize = 10;
+      this.selectIndex === 4 ? (this.params.haveImage = 1) : true;
       this.commDetail = [];
-      if (this.selectIndex == 0) {
+      if (this.selectIndex === 0) {
         this.params = {
           pageNumber: 1,
           pageSize: 10,
@@ -361,7 +363,7 @@ page {
           color: $font-color-light;
           margin-top: 20rpx;
 
-       
+
         }
       }
     }

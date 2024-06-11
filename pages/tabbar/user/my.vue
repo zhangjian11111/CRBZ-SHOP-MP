@@ -19,15 +19,20 @@
     <!-- 积分，优惠券，关注， -->
     <div class="pointBox box">
       <u-row text-align="center" gutter="16" class="point">
-        <u-col text-align="center" span="4" @click="navigateTo('/pages/mine/deposit/operation')">
+        <!-- <u-col text-align="center" span="4" @click="navigateTo('/pages/mine/deposit/operation')">
           <view>预存款</view>
           <view class="money">{{ walletNum | unitPrice }}</view>
-        </u-col>
+        </u-col> -->
 
         <u-col text-align="center" span="4" @click="navigateTo('/pages/cart/coupon/myCoupon')">
           <view>优惠券</view>
           <view>{{ couponNum || 0 }}</view>
         </u-col>
+
+		<u-col text-align="center" span="4" @click="navigateTo('/pages/mine/deposit/operation')">
+		  <view></view>
+		  <view class="money"></view>
+		</u-col>
 
         <u-col text-align="center" span="4" @click="navigateTo('/pages/mine/myTracks')">
           <view>足迹</view>
@@ -66,17 +71,42 @@
           </div>
           <view>我的订单</view>
         </view>
-		
+
       </view>
-	  
-	  <view class="order" v-if="userInfo.mobile === '18186854165' || userInfo.mobile === '18393706596' || userInfo.mobile === '18943013950' " >
+
+	  <!-- <view class="order" v-if="userInfo.mobile === '18186854165' || userInfo.mobile === '18393706596' || userInfo.mobile === '18943013950' " >
 		  <view class="order-item" @click="navigateTo('/pages/order/cancelafterverification/ca-verification')">
 		    <div class="bag bag6">
 		      <u-icon name="scan" size="35" color="#fff"></u-icon>
 		    </div>
 		    <view>订单核销</view>
 		  </view>
+
+		  <view class="order-item" @click="navigateTo('/pages/order/allOrder?status=0')">
+		    <div class="bag bag6">
+		      <u-icon name="account" size="35" color="#fff"></u-icon>
+		    </div>
+		    <view>订单复查</view>
+		  </view>
+	  </view> -->
+
+	  <view class="order" v-if="userInfo.haveStore" >
+	  		  <view class="order-item" @click="navigateTo('/pages/order/cancelafterverification/ca-verification')">
+	  		    <div class="bag bag6">
+	  		      <u-icon name="scan" size="35" color="#fff"></u-icon>
+	  		    </div>
+	  		    <view>订单核销</view>
+	  		  </view>
+
+	  		  <view class="order-item" @click="navigateTo('/pages/order/allOrder?status=0')">
+	  		    <div class="bag bag6">
+	  		      <u-icon name="account" size="35" color="#fff"></u-icon>
+	  		    </div>
+	  		    <view>订单复查</view>
+	  		  </view>
 	  </view>
+
+
     </div>
     <!-- 常用工具 -->
 
@@ -108,7 +138,7 @@ export default {
   },
   onLoad() { },
   onShow() {
-    this.userInfo = this.$options.filters.isLogin();
+    this.userInfo = this.$options.filters.isLogin() || {};
 	console.log("userinfo:::",this.userInfo)
     if (this.$options.filters.isLogin("auth")) {
       this.getUserOrderNum();
@@ -147,6 +177,7 @@ export default {
         ? this.navigateTo("/pages/mine/set/personMsg")
         : this.$options.filters.navigateToLogin();;
     },
+
     async getUserOrderNum() {
       uni.stopPullDownRefresh();
 
@@ -186,8 +217,10 @@ body {
     border-bottom-left-radius: 30rpx;
     border-bottom-right-radius: 30rpx;
     // background-image: url("https://crbzshop.oss-cn-hangzhou.aliyuncs.com/%E7%B4%A0%E6%9D%90/wxminiapppic/%E7%83%A7%E9%BA%A6%E5%A4%A7%E5%A4%B4%E8%B4%B4.jpg");
-	background-image: url("https://crbzshop.oss-cn-hangzhou.aliyuncs.com/%E7%B4%A0%E6%9D%90/wxminiapppic/%E7%83%A7%E9%BA%A6%E5%98%9F%E5%98%9F%E8%84%B8.jpg");
-    background-position: bottom;
+	// background-image: url("https://crbzshop.oss-cn-hangzhou.aliyuncs.com/%E7%B4%A0%E6%9D%90/wxminiapppic/%E7%83%A7%E9%BA%A6%E5%98%9F%E5%98%9F%E8%84%B8.jpg");
+	// background-image: url("https://xbcdn.qgxbm.com/XBCDN/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9B%BE%E7%89%87/%E8%A5%BF%E9%83%A8%E8%83%9C%E6%B5%B7%E7%89%9B%E8%82%89%E9%9D%A2%20%E7%B2%BE%E9%80%89%E5%B0%8F%E9%BA%A6%E7%B2%89.png");
+    background-image: url("https://xbcdn.qgxbm.com/XBMALL/images/xb-my.gif");
+	background-position: bottom;
     background-repeat: no-repeat;
     color: #ffffff;
     display: flex;
@@ -201,8 +234,8 @@ body {
       align-items: center;
 
       image {
-        width: 152rpx;
-        height: 144rpx;
+        width: 110rpx;
+        height: 110rpx;
         border-radius: 50%;
         margin-bottom: 30rpx;
         border: 3px solid #fff;
@@ -226,7 +259,7 @@ body {
 
     .head-2 {
       flex: 1;
-      margin-left: 30rpx;
+      margin-left: 10rpx;
       margin-top: 120rpx;
       line-height: 1;
     }
@@ -297,7 +330,7 @@ body {
 
 .user-name {
   font-size: 40rpx;
-  color: goldenrod;
+  color: #ffffff;
   font-weight: bolder;
 }
 

@@ -124,7 +124,7 @@ export default {
         this.params.pageNumber++
         this.initGoods(this.res.list[0].titleWay[this.selected.index])
       }
-      
+
     })
   },
   destroyed(){

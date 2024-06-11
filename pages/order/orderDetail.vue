@@ -10,7 +10,7 @@
     </div>
     <!-- 物流信息 -->
     <view class="info-view logistics-view">
-      <view class="logistics-List" v-if="logisticsList && logisticsList.traces.length != 0 ">
+      <view class="logistics-List" v-if="logisticsList && logisticsList.traces && logisticsList.traces.length != 0 ">
         <view class="logistics-List-title">
           {{ logisticsList.traces[logisticsList.traces.length - 1].AcceptStation }}
         </view>
@@ -23,9 +23,14 @@
         <view class="verificationCode" v-if="order.verificationCode">
           券码： {{ order.orderStatus == 'CANCELLED' ?  '已失效' : order.verificationCode }}
         </view>
-		<view class="verificationQrCode" v-if="order.verificationCode">
-		  <yz-qr :qrPath.sync="qrPath" :text="order.sn+','+(order.orderStatus=='CANCELLED'?'已失效':order.verificationCode)" :size="size" :quality="quality" :colorDark="colorDark" :colorLight="colorLight"></yz-qr>
-		</view>
+        <view @click="handleClickDeliver()" class="info-view logi-view"  v-else-if="orderPackage && orderPackage.length">
+          <view class="verificationCode">
+            当前订单有 {{ orderPackage.length }} 个包裹快递
+          </view>
+          <div>
+            点击此处查看
+          </div>
+        </view>
         <view v-else class="logistics-List-title">
           {{ '暂无物流信息' }}
         </view>
@@ -33,7 +38,7 @@
 
     </view>
     <!-- 地址 -->
-    <view class="info-view" v-if="order.deliveryMethod == 'LOGISTICS'">
+    <view class="info-view" v-if="order.deliveryMethod === 'LOGISTICS' && order.orderType !== 'VIRTUAL'">
       <view class="address-view">
         <view>
           <view class="address-title">
@@ -47,7 +52,7 @@
     </view>
 
     <!-- 提货地址 -->
-    <view class="info-view" v-if="order.deliveryMethod == 'SELF_PICK_UP'">
+    <view class="info-view" v-if="order.deliveryMethod === 'SELF_PICK_UP'">
       <view class="address-view">
         <view>
           <view class="order-info-view">
@@ -58,7 +63,7 @@
             <view class="title">联系方式:</view>
             <view class="value">{{ order.storeAddressMobile }}<u-icon name='phone-fill' ></u-icon></view>
           </view>
-         
+
         </view>
       </view>
     </view>
@@ -85,6 +90,9 @@
                 <view class="goods-price">
                   ￥{{ sku.goodsPrice | unitPrice }}
                   <!-- <span v-if="sku.point">+{{ sku.point }}积分</span> -->
+                  <span style="font-size: 24rpx;margin-left: 14rpx;color: #ff9900;" v-if="sku.isRefund && sku.isRefund !== 'NO_REFUND'">
+				  {{refundPriceList(sku.isRefund)}} ({{ sku.refundPrice | unitPrice("￥") }})
+				   </span>
                 </view>
               </view>
               <view class="goods-num">
@@ -107,11 +115,11 @@
           <view class="title">商品总价：</view>
           <view class="value">￥{{ order.goodsPrice | unitPrice }}</view>
         </view>
-        <view class="order-info-view">
+        <view class="order-info-view" v-if="order.freightPrice">
           <view class="title">运费：</view>
           <view class="value">￥{{ order.freightPrice | unitPrice }}</view>
         </view>
-        <view class="order-info-view">
+        <view class="order-info-view" v-if="order.priceDetailDTO">
           <view class="title">优惠券：</view>
           <view class="value main-color">-￥{{ order.priceDetailDTO.couponPrice | unitPrice }}</view>
         </view>
@@ -161,7 +169,7 @@
         <view class="order-info-view">
           <view class="title">订单备注：</view>
           <view class="value">{{
-              order.remark
+              order.remark || '暂无备注'
           }}</view>
         </view>
         <view class="order-info-view">
@@ -251,7 +259,7 @@
 </template>
 
 <script>
-import { getExpress } from "@/api/trade.js";
+import { getExpress, getPackage } from "@/api/trade.js";
 import { cancelOrder, confirmReceipt, getOrderDetail } from "@/api/order.js";
 
 import shares from "@/components/m-share/index"; //分享
@@ -272,7 +280,7 @@ export default {
 	  colorDark: '#000000',
 	  colorLight: '#ffffff',
 	  /**qrcode****/
-		
+
       lightColor: this.$lightColor,
       logisticsList: "", //物流信息
       shareFlag: false, //拼团分享开关
@@ -318,6 +326,8 @@ export default {
       cancelList: "",
       rogShow: false,
       reason: "",
+	  skuNameNum: "",//二维码中商品名和数量
+    orderPackage:"",
     };
   },
   onLoad(options) {
@@ -325,6 +335,34 @@ export default {
     this.sn = options.sn;
   },
   methods: {
+    //获取包裹
+    async getOrderPackage() {
+      getPackage(this.order.sn).then(res => {
+        if (res.data.success) {
+          this.orderPackage = res.data.result
+        }
+      })
+    },
+    handleClickDeliver(){
+      uni.navigateTo({
+        url: `/pages/order/deliverDetail?order_sn=${this.order.sn}`,
+      });
+    },
+    // 退款状态枚举
+    refundPriceList(status) {
+      switch (status) {
+        case 'ALL_REFUND':
+          return "全部退款";
+        case 'PART_REFUND':
+          return "部分退款";
+        case 'NO_REFUND':
+          return "未退款";
+        case 'REFUNDING':
+          return "退款中";
+        default:
+          return "";
+      }
+    },
     callPhone(){
       this.$options.filters.callPhone(this.order.storeAddressMobile )
     },
@@ -360,6 +398,8 @@ export default {
           this.orderGoodsList[0].goodsId,
       });
     },
+
+
     async loadData(sn) {
       uni.showLoading({
         title: "加载中",
@@ -368,13 +408,22 @@ export default {
         const order = res.data.result;
         this.order = order.order;
         this.orderGoodsList = order.orderItems;
+
         this.orderDetail = res.data.result;
         if (this.order.deliveryMethod === 'LOGISTICS') {
-          this.loadLogistics(sn)
+          this.loadLogistics(sn);
+          this.getOrderPackage();
         }
          if (this.$store.state.isShowToast){ uni.hideLoading() };
-      });
 
+		 const singleP = [];
+		 for (let i = 0; i < this.orderGoodsList.length; i++) {
+		 	console.log("商品信息：：",this.orderGoodsList[i])
+		 	singleP.push(this.orderGoodsList[i].goodsName,this.orderGoodsList[i].num);
+		 }
+		 this.skuNameNum = singleP.join(",");
+
+      });
     },
     onReceipt(val) {
       uni.navigateTo({
@@ -709,7 +758,7 @@ page,
 .verificationQrCode{
 	width: 100%;
 	margin-left: 30%;
-	
+
 }
 
 .bottom_view {

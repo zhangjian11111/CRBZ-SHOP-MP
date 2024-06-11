@@ -115,7 +115,8 @@ export default {
   onShow() {
     this.orderList = [];
     this.params.pageNumber = 1;
-    this.current == 0 ? this.loadData() : this.loadComments();
+    this.current = 0
+    this.loadData()
   },
   watch: {
     /**
@@ -129,7 +130,7 @@ export default {
       //重新读取数据
 
       if (val == 0) {
-        delete  this.params.commentStatus 
+        delete  this.params.commentStatus
         this.loadData();
       } else if (val == 1) {
         this.params.commentStatus = "UNFINISHED";

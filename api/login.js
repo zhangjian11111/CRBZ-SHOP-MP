@@ -1,6 +1,7 @@
 import { http } from "@/utils/request.js";
 
 import api from "@/config/api.js";
+import qs from 'qs';
 
 /**
  * 通过短信重置密码
@@ -14,6 +15,17 @@ export function resetByMobile(params) {
   });
 }
 
+/**
+ * 绑定手机号码
+ * @param  mobile
+ */
+export function bindMobile(params) {
+    return http.request({
+        url: `/passport/member/bindMobile`,
+        method: "POST",
+        params,
+    });
+}
 
 //获取自动发券
 export function getAutoCoup(){
@@ -40,6 +52,7 @@ export function getAutoCoup(){
     },
   })
 }
+
 
 
 /**
@@ -118,4 +131,14 @@ export function scannerCodeLoginConfirm(params){
 	  params,
 	  needToken: true,
 	});
+}
+
+
+// 注销用户
+export function logoffConfirm() {
+    return http.request({
+        url: '/passport/member/cancellation',
+        method: "PUT",
+        needToken: true,
+    })
 }

@@ -13,14 +13,22 @@
 				<u-form-item label="核销码" label-width="130">
 					<u-input v-model="scanData[1]" placeholder="扫码获取核销码或者点击这里填写核销码" />
 				</u-form-item>
+				
+				<u-form-item label="商品信息" label-width="130">
+					<view v-for="(sku, skuIndex) in scanData" :key="skuIndex" v-if="skuIndex>=2">
+						<text v-if="isOdd(skuIndex)">数量: </text>
+						<text>{{ sku }}</text>
+					</view>
+						
+				</u-form-item>
 
 
 				<div class="saveBtn" @click="cav">立即核销✅</div>
 			</u-form>
-
-
 		</div>
 	</view>
+	
+	
 </template>
 <script>
 	import permission from "@/js_sdk/wa-permission/permission.js"; //权限工具类
@@ -36,8 +44,28 @@
 				isIos: "",
 			};
 		},
+		
+		computed: {
+		  isOdd() {
+		    return (index) => index % 2 !== 0;
+		  }
+		},
+
 
 		methods: {
+			
+			//去除空格
+			 
+			trimAll(ele){
+			    if(typeof ele === 'string'){
+					console.log("订单号是字符串：：！！！")
+			       return ele.split(/[\t\r\f\n\s]*/g).join('');
+			           
+			    }else{
+			        console.error(`${typeof ele} is not the expected type, but the string type is expected`)
+			    }
+			  
+			},
 			
 			
 			getUserAddress() {
@@ -53,7 +81,17 @@
 			
 			
 			cav() {
-				API_CAV.caVerification(this.scanData[0],this.scanData[1]).then((res) => {
+				console.log(this.scanData[0],this.scanData[1])
+				if(this.scanData[0]===undefined || this.scanData[1]===undefined){
+					uni.showToast({
+						title: "请填写需要核销的订单信息❌",
+						duration: 2000,
+						icon: "none"
+						
+					})
+					return;
+				}
+				API_CAV.caVerification(this.trimAll(this.scanData[0]),this.trimAll(this.scanData[1])).then((res) => {
 					console.log("核销返回：：：",res)
 					console.log("核销返回：：：",res.data.success)
 					if (res.data.success){

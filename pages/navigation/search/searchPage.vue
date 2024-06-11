@@ -192,10 +192,10 @@
 			</view>
 		</u-popup>
 		<div class="empty" v-if="empty">
-			<view><image style="width: 320rpx; height: 240rpx" src="https://xbcdn.qgxbm.com/XBMALL/images/nodata.png"></image></view>
+			<view><image style="width: 320rpx; height: 240rpx" src="https://xbcdn.qgxbm.com/XBMALL/images/nogoods.png"></image></view>
 			<view>
-				<p>没有找到相关的商品信息</p>
-				<p>请换一个关键词试试吧</p>
+				<p>您要的暂时没有哦</p>
+				<p>试试别的吧</p>
 			</view>
 		</div>
 		<u-back-top :scroll-top="scrollTop"></u-back-top>

@@ -130,8 +130,8 @@
 				lightColor: this.$lightColor,
 				seconds: 60, //默认验证码等待时间
 				loginTitleWay: [{
-						title: "欢迎登录",
-						desc: "登录后更精彩，美好生活即将开始",
+						title: "欢迎回来",
+						desc: "您的支持成就我们",
 					},
 					{
 						title: "请输入验证码",
@@ -206,10 +206,13 @@
 		mounted() {
 
 			// #ifndef APP-PLUS
-			//判断是否微信浏览器
+			//判断是否微信浏览器--暂时不管是什么浏览器，都使用网页账号密码登录，因为订阅号用不了，服务号认证要钱
 			var ua = window.navigator.userAgent.toLowerCase();
 			if (ua.match(/MicroMessenger/i) == "micromessenger") {
-				this.wechatLogin = true;
+				//暂时不管是什么浏览器，都使用网页账号密码登录，因为订阅号用不了，服务号认证要钱
+				// this.wechatLogin = true;
+				this.wechatLogin = false;
+				this.methodFilter([""]);
 				return;
 			}
 			// #endif
@@ -277,9 +280,9 @@
 			});
 			//#endif
 
-			//特殊平台，登录方式需要过滤
+			//特殊平台，登录方式需要过滤,如果不是微信小程序，都用账号密码登录
 			// #ifdef H5
-			this.methodFilter(["QQ"]);
+			this.methodFilter([""]);
 			// #endif
 
 			//微信小程序，只支持微信登录
@@ -428,7 +431,7 @@
 								//写入用户信息
 								uni.setStorageSync("nickname", infoRes.userInfo.nickName);
 								uni.setStorageSync("avatar", infoRes.userInfo.avatarUrl);
-								uni.setStorageSync("unionId", infoRes.userInfo.unionId);
+                uni.setStorageSync("unionId", infoRes.userInfo.unionId || infoRes.userInfo.unionid);
 
 								// #ifdef MP-WEIXIN
 								//微信小程序获取openid 需要特殊处理 如需获取openid请参考uni-id: https://uniapp.dcloud.net.cn/uniCloud/uni-id
@@ -453,10 +456,11 @@
 					uuid: uni.getStorageSync("openid"), //联合登陆id
 					source: uni.getStorageSync("type"), //联合登陆类型
 					nickname: uni.getStorageSync("nickname"), // 昵称
+          username: uni.getStorageSync("openid"), // 昵称
 					avatar: uni.getStorageSync("avatar"), // 头像
 					uniAccessToken: uni.getStorageSync("uni_access_token"), //第三方token
 					type:this.clientType,
-					token:{unionId:""}
+          token:{unionId:"",openId:uni.getStorageSync("openid")}
 				};
         		uni.getStorageSync("unionId") ? (params.token.unionId = uni.getStorageSync("unionId")) : delete params.token;
 

@@ -88,6 +88,14 @@
 
 		onShow() {
 			// #ifndef H5
+			var ua = navigator.userAgent.toLowerCase();
+			        var isWeixin = ua.indexOf('micromessenger') != -1;
+			        if (isWeixin) {
+			            uni.reLaunch({
+			             url:'/pages/floor/useyoursafari'
+			            })
+			        }
+			        console.log('使用外部浏览器打开！！！');
 			if(this.config.enableGetClipboard){
 				this.getClipboard();
 			}
@@ -101,6 +109,8 @@
 				}
 			}
 			// #endif
+			
+			
 		},
 		methods: {
 			/**

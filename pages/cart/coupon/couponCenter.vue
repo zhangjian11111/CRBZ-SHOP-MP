@@ -120,14 +120,14 @@
 			 * 领取优惠券
 			 */
       receive(val) {
-        this.$u.throttle(()=>{
-          this.fetchCoupon(val)
-        }, 1500)
-
-      },
-
-      fetchCoupon(val){
-        receiveCoupons(val.id).then((res) => {
+      				this.$u.throttle(()=>{
+      					this.fetchCoupon(val)
+      				}, 1500)
+      				
+      			},
+      
+      			fetchCoupon(val){
+      				receiveCoupons(val.id).then((res) => {
 					if (res.data.code == 200) {
 						uni.showToast({
 							title: "领取成功",

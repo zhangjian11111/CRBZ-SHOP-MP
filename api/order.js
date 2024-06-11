@@ -58,6 +58,20 @@ export function getOrderList(params) {
   });
 }
 
+
+/**
+ * 获取所有用户的订单列表--只有管理员可见，便于订单核查
+ * @param params
+ */
+export function getAllOrderList(params) {
+  return http.request({
+    url: "/order/order/showAllOrders",
+    method: Method.GET,
+    needToken: true,
+    params,
+  });
+}
+
 /**
  * 获取订单详情
  * @param orderSn 订单编号

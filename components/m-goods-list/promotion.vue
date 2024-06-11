@@ -17,18 +17,18 @@
 										$options.filters.goodsFormatPrice(item.price )[1]
 									}}
 							</div>
-							<!-- 砍价 -->
-							<div class="price" v-if="type && item.purchasePrice!=undefined">
-								最低：
-								¥<span>{{ $options.filters.goodsFormatPrice(item.purchasePrice )[0] }} </span>.{{
-										$options.filters.goodsFormatPrice(item.purchasePrice )[1]
-									}}
-							</div>
-							<!-- 兜底策略如果金额是0 -->
-							<div class="price" v-if="!item.price">
-								¥<span>0 </span>.00
-							</div>
-						</view>
+              <!-- 砍价 -->
+              <div class="price" v-if="type && item.purchasePrice!=undefined">
+                最低：
+                ¥<span>{{ $options.filters.goodsFormatPrice(item.purchasePrice )[0] }} </span>.{{
+                  $options.filters.goodsFormatPrice(item.purchasePrice )[1]
+                }}
+              </div>
+              <!-- 兜底策略如果金额是0 -->
+              <div class="price" v-if="!item.price && !type">
+                ¥<span>0 </span>.00
+              </div>
+            </view>
 						<div>
 							<image class='buy' :src="buy"></image>
 						</div>

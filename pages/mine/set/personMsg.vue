@@ -16,24 +16,30 @@
       </u-form-item>
 
       <u-form-item label="生日" label-width="150" right-icon="arrow-right">
-        <u-input v-model="birthday" disabled placeholder="请选择出生日期" @click="showBirthday = true" />
+        <div style="width: 100%;" @click="showBirthday = true">{{ birthday || '请选择出生日期' }}</div>
         <u-picker v-model="showBirthday" mode="time" :confirm-color="lightColor" @confirm="selectTime"></u-picker>
       </u-form-item>
       <u-form-item label="城市" label-width="150" placeholder="请选择城市" right-icon="arrow-right">
-        <u-input v-model="form.___path" disabled @click="clickRegion" />
+        <div style="width: 100%;" @click="clickRegion">{{ form.___path || '请选择城市' }}</div>
       </u-form-item>
-	  <u-form-item label="手机" label-width="150">
-	    <u-input v-model="form.mobile" placeholder="请输入您的手机号" />
-	  </u-form-item>
-      <view class="submit" @click="submit">保存</view>
-	    <view class="submit" @click="quiteLoginOut">退出登录</view>
+      <u-form-item label="手机号" label-width="150">
+        <view v-if="form.mobile">
+          {{form.mobile}}
+        </view>
+        <view v-else>
+          <view class="submit" @click="navigateTo(form.username)">绑定手机号码</view>
+        </view>
+      </u-form-item>
     </u-form>
-
+    <div class="bottom">
+      <view class="submit" @click="submit">保存</view>
+      <view class="submit light" @click="quiteLoginOut">退出登录</view>
+    </div>
     <m-city :provinceData="region" headTitle="区域选择" ref="cityPicker" @funcValue="getPickerParentValue" pickerSize="4"></m-city>
   </view>
 </template>
 <script>
-import { saveUserInfo } from "@/api/members.js";
+import { saveUserInfo, getUserInfo } from "@/api/members.js";
 import { upload } from "@/api/common.js";
 import storage from "@/utils/storage.js";
 import uFormItem from "@/uview-ui/components/u-form-item/u-form-item.vue";
@@ -51,7 +57,8 @@ export default {
         region: storage.getUserInfo().region || [], //地址
         sex: storage.getUserInfo().sex, //性别
         ___path: storage.getUserInfo().region,
-		mobile: storage.getUserInfo().mobile,
+        mobile: storage.getUserInfo().mobile,
+        username: storage.getUserInfo().username,
       },
       birthday: storage.getUserInfo().birthday || "", //生日
       photo: [
@@ -76,7 +83,7 @@ export default {
 	  quiteLoginOut() {
       this.$options.filters.quiteLoginOut();
 	  },
-	  
+
     /**
      * 选择地址回调
      */
@@ -115,7 +122,9 @@ export default {
       saveUserInfo(params).then((res) => {
         if (res.statusCode == 200) {
           storage.setUserInfo(res.data.result);
-          uni.navigateBack();
+		  uni.switchTab({
+		 	 url: '/pages/tabbar/user/my'
+		  });
         }
       });
     },
@@ -162,6 +171,12 @@ export default {
       this.form.birthday = `${time.year}-${time.month}-${time.day}`;
       this.birthday = `${time.year} - ${time.month} - ${time.day}`;
     },
+
+    navigateTo(username) {
+      uni.navigateTo({
+        url: '/pages/mine/set/securityCenter/bindMobile' + '?username=' + username,
+      });
+    },
   },
 
   /**
@@ -170,7 +185,11 @@ export default {
   onLoad() {},
 };
 </script>
-
+<style>
+page{
+  background: #fff;
+}
+</style>
 <style lang="scss" scoped>
 .submit {
   height: 90rpx;
@@ -210,5 +229,22 @@ export default {
 }
 .form {
   background-color: #ffffff;
+}
+.bottom{
+  position: fixed;
+  bottom: 40px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  >.submit{
+    background: $light-color;
+    color: #fff;
+    width: 40%;
+  }
+
+}
+.light{
+  background: rgba($color: $light-color, $alpha: 0.2) !important;
+  color: $light-color !important;
 }
 </style>

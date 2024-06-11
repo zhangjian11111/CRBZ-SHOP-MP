@@ -111,7 +111,7 @@ export default {
       enableScroll: true, //是否启用滚动
       tabCurrentIndex: 0, //当前选项卡索引
       tabbars: this.provinceData, //默认的省市区id
-      pickersize: this.pickerSize, //多少个tab 推荐为4级 
+      pickersize: this.pickerSize, //多少个tab 推荐为4级
       showPicker: false, //显示选取器
     };
   },
@@ -137,7 +137,7 @@ export default {
     hide() {
       this.showPicker = false;
     },
-    
+
     /**
      * tab切换
      */
@@ -150,7 +150,7 @@ export default {
         this.getScroll("show" + index);
       }, 10);
     },
-    
+
     /**
      * 获得元素的大小
      */
@@ -180,6 +180,7 @@ export default {
       if (this.tabbars[index].id != item.id) {
         this.tabbars[index].localName = item.name;
         this.tabbars[index].id = item.id;
+        this.tabbars[index].center = item.center
         if (index < this.tabbars.length - 1) {
           this.tabbars.splice(index + 1, this.tabbars.length - index - 1);
         }

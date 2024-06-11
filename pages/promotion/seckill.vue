@@ -2,7 +2,7 @@
 	<view class="sale">
 		<u-navbar title='限时抢购'></u-navbar>
 		<view class="header-wraper">
-				<image mode="widthFix" src="https://xbcdn.qgxbm.com/XBMALL/images/seckill.png"></image>
+				<!-- <image mode="widthFix" src="https://xbcdn.qgxbm.com/XBMALL/images/seckills.png"></image> -->
 		</view>
 		<scroll-view scroll-x>
 			<view class="index-navs">
@@ -23,7 +23,7 @@
 		</view>
 		<view v-else>
 			<view class="nodata">
-				<image style="height: 240rpx;width: 320rpx;" src="https://xbcdn.qgxbm.com/XBMALL/images/nodata.png" alt="" />
+				<image style="height: 240rpx;width: 320rpx;" src="https://xbcdn.qgxbm.com/XBMALL/images/nogoods.png" alt="" />
 				<div>暂无商品</div>
 			</view>
 		</view>
@@ -168,7 +168,7 @@
 	}
 
 	.header-wraper {
-		background: url('https://xbcdn.qgxbm.com/XBMALL/images/bg.png');
+		background: url('https://xbcdn.qgxbm.com/XBMALL/images/xb-seckill.jpg');
 		height: 200rpx;
 		display: flex;
 		align-items: center;

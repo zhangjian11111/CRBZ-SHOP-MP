@@ -85,7 +85,7 @@
         <u-tabs :list="tabs" :active-color="mainColor" :is-scroll="false" :current="current" @change="changeTab"></u-tabs>
         <div class="content" v-if="current == 0">
           <u-empty style='margin-top:100rpx' v-if="goodsList.length == 0" class="empty" text='暂无商品信息'></u-empty>
-          <goodsTemplate v-else :res="goodsList" :storeName="false" />
+          <goodsTemplate style="width:100%;" v-else :res="goodsList" :storeName="false" />
         </div>
         <!-- 全部分类 -->
         <div class="category" v-if="current == 1">
@@ -117,7 +117,7 @@
           >
             <div class="navbar-right"></div>
 
-            <search style="width: 100%" :res="item.options" :storeId = "storeId"/>         
+            <search style="width: 100%" :res="item.options" :storeId = "storeId"/>
           </u-navbar>
           <carousel v-if="item.type == 'carousel'" :res="item.options" />
           <titleLayout v-if="item.type == 'title'" :res="item.options" />
@@ -420,7 +420,7 @@ export default {
           this.getGoodsData();
           // 店铺分类
           this.getCategoryData();
-          
+
           this.basePageData = true;
         }
       } else {
@@ -447,7 +447,7 @@ export default {
       }
     },
 
-  
+
 
     /**
      *  是否收藏

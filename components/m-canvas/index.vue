@@ -26,7 +26,7 @@ export default {
     imgUrl: "", //绘制出来的图片路径
     show: false, //是否展示模态框
     dp: {}, //绘制的dp对象，用于存储绘制等一些方法。
-    logo: "https://xbcdn.qgxbm.com/XBMALL/images/logo-title.png", //本地logo地址
+    logo: "https://xbcdn.qgxbm.com/XBCDN/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9B%BE%E7%89%87/%E8%A5%BF%E9%83%A8%E8%83%9C%E6%B5%B7%E6%97%A0%E5%BA%95%E8%89%B2%E6%97%A0%E6%96%87%E5%AD%97logo500X500.png", //本地logo地址
   }),
 
   props: {
